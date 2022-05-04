@@ -2,12 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
+use App\Models\Product;
+
+use App\Repositories\ProductRepository;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+
 class ProductController extends Controller
 {
+    protected $productRepository;
+
+    public function __construct(ProductRepository $productRepository) {
+        //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
+        $this->productRepository = $productRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +27,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = $this->productRepository->get();
+        return view('dashboards.products.index', compact('products'));
     }
 
     /**
@@ -25,7 +38,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboards.products.create');
     }
 
     /**
@@ -36,7 +49,21 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        
+        $request->validate([
+            'title' => 'required|max:255',
+            'overview' => 'required'
+        ]);
+
+        $request->merge([
+            'slug' => Str::slug($request->get('title')),
+            'user_id' => Auth::user()->id,
+        ]);
+            
+        $product = $this->productRepository->store($request->all());
+
+        return redirect('/dashboard/product/')->withStatus("Nouveau product (".$product->title.") vient d'être ajouté");
+    
     }
 
     /**
@@ -47,7 +74,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return view('dashboards.products.show', compact('product'));
     }
 
     /**
@@ -58,7 +85,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return view('dashboards.products.edit', compact('product'));
     }
 
     /**
@@ -70,7 +97,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $this->productRepository->update($product->id, $request->all());
+        return redirect('/dashboard/product')->withStatus("Product a bien été modifier");
     }
 
     /**
@@ -81,6 +109,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->productRepository->destroy($product->id);
+        return redirect()->back()->withError("Product a bien été supprimer");;
     }
 }
