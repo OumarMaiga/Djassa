@@ -17,7 +17,6 @@ class ProductController extends Controller
     protected $productRepository;
 
     public function __construct(ProductRepository $productRepository) {
-        //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->productRepository = $productRepository;
     }
     /**
@@ -111,6 +110,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $this->productRepository->destroy($product->id);
-        return redirect()->back()->withError("Product a bien été supprimer");;
+        return redirect()->back()->withError("Product a bien été supprimer");
     }
 }

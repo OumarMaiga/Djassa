@@ -49,21 +49,6 @@
                                             </button>
                                     </form>
                                 </span>
-                                <span>
-                                    <form  method="POST" action="{{ route('panier.store') }}">
-                                        @csrf
-                                            <input type="hidden" id="id" name="id" value="{{ $product->id }}">
-                                            <input id="quantity" name="quantity" type="number" value="1" min="1">
-                                            <label for="quantity">Quantité</label>        
-                                            <p>
-                                                <button class="" style="width:100%" type="submit" id="addcart">Ajouter au panier
-                                                    <i class="">add_shopping_cart</i>
-                                                </button>
-                                            </p>
-                                      </form>
-                                </span>
-                                <a href="{{ route('panier.store', $product->id) }}">Add_panier</a>
-                                <a href="{{ route('product.destroy', $product->id) }}">Delpanier</a>
                                 
                             </td>
                         </tr>

@@ -34,7 +34,7 @@
         }
 
         public function update($id, Array $inputs) {
-            $this->getById($id)->fill($inputs)->save();
+            return $this->getById($id)->fill($inputs)->save();
         }
 
         public function destroy($id) {

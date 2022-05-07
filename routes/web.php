@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\CommandeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,5 @@ Route::resource('dashboard/product', ProductController::class)->middleware('auth
 Route::resource('panier', PanierController::class);
 
 Route::get('/products', [PageController::class, 'products'])->name('products');
+
+Route::resource('commande', CommandeController::class);

@@ -44,19 +44,25 @@ class PanierController extends Controller
         $request->validate([
             'quantity' => 'required'
         ]);
+        
         $product = Product::findOrFail($request->id);
+        
         // Le cookie est valable pour 30 jours
         $minutes = 30 * 60 * 24 * 30;
+
         $product = array(
             'id' => $product->id,
             'name' => $product->title,
             'price' => $product->price,
             'quantity' => $request->get('quantity')
         );
+
         Cart::add($product);
+        
         /*$cookie = cookie('panier', $product, $minutes);
         var_dump($cookie);
         die();*/
+        
         return redirect()->back()->with('cart', 'ok')/*->cookie('panier', $product, $minutes)*/;
     }
 
