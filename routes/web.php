@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PanierController;
+use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +27,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('dashboard/product', ProductController::class)->middleware('auth');
+
+Route::resource('panier', PanierController::class);
+
+Route::get('/products', [PageController::class, 'products'])->name('products');

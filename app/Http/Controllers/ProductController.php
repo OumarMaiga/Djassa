@@ -52,7 +52,8 @@ class ProductController extends Controller
         
         $request->validate([
             'title' => 'required|max:255',
-            'overview' => 'required'
+            'overview' => 'required',
+            'price' => 'required'
         ]);
 
         $request->merge([

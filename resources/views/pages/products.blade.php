@@ -3,7 +3,6 @@
         <div class="container">
             <h3 class="mb-3 d-flex align-items-center ">
                     LES PRODUCTS
-                    <a href="{{ route('product.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
                 </div>
             </h3>
 
@@ -36,19 +35,6 @@
                             <td>{{ $product->price }}</td>
                             <td>{{ $product->quantity }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('product.show', $product->id) }}">Voir</a>
-                                <a href="{{ route('product.edit', $product->id) }}" class="col icon-action icon-edit">
-                                    Edit
-                                </a>
-                                <span class="col icon-action">
-                                    <form method="POST" action="{{ route('product.destroy', $product->id) }}">
-                                        @csrf
-                                        @method('delete')
-                                            <button class="" type="submit" onclick="confirm('Vraiment supprimer ce product ?')">
-                                                Del
-                                            </button>
-                                    </form>
-                                </span>
                                 <span>
                                     <form  method="POST" action="{{ route('panier.store') }}">
                                         @csrf
@@ -56,14 +42,13 @@
                                             <input id="quantity" name="quantity" type="number" value="1" min="1">
                                             <label for="quantity">Quantité</label>        
                                             <p>
-                                                <button class="" style="width:100%" type="submit" id="addcart">Ajouter au panier
-                                                    <i class="">add_shopping_cart</i>
+                                                <button class="" style="width:100%" type="submit" id="addcart">
+                                                    Ajouter au panier
                                                 </button>
                                             </p>
                                       </form>
                                 </span>
-                                <a href="{{ route('panier.store', $product->id) }}">Add_panier</a>
-                                <a href="{{ route('product.destroy', $product->id) }}">Delpanier</a>
+                                <a href="{{ route('product.destroy', $product->id) }}">Del_panier</a>
                                 
                             </td>
                         </tr>
