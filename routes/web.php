@@ -34,3 +34,5 @@ Route::resource('panier', PanierController::class);
 Route::get('/products', [PageController::class, 'products'])->name('products');
 
 Route::resource('commande', CommandeController::class);
+
+Route::get('/my_commande/{user_id}', [CommandeController::class, 'my_commande'])->name('my_commande');

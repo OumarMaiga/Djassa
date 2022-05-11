@@ -17,6 +17,7 @@ class CommandeController extends Controller
     public function __construct(CommandeRepository $commandeRepository) {
         $this->commandeRepository = $commandeRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -84,6 +85,7 @@ class CommandeController extends Controller
      */
     public function show($id)
     {
+        $commande = $this->commandeRepository->getById($id);
         return view('commandes.show', compact('commande'));
     }
 
@@ -132,5 +134,26 @@ class CommandeController extends Controller
     {
         $this->commandeRepository->destroy($commande->id);
         return redirect()->back()->withError("Commande a bien été supprimer");
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function my_commande($user_id)
+    {
+        // On recupère les commandes d'un utilisateur, les infos sur les produits
+        $commandes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, users.name as user_name, 
+                                products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+                                FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+                                LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+                                LEFT JOIN products ON commande_product.product_id = products.id 
+                                WHERE commandes.user_id = $user_id GROUP BY commande_code");
+        
+        /*print_r($commandes);
+        die();*/
+        return view('commandes.my_commande', compact('commandes'));
     }
 }

@@ -23,6 +23,11 @@
                             Panier({{ $cartCount }})
                         </x-nav-link>
                     @endif
+                    @if (Auth::check())
+                        <x-nav-link :href="route('my_commande', Auth::user()->id)">
+                            Mes commandes
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
