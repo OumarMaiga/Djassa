@@ -23,5 +23,6 @@ class Commande extends Model
         'quantity',
         'user_id',
         'paid',
+        'delivered',
     ];
 }

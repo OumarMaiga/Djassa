@@ -85,8 +85,29 @@ class CommandeController extends Controller
      */
     public function show($id)
     {
-        $commande = $this->commandeRepository->getById($id);
+        // On recupère la commande et les infos sur les produits
+        $commande = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, users.name as user_name, 
+                                products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+                                FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+                                LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+                                LEFT JOIN products ON commande_product.product_id = products.id 
+                                WHERE commandes.id = $id")[0];
+            /*var_dump($commande);
+            die();*/
         return view('commandes.show', compact('commande'));
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delivered($id)
+    {
+        $data = array('delivered' => 1, 'paid' => 1);
+        $this->commandeRepository->update($id, $data);
+        return redirect()->back()->withStatus("Commande livré");
     }
 
     /**
@@ -145,15 +166,14 @@ class CommandeController extends Controller
     {
         // On recupère les commandes d'un utilisateur, les infos sur les produits
         $commandes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
-                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, users.name as user_name, 
+                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, users.name as user_name, 
                                 products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
                                 FROM commandes LEFT JOIN users ON commandes.user_id = users.id
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
                                 LEFT JOIN products ON commande_product.product_id = products.id 
                                 WHERE commandes.user_id = $user_id GROUP BY commande_code");
         
-        /*print_r($commandes);
-        die();*/
         return view('commandes.my_commande', compact('commandes'));
     }
+
 }

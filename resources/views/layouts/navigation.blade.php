@@ -27,6 +27,9 @@
                         <x-nav-link :href="route('my_commande', Auth::user()->id)">
                             Mes commandes
                         </x-nav-link>
+                        <x-nav-link :href="route('recettes')">
+                            Les recettes
+                        </x-nav-link>
                     @endif
                 </div>
             </div>

@@ -13,7 +13,7 @@
             return $this->model->where('slug', $slug)->first();
         }
         
-        public function getByForeignId($name, $value) {
+        public function getByField($name, $value) {
             return $this->model->where($name, $value)->get();
         }
 

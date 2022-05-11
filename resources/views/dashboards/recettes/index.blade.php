@@ -4,7 +4,7 @@
         <div class="card">        
         <div class="card-content">
             <div id="wrapper">          
-            @if($commandes)
+            @if($recettes)
             <table class="table table-hover table-responsive-md">
                 <thead>
                     <tr>
@@ -20,19 +20,19 @@
                 </thead>
                 <tbody>
                     <?php $n = 0 ?>
-                    @foreach ($commandes as $commande)
+                    @foreach ($recettes as $recette)
                     <?php 
                         $n = $n + 1;
                         $commande_products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
                                                         products.id as product_id FROM products LEFT JOIN commande_product
-                                                        ON products.id = commande_product.product_id WHERE commande_product.commande_id = $commande->commande_id");
+                                                        ON products.id = commande_product.product_id WHERE commande_product.commande_id = $recette->commande_id");
 
                     ?>
                         <tr>
                             <th scope="row">{{ $n }}</th>
-                            <td>{{ "$commande->commande_firstname $commande->commande_lastname" }}</td>
-                            <td>{{ $commande->commande_telephone }}</td>
-                            <td>{{ $commande->commande_code }}</td>
+                            <td>{{ "$recette->commande_firstname $recette->commande_lastname" }}</td>
+                            <td>{{ $recette->commande_telephone }}</td>
+                            <td>{{ $recette->commande_code }}</td>
                             <td>
                                 <?php 
                                 $x = 0;
@@ -43,9 +43,9 @@
                                 }
                                 ?>
                             </td>
-                            <td>{{ $commande->user_name }}</td>
-                            <td>{!! $commande->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
-                            <td><a href="{{ route('commande.show', $commande->commande_id) }}">Voir</a></td>
+                            <td>{{ $recette->user_name }}</td>
+                            <td>{!! $recette->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
+                            <td><a href="{{ route('commande.show', $recette->commande_id) }}">Voir</a></td>
                         </tr>
                     @endforeach
                 </tbody>
