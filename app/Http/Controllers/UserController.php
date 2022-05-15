@@ -42,10 +42,10 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUserRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request)
+    public function store(Request $request)
     {
         
         $request->validate([
@@ -120,7 +120,7 @@ class UserController extends Controller
     }
 
     public function unblocked ($id) {
-        $data = array('etat' => 'actif');
+        $data = array('etat' => 'enabled');
         $this->userRepository->update($id, $data);
         return redirect()->back()->withStatus("User a bien été débloqué");
     }
