@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('dashboard/product', ProductController::class)->middleware('auth');
+Route::get('dashboard/user/{id}', [UserController::class, 'show'])->name('dashboard.user.show')->middleware('auth');
+Route::get('dashboard/user/{id}/blocked', [UserController::class, 'blocked'])->name('dashboard.user.blocked')->middleware('auth');
+Route::delete('dashboard/user/{id}', [UserController::class, 'destroy'])->name('dashboard.user.destroy')->middleware('auth');
 
 Route::resource('panier', PanierController::class);
 
