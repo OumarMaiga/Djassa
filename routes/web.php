@@ -37,7 +37,7 @@ Route::delete('dashboard/user/{id}', [UserController::class, 'destroy'])->name('
 Route::resource('panier', PanierController::class);
 
 Route::get('/products', [PageController::class, 'products'])->name('products');
-Route::get('/product', [ProductController::class, 'product'])->name('product');
+Route::get('/product/{id}', [ProductController::class, 'product'])->name('product');
 Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('recettes');
 
 Route::resource('commande', CommandeController::class);
