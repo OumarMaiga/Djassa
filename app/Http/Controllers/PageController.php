@@ -24,10 +24,21 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function welcome()
+    {
+        $products = $this->productRepository->get();
+        return view('pages.welcome', compact('products'));
+    }
+    
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function products()
     {
         $products = $this->productRepository->get();
-        return view('pages.products', compact('products'));
+        return view('pages.products.index', compact('products'));
     }
     
     /**
@@ -46,5 +57,16 @@ class PageController extends Controller
                                 LEFT JOIN products ON commande_product.product_id = products.id 
                                 WHERE commandes.paid = 1 GROUP BY commande_code");
         return view('dashboards.recettes.index', compact('recettes'));
+    }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function product(Product $product)
+    {
+        return view('pages.products.show', compact('product'));
     }
 }
