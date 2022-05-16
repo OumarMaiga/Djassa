@@ -5,6 +5,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PanierController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\CommandeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +30,9 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('dashboard/product', ProductController::class)->middleware('auth');
+Route::get('dashboard/user/{id}', [UserController::class, 'show'])->name('dashboard.user.show')->middleware('auth');
+Route::get('dashboard/user/{id}/blocked', [UserController::class, 'blocked'])->name('dashboard.user.blocked')->middleware('auth');
+Route::delete('dashboard/user/{id}', [UserController::class, 'destroy'])->name('dashboard.user.destroy')->middleware('auth');
 
 Route::resource('panier', PanierController::class);
 
@@ -37,3 +42,7 @@ Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('re
 Route::resource('commande', CommandeController::class);
 Route::get('/my_commande/{user_id}', [CommandeController::class, 'my_commande'])->name('my_commande');
 Route::get('/delivered/{id}', [CommandeController::class, 'delivered'])->name('delivered');
+
+Route::resource('service', ServiceController::class);
+Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
+Route::get('service/{id}/done', [ServiceController::class, 'done'])->name('service.done');
