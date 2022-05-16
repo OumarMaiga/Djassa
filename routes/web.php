@@ -8,6 +8,7 @@ use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RayonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,3 +54,4 @@ Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])-
 Route::get('service/{id}/done', [ServiceController::class, 'done'])->name('service.done');
 
 Route::resource('dashboard/category', CategoryController::class)->middleware('auth');
+Route::resource('dashboard/rayon', RayonController::class)->middleware('auth');
