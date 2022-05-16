@@ -25,7 +25,7 @@
         <p class="text-sm font-normal text-black ml-4 mt-3 hover:bg-gray-800 hover:cursor-pointer">Aimaux</p>
     </div>
 
-    <div style="margin-left:19rem; margin-top:8.5rem">
+    <div style="margin-left:19rem; margin-top:6.5rem">
         <!-- Banners -->
         <div style="display:inline-block; margin-right:1rem">
             <img src="https://source.unsplash.com/random/540x240" alt="">

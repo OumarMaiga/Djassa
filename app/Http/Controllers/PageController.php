@@ -29,6 +29,16 @@ class PageController extends Controller
         $products = $this->productRepository->get();
         return view('pages.products', compact('products'));
     }
+
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function vegetables()
+    {
+        return view('pages.vegetables');
+    }
     
     /**
      * Display a listing of the resource.
