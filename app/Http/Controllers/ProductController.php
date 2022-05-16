@@ -112,4 +112,15 @@ class ProductController extends Controller
         $this->productRepository->destroy($product->id);
         return redirect()->back()->withError("Product a bien été supprimer");
     }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function product(Product $product)
+    {
+        return view('pages.product', compact('product'));
+    }
 }
