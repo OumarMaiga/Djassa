@@ -33,10 +33,13 @@
                         <x-nav-link :href="route('recettes')">
                             Les recettes
                         </x-nav-link>
+                        <x-nav-link :href="route('category.index')">
+                            Les categories
+                        </x-nav-link>
+                    @endif
                         <x-nav-link :href="route('service.index')">
                             Les services
                         </x-nav-link>
-                    @endif
                 </div>
             </div>
 

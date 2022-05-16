@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="dashboard-content">
+    <div class="dashboard-content" style="margin-top: 6rem">
         <h2>{{ $user->name }}</h2>
         
         <form method="POST" action="{{ route('dashboard.user.destroy', $user->id) }}">

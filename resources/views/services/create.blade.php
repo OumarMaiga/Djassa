@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="dashboard-content">
+    <div class="dashboard-content" style="margin-top: 6rem">
         <div class="container content">
             <div class="content-title">{{ __('DEMANDE DE SERVICE') }}</div>
     

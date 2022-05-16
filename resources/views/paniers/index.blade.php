@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container">
+    <div class="container" style="margin-top: 6rem">
         <div class="row">
         <div class="col s12">
             <div class="card">        
