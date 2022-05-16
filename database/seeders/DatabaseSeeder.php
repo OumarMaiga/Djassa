@@ -18,13 +18,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        /*User::create([
+        User::create([
             'name' => 'Admin',
             'email' => 'admin@djassa.com',
             'password' => Hash::make('password123'),
             'etat' => 'enabled',
             'type' => 'admin'
-        ])->save();*/
+        ])->save();
  
         Rayon::create([
             'title' => 'Alimentation',
