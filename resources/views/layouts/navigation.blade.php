@@ -28,17 +28,17 @@
                     @endif
                     @if (Auth::check())
                         <x-nav-link :href="route('my_commande', Auth::user()->id)">
-                            Mes commandes
+                            Commandes
                         </x-nav-link>
                         <x-nav-link :href="route('recettes')">
-                            Les recettes
+                            Recettes
                         </x-nav-link>
                         <x-nav-link :href="route('category.index')">
-                            Les categories
+                            Categories
                         </x-nav-link>
                     @endif
                         <x-nav-link :href="route('service.index')">
-                            Les services
+                            Services
                         </x-nav-link>
                 </div>
             </div>
