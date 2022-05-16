@@ -7,6 +7,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,11 @@ use App\Http\Controllers\ServiceController;
 
 require __DIR__.'/auth.php';
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [PageController::class, 'welcome'])->name('welcome');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -48,3 +51,5 @@ Route::get('/delivered/{id}', [CommandeController::class, 'delivered'])->name('d
 Route::resource('service', ServiceController::class);
 Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
 Route::get('service/{id}/done', [ServiceController::class, 'done'])->name('service.done');
+
+Route::resource('dashboard/category', CategoryController::class)->middleware('auth');

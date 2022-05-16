@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('welcome') }}">
                         <h1 class="inline-flex items-center" style="font-size:24px; font-weight:800; color:#ec8333">DJASSA</h1>
                     </a>
                 </div>
@@ -33,10 +33,13 @@
                         <x-nav-link :href="route('recettes')">
                             Les recettes
                         </x-nav-link>
+                        <x-nav-link :href="route('category.index')">
+                            Les categories
+                        </x-nav-link>
+                    @endif
                         <x-nav-link :href="route('service.index')">
                             Les services
                         </x-nav-link>
-                    @endif
                 </div>
             </div>
 
@@ -85,7 +88,7 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
         </div>

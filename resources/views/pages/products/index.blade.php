@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="">
+    <div class="" style="margin-top: 6rem">
         <div class="container">
             <h3 class="mb-3 d-flex align-items-center ">
                     LES PRODUCTS
