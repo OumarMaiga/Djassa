@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ProductRepository;
 use App\Repositories\CommandeRepository;
+use App\Repositories\RayonRepository;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -12,11 +13,13 @@ class PageController extends Controller
 {
     
     protected $productRepository;
-
-    public function __construct(ProductRepository $productRepository, CommandeRepository $commandeRepository) {
+    protected $rayonRepository;
+    
+    public function __construct(ProductRepository $productRepository, CommandeRepository $commandeRepository, RayonRepository $rayonRepository) {
         //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->productRepository = $productRepository;
         $this->commandeRepository = $commandeRepository;
+        $this->rayonRepository = $rayonRepository;
     }
     
     /**
@@ -27,7 +30,8 @@ class PageController extends Controller
     public function welcome()
     {
         $products = $this->productRepository->get();
-        return view('pages.welcome', compact('products'));
+        $rayons = $this->rayonRepository->get();
+        return view('pages.welcome', compact('products', 'rayons'));
     }
     
     /**
