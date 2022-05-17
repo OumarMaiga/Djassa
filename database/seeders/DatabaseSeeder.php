@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Fruits & Légume'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 1,
         ])->save();
  
         Category::create([
@@ -46,6 +47,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Viandes & Poissons'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 1,
         ])->save();
  
         Category::create([
@@ -53,6 +55,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Produits laitiers et oeufs'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 1,
         ])->save();
  
         Category::create([
@@ -60,6 +63,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Boulangerie & Pâtisserie'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 1,
         ])->save();
  
         Rayon::create([
@@ -74,6 +78,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Epicerie sucrée'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 2,
         ])->save();
  
         Category::create([
@@ -81,6 +86,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Epicerie salée'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 2,
         ])->save();
  
         Category::create([
@@ -88,6 +94,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Surgelés'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 2,
         ])->save();
  
         Category::create([
@@ -95,6 +102,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Boissons, Café & Thé'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 2,
         ])->save();
  
         Category::create([
@@ -102,6 +110,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Vins, Bières & Spititueux'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 2,
         ])->save();
  
         Rayon::create([
@@ -116,6 +125,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Bébés & Enfants'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 3,
         ])->save();
  
         Category::create([
@@ -123,6 +133,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Hygiène & Beauté'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 3,
         ])->save();
  
         Category::create([
@@ -130,6 +141,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Entretien & Nettoyage'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 3,
         ])->save();
  
         Category::create([
@@ -137,6 +149,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Maisons & Equipements'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 3,
         ])->save();
  
         Category::create([
@@ -144,6 +157,7 @@ class DatabaseSeeder extends Seeder
             'slug' => Str::slug('Vêtements & Accessoires'),
             'etat' => 'enabled',
             'user_id' => 1,
+            'rayon_id' => 3,
         ])->save();
     }
 }

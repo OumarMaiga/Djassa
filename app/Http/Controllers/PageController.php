@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ProductRepository;
 use App\Repositories\CommandeRepository;
+use App\Repositories\RayonRepository;
+use App\Repositories\CategoryRepository;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -12,11 +14,15 @@ class PageController extends Controller
 {
     
     protected $productRepository;
-
-    public function __construct(ProductRepository $productRepository, CommandeRepository $commandeRepository) {
+    protected $rayonRepository;
+    protected $categoryRepository;
+    
+    public function __construct(ProductRepository $productRepository, CommandeRepository $commandeRepository, RayonRepository $rayonRepository, CategoryRepository $categoryRepository) {
         //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->productRepository = $productRepository;
         $this->commandeRepository = $commandeRepository;
+        $this->rayonRepository = $rayonRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     
     /**
@@ -27,7 +33,8 @@ class PageController extends Controller
     public function welcome()
     {
         $products = $this->productRepository->get();
-        return view('pages.welcome', compact('products'));
+        $rayons = $this->rayonRepository->get();
+        return view('pages.welcome', compact('products', 'rayons'));
     }
     
     /**
@@ -46,9 +53,11 @@ class PageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function vegetables()
+    public function product_per_category($category)
     {
-        return view('pages.vegetables');
+        $rayons = $this->rayonRepository->get();
+        $category = $this->categoryRepository->getBySlug($category);
+        return view('pages.product_per_category', compact('rayons', 'category'));
     }
     
     /**

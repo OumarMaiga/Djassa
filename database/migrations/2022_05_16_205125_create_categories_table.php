@@ -18,6 +18,7 @@ class CreateCategoriesTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->foreignId('user_id')->reference('id')->on('users');
+            $table->foreignId('rayon_id')->reference('id')->on('rayons')->nullable();
             $table->string('etat');
             $table->timestamps();
         });
