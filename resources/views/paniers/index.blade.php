@@ -1,85 +1,145 @@
 <x-app-layout>
-    <div class="container" style="margin-top: 6rem">
-        <div class="row">
-        <div class="col s12">
-            <div class="card">        
-            <div class="card-content">
-                <div id="wrapper">          
-                @if($total)
-                    <span class="card-title">Mon panier</span>            
-                    @foreach ($content as $item)
-                    <hr><br>
+ 
+    <section style="height:100%; margin-top:6.5rem">
+        <div class="">
+            <div class="row d-flex justify-content-center align-items-center">
+            <div class="col">
+                <div class="">
+                <div class="p-4">
+
                     <div class="row">
-                        <form action="{{ route('panier.update', $item->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="col m6 s12">{{ $item->name }}</div>
-                        <div class="col m3 s12"><strong>{{ $item->quantity * $item->price }} FCFA</strong></div>
-                        <div class="col m2 s12">
-                            <input name="quantity" type="number" style="height: 2rem" min="1" value="{{ $item->quantity }}">
+
+                    <div class="col-lg-7">
+                    @if($total)
+                        <h5 class="mb-3"><a href="{{ route('products') }}" style="font-size:18px; font-weight:600"><i
+                            class="fas fa-long-arrow-alt-left me-2"></i>Continuer mes achats</a></h5>
+                        <hr>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <p class="mb-1">Mon panier</p>
+                                <p class="mb-0">Vous avez 4 articles dans votre panier</p>
+                            </div>
+                            <div>
+                                <p class="mb-0"><span class="text-muted">Trier:</span> <a href="#!"
+                                    class="text-body">prix <i class="fas fa-angle-down mt-1"></i></a></p>
+                            </div>
                         </div>
-                        </form>
-                        <form action="{{ route('panier.destroy', $item->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <div class="col m1 s12"><i class="material-icons deleteItem" style="cursor: pointer">delete</i></div>
-                        </form>              
+                        @foreach ($content as $item)
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <form action="{{ route('panier.update', $item->id) }}" method="POST" class="d-flex flex-row align-items-center">
+                                        @csrf
+                                        @method('PUT')
+                                            <div style="display:inline-block">
+                                            <img
+                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                                                class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                                            </div>
+                                            <div class="ms-3" style="display:inline-block; width:230px">
+                                                <h5>{{ $item->name }}</h5>
+                                            </div>
+                                            <div style="display:inline-block; margin-left:10rem">
+                                                <input name="quantity" type="number" style="height: 2rem; width: 4rem" min="1" value="{{ $item->quantity }}">
+                                            </div>
+                                            <div style="display:inline-block; margin-left:1rem">
+                                                <h5 class="">{{ $item->quantity * $item->price }} FCFA</h5>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="d-flex flex-row align-items-center">
+                                        <form action="{{ route('panier.destroy', $item->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                            <div style="color: #d9402b;"><i class="fas fa-trash-alt deleteItem" style="cursor: pointer"></i></div>
+                                        </form>  
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+
+                        @else
+                        <span class="card-title center-align">Le panier est vide</span>
+                        @endif
+                        <a  href="{{ route('products') }}" style="margin-top:1rem; display:block; color:#ec6333">Continuer mes achats</a>
                     </div>
-                    @endforeach
-                    <hr><br>
-                    <div class="row" style="background-color: lightgrey">
-                    <div class="col s6">
-                        Total TTC (hors livraison)
+                    <div class="col-lg-5">
+
+                        <div class="card text-gray-900 rounded-3" style="background-color:#F6F6F6">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="mb-0" style="font-size:20px; font-weight:600">Poursuivre ma commande</h5>
+                            </div>
+
+                            <p class="small mb-3" style="font-size:16px; font-weight:600">Moyens de paiement disponible</p>
+                            <a href="#!" type="submit" class="text-gray-900"><i
+                                class="fab fa-cc-mastercard fa-2x me-2"></i></a>
+                            <a href="#!" type="submit" class="text-gray-900"><i
+                                class="fab fa-cc-visa fa-2x me-2"></i></a>
+                            <a href="#!" type="submit" class="text-gray-900"><i
+                                class="fab fa-cc-amex fa-2x me-2"></i></a>
+                            <a href="#!" type="submit" class="text-gray-900"><i class="fab fa-cc-paypal fa-2x"></i></a>
+
+                            @if($total)
+                                <form  method="POST" action="{{ route('commande.store') }}" style="margin-top:2.5rem">
+                                    @csrf
+                                    <div class="form-outline form-white mb-4">
+                                        <input id="firstname" class="form-control" type="text" name="firstname" value="{{ old('firstname') }}" placeholder="Prenom" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input id="lastname" class="form-control" type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Nom" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="Email" />
+                                    </div>
+
+                                    <div class="form-outline form-white mb-4">
+                                        <input id="telephone" class="form-control" type="text" name="telephone" value="{{ old('telephone') }}" placeholder="Telephone" />
+                                    </div>
+
+                                    <hr class="my-4">
+
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-2">Sous-total</p>
+                                        <p class="mb-2">{{ $total }} FCFA</p>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-2">Livraison</p>
+                                        <p class="mb-2">1000 FCFA</p>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <p class="mb-2" style="font-weight:600">Total(taxes incluses)</p>
+                                        <p class="mb-2" style="font-weight:600">{{ $total + 1000 }} FCFA</p>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-block btn-lg" style="background-color:#ec6333">
+                                        <div class="d-flex justify-content-between">
+                                            <span style="font-weight:600; color:#fff">COMMANDER <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
+                                        </div>
+                                    </button>
+                                </form>
+                            @endif
+
+                        </div>
+                        </div>
+
                     </div>
-                    <div class="col s6">
-                        <strong>{{ $total }} FCFA</strong>
+
                     </div>
-                    </div>
-                @else
-                <span class="card-title center-align">Le panier est vide</span>
-                @endif
-                </div>        
-                <div id="loader" class="hide">
-                <div class="loader"></div>
+
+                </div>
                 </div>
             </div>
-            <div id="action" class="card-action">
-                <p>
-                <a  href="{{ route('products') }}">Continuer mes achats</a>
-                @if($total)
-                <form  method="POST" action="{{ route('commande.store') }}">
-                    @csrf
-                    <div class="row">
-                        <div class="form-item col-md-6">
-                            <label for="firstname">Prenom</label>
-                            <input id="firstname" class="form-control" type="text" name="firstname" value="{{ old('firstname') }}" placeholder="Prenom" />
-                        </div>
-                        <div class="form-item col-md-6">
-                            <label for="lastname">Nom</label>
-                            <input id="lastname" class="form-control" type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Nom" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-item col-md-6">
-                            <label for="email">Email</label>
-                            <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="Email" />
-                        </div>
-                        <div class="form-item col-md-6">
-                            <label for="telephone">Telephone</label>
-                            <input id="telephone" class="form-control" type="text" name="telephone" value="{{ old('telephone') }}" placeholder="Telephone" />
-                        </div>
-                    </div>
-                        <button class="" type="submit">
-                            Commander
-                        </button>
-                    </form>
-                @endif
-                </p>
-            </div>
             </div>
         </div>
-        </div>
-    </div>
+    </section>
 </x-app-layout>
 
     <script>

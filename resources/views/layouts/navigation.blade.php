@@ -15,19 +15,19 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('product.index')">
                         {{ __('Product') }}
-                    </x-nav-link>
-                    @if($cartCount)
+                    </x-nav-link> -->
+                    @if($cartCount ?? '' )
                         <x-nav-link :href="route('panier.index')">
                             Panier({{ $cartCount }})
                         </x-nav-link>
                     @endif
                     @if (Auth::check())
-                        <x-nav-link :href="route('my_commande', Auth::user()->id)">
+                        <!-- <x-nav-link :href="route('my_commande', Auth::user()->id)">
                             Commandes
                         </x-nav-link>
                         <x-nav-link :href="route('recettes')">
@@ -35,7 +35,7 @@
                         </x-nav-link>
                         <x-nav-link :href="route('category.index')">
                             Categories
-                        </x-nav-link>
+                        </x-nav-link> -->
                     @endif
                         <x-nav-link :href="route('service.index')">
                             Services
