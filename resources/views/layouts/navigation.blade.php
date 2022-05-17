@@ -11,7 +11,7 @@
                 </div>
 
                 <!-- Search input -->
-                <input style="height:70%; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:0.75rem" placeholder="Rechercher un produit" />
+                <input style="height:70%; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:0.75rem" placeholder="Rechercher un produit"/>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -21,11 +21,14 @@
                     <x-nav-link :href="route('product.index')">
                         {{ __('Product') }}
                     </x-nav-link> -->
-                    @if($cartCount ?? '' )
-                        <x-nav-link :href="route('panier.index')">
-                            Panier({{ $cartCount }})
-                        </x-nav-link>
-                    @endif
+                    <!-- @if($cartCount ?? '' )
+                        <span style="margin-top:1.5rem" class="position-relative">
+                            <a href="{{ route('panier.index') }}">
+                                <ion-icon name="cart-outline" style="font-size:2em; color:#1A1A1A"></ion-icon>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#ec6333">{{ $cartCount }}</span>
+                            </a>
+                        </span>
+                    @endif -->
                     @if (Auth::check())
                         <!-- <x-nav-link :href="route('my_commande', Auth::user()->id)">
                             Commandes
@@ -37,7 +40,7 @@
                             Categories
                         </x-nav-link> -->
                     @endif
-                        <x-nav-link :href="route('service.index')">
+                        <x-nav-link :href="route('service.index')" style="font-size:16px; color:#1A1A1A">
                             Services
                         </x-nav-link>
                 </div>
@@ -45,10 +48,18 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                @if($cartCount ?? '' )
+                    <span style="margin-top:0.6rem; margin-right:2rem" class="position-relative">
+                        <a href="{{ route('panier.index') }}">
+                            <ion-icon name="cart-outline" style="font-size:2em; color:#1A1A1A"></ion-icon>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#ec6333">{{ $cartCount }}</span>
+                        </a>
+                    </span>
+                @endif
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div>{{ Auth::check() ? Auth::user()->name : "" }}</div>
+                            <div style="font-size:16px; color:#1A1A1A; margin-right:-5rem">{{ Auth::check() ? Auth::user()->name : "" }}</div>
 
                             <div class="ml-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
