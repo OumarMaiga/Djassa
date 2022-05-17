@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-8">
-                    <img src="images/vegetables01.jpeg" class="img-responsive" style="width:100%; height:6em" alt="...">
+                    <img src="{{ asset('images/vegetables01.jpeg') }}" class="img-responsive" style="width:100%; height:6em" alt="...">
                     </div>
                 </div>
                     
@@ -44,7 +44,7 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-8">
-                    <img src="images/vegetables02.jpeg" class="img-responsive" style="width:100%; height:6em" alt="...">
+                    <img src="{{ asset('images/vegetables02.jpeg') }}" class="img-responsive" style="width:100%; height:6em" alt="...">
                     </div>
                 </div>
                     
@@ -76,7 +76,7 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-8">
-                    <img src="images/vegetables03.jpeg" class="img-responsive" style="width:100%; height:6em" alt="...">
+                    <img src="{{ asset('images/vegetables03.jpeg') }}" class="img-responsive" style="width:100%; height:6em" alt="...">
                     </div>
                 </div>
                     
@@ -108,7 +108,7 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-8">
-                    <img src="images/vegetables04.jpeg" class="img-responsive" style="width:100%; height:6em" alt="...">
+                    <img src="{{ asset('images/vegetables04.jpeg') }}" class="img-responsive" style="width:100%; height:6em" alt="...">
                     </div>
                 </div>
                     
@@ -140,7 +140,7 @@
                 <div class="row">
                     <div class="col-4"></div>
                     <div class="col-8">
-                    <img src="images/vegetables05.jpeg" class="img-responsive" style="width:100%; height:6em" alt="...">
+                    <img src="{{ asset('images/vegetables05.jpeg') }}" class="img-responsive" style="width:100%; height:6em" alt="...">
                     </div>
                 </div>
                     
