@@ -10,11 +10,12 @@
                 <div class="card shadow-sm py-6 px-6" style="border-radius:15px">
                     <form  method="POST" action="{{ route('panier.store') }}">
                         @csrf
+                        <input type="hidden" id="id" name="id" value="{{ $product->id }}">
                         <input id="quantity" name="quantity" type="number" value="1" min="1">
                         <div class="card-body">
                             <p class="py-1 mt-2" style="font-weight:700;">{{ $product->title }}</p>
                             <p class="py-3" style="font-weight:700;font-size:18px">3 500 F CFA</p>
-                            <button type="submit" style="background-color:#ec6333; color:#fff; padding:0.75em 4.5em; border-radius:0.3em; font-size:18px; font-weight:800; text-align:center;">Ajouter au panier</button>
+                            <button type="submit" id="addcart" style="background-color:#ec6333; color:#fff; padding:0.75em 4.5em; border-radius:0.3em; font-size:18px; font-weight:800; text-align:center;">Ajouter au panier</button>
                         </div>
                     </form>
                 </div>
