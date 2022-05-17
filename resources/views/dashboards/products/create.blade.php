@@ -47,6 +47,11 @@
                         <input id="quantity" class="form-control" type="text" name="quantity" value="{{ old('quantity') }}" placeholder="quantity" />
                     </div>
                 </div>
+                
+                <div class="form-item col-md-6">
+                    <label for="cv">Ajouter l'image du product</label>
+                    <input id="cv" class="form-control" type="file" name="cv" value="" placeholder="" />
+                </div>
     
                 <div class="mt-4">
                     <button type="submit" class="">

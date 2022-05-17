@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
 use App\Models\Product;
+use App\Models\File;
 
 use App\Repositories\ProductRepository;
 
@@ -61,6 +62,23 @@ class ProductController extends Controller
         ]);
             
         $product = $this->productRepository->store($request->all());
+
+        $fileModel = new File;
+
+        if($request->hasFile('product_image')) {
+            
+            $fileName = time().'_'.$request->file('product_image')->getClientOriginalName();
+            $filePath = $request->file('product_image')->storeAs("uploads/product_image/".$product_image->id, $fileName, 'public');
+            $fileModel->libelle = $fileName;
+            $fileModel->file_path = '/storage/' . $filePath;
+            /*
+            if (Auth::check()) {
+                $fileModel->user_id = Auth::user()->id;
+            }
+            */
+            $fileModel->type = 'product_image';
+            $fileModel->save();
+        } 
 
         return redirect('/dashboard/product/')->withStatus("Nouveau product (".$product->title.") vient d'être ajouté");
     
