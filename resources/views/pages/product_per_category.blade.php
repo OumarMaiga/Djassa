@@ -3,7 +3,7 @@
 
     <div style="margin-left:19rem; margin-top:6.5rem">
         
-        <h2 style="margin-top:5%; margin-bottom:1rem; font-size:30px; font-weight:600">Fruits & Légumes</h2>
+        <h2 style="margin-top:5%; margin-bottom:1rem; font-size:30px; font-weight:600">{{ $category->title }}</h2>
         
         <!-- Cards -->
         <div class="row gx-1" style="margin-bottom:3%">

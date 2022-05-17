@@ -18,6 +18,7 @@ class Category extends Model
         'title',
         'slug',
         'user_id',
+        'rayon_id',
         'etat',
     ];
 }
