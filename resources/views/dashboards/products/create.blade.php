@@ -9,7 +9,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('product.store') }}">
+            <form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                 @csrf
     
                 <!-- Email Address -->
@@ -49,8 +49,8 @@
                 </div>
                 
                 <div class="form-item col-md-6">
-                    <label for="cv">Ajouter l'image du product</label>
-                    <input id="cv" class="form-control" type="file" name="cv" value="" placeholder="" />
+                    <label for="product_image">Ajouter l'image du product</label>
+                    <input id="product_image" class="form-control" type="file" name="product_image" value="" placeholder="" />
                 </div>
     
                 <div class="mt-4">

@@ -9,7 +9,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('product.update', $product->id) }}">
+            <form method="POST" action="{{ route('product.update', $product->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <!-- Email Address -->
@@ -46,6 +46,11 @@
                         <label for="quantity">quantité</label>
                         <input id="quantity" class="form-control" type="text" name="quantity" value="{{ $product->quantity }}" placeholder="quantity" required />
                     </div>
+                </div>
+                
+                <div class="form-item col-md-6">
+                    <label for="product_image">Ajouter l'image du product</label>
+                    <input id="product_image" class="form-control" type="file" name="product_image" value="" placeholder="" />
                 </div>
 
                 <div class="mt-4">

@@ -66,9 +66,9 @@ class ProductController extends Controller
         $fileModel = new File;
 
         if($request->hasFile('product_image')) {
-            
+
             $fileName = time().'_'.$request->file('product_image')->getClientOriginalName();
-            $filePath = $request->file('product_image')->storeAs("uploads/product_image/".$product_image->id, $fileName, 'public');
+            $filePath = $request->file('product_image')->storeAs("uploads/product_image/".$product->id, $fileName, 'public');
             $fileModel->libelle = $fileName;
             $fileModel->file_path = '/storage/' . $filePath;
             /*
@@ -76,6 +76,7 @@ class ProductController extends Controller
                 $fileModel->user_id = Auth::user()->id;
             }
             */
+            $fileModel->product_id = $product->id;
             $fileModel->type = 'product_image';
             $fileModel->save();
         } 
