@@ -20,7 +20,7 @@
         <div class="row" style="margin-right:1rem">
                 <div class="col-2">
                     <div class="card shadow-sm">
-                        <a :href="route('dashboard/product/1')" class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%; cursor:pointer">Voir les offres</a>
+                        <a href="{{ route('product.show', 1) }}" class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%; cursor:pointer">Voir les offres</a>
                         <img src="images/lunettes.webp" class="img-responsive mx-3" style="margin-bottom:10%" alt="...">
                         <div class="card-body">
                             <p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">30%</p>
