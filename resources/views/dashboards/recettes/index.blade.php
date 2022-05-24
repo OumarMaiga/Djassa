@@ -14,7 +14,7 @@
                         <th scope="col">Telephone</th>
                         <th scope="col">Code</th>
                         <th scope="col">Produits</th>
-                        <th scope="col">Utilisateur</th>
+                        <th scope="col">Payer</th>
                         <th scope="col">Etat</th>
                         <th scope="col">Action</th>
                         </tr>
@@ -44,7 +44,7 @@
                                     }
                                     ?>
                                 </td>
-                                <td>{{ $recette->user_name }}</td>
+                                <td>{!! $recette->commande_paid ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}</td>
                                 <td>{!! $recette->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
                                 <td><a href="{{ route('commande.show', $recette->commande_id) }}">Voir</a></td>
                             </tr>

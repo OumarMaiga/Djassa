@@ -34,8 +34,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::resource('dashboard/product', ProductController::class)->middleware('auth');
+Route::get('dashboard/user/', [UserController::class, 'index'])->name('dashboard.user.index')->middleware('auth');
 Route::get('dashboard/user/{id}', [UserController::class, 'show'])->name('dashboard.user.show')->middleware('auth');
 Route::get('dashboard/user/{id}/blocked', [UserController::class, 'blocked'])->name('dashboard.user.blocked')->middleware('auth');
+Route::get('dashboard/user/{id}/unblocked', [UserController::class, 'unblocked'])->name('dashboard.user.unblocked')->middleware('auth');
 Route::delete('dashboard/user/{id}', [UserController::class, 'destroy'])->name('dashboard.user.destroy')->middleware('auth');
 
 Route::resource('panier', PanierController::class);
