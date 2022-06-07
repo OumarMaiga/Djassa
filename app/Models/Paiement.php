@@ -5,18 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class File extends Model
+class Paiement extends Model
 {
     use HasFactory;
-    
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
-        'libelle',
-        'file_path',
-        'type',
-        'product_id',
+        'montant',
         'user_id',
-        'category_id',
-        'rayon_id',
         'service_id',
+        'commande_id',
+        'etat',
     ];
 }

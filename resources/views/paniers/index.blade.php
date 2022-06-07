@@ -124,6 +124,12 @@
                                             <span style="font-weight:600; color:#fff">COMMANDER <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
                                         </div>
                                     </button>
+
+                                    <button type="submit" class="btn btn-block btn-md" style="background-color:#ec6333">
+                                        <div class="d-flex justify-content-between">
+                                            <a href="{{ route("") }}" style="font-weight:600; color:#fff">PAYEZ MAINTENANT <i class="fas fa-long-arrow-alt-right ms-2"></i></a>
+                                        </div>
+                                    </button>
                                 </form>
                             @endif
 

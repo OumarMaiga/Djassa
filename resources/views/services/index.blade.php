@@ -53,7 +53,7 @@
                                     <a href="{{ route('service.inprogress', $service->id) }}">In proccess</a>
                                 @endif
                                 @if ($service->etat === "inprogress")
-                                    <a href="{{ route('service.done', $service->id) }}">Done</a>
+                                    <!--<a href="{{ route('service.done', $service->id) }}">Done</a>-->
                                 @endif
                             </td>
                         </tr>

@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 
-use App\Models\Service;
+use App\Models\Paiement;
 use App\Models\File;
 
-use App\Repositories\ServiceRepository;
+use App\Repositories\PaiementRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-class ServiceController extends Controller
+class PaiementController extends Controller
 {
-    protected $serviceRepository;
+    protected $paiementRepository;
 
-    public function __construct(ServiceRepository $serviceRepository) {
-        $this->serviceRepository = $serviceRepository;
+    public function __construct(PaiementRepository $paiementRepository) {
+        $this->paiementRepository = $paiementRepository;
     }
     /**
      * Display a listing of the resource.
@@ -26,8 +26,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = $this->serviceRepository->get();
-        return view('services.index', compact('services'));
+        $paiements = $this->paiementRepository->get();
+        return view('paiements.index', compact('paiements'));
     }
 
     /**
@@ -37,7 +37,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('services.create');
+        return view('paiements.create');
     }
 
     /**
@@ -67,80 +67,80 @@ class ServiceController extends Controller
             'paid' => 0,
         ]);
             
-        $service = $this->serviceRepository->store($request->all());
+        $paiement = $this->paiementRepository->store($request->all());
 
-        return redirect('/service')->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
+        return redirect('/paiement')->withStatus("Nouveau paiement (".$paiement->title.") vient d'être ajouté");
     
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Service  $service
+     * @param  \App\Models\Paiement  $paiement
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $service = $this->serviceRepository->getById($id);
+        $paiement = $this->paiementRepository->getById($id);
         $file = null;
-        if ($service->etat === "done") {
-            $file = File::where('service_id', $service->id)->limit(1)->get()[0];
+        if ($paiement->etat === "done") {
+            $file = File::where('paiement_id', $paiement->id)->limit(1)->get()[0];
             $file->file_path = env('APP_URL').$file->file_path;
         }
-        return view('services.show', compact('service', 'file'));
+        return view('paiements.show', compact('paiement', 'file'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Service  $service
+     * @param  \App\Models\Paiement  $paiement
      * @return \Illuminate\Http\Response
      */
-    public function edit(Service $service)
+    public function edit(Paiement $paiement)
     {
-        return view('services.edit', compact('service'));
+        return view('paiements.edit', compact('paiement'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Request  $request
-     * @param  \App\Models\Service  $service
+     * @param  \App\Models\Paiement  $paiement
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $this->serviceRepository->update($id, $request->all());
-        return redirect('/service')->withStatus("Service a bien été modifier");
+        $this->paiementRepository->update($id, $request->all());
+        return redirect('/paiement')->withStatus("Paiement a bien été modifier");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Service  $service
+     * @param  \App\Models\Paiement  $paiement
      * @return \Illuminate\Http\Response
      */
     public function destroy ($id)
     {
-        $this->serviceRepository->destroy($id);
-        return redirect()->back()->withError("Service a bien été supprimer");
+        $this->paiementRepository->destroy($id);
+        return redirect()->back()->withError("Paiement a bien été supprimer");
     }
 
     public function inprogress ($id) {
         $data = array('etat' => 'inprogress');
-        $this->serviceRepository->update($id, $data);
-        return redirect()->back()->withStatus("Service a bien été prise en compte");
+        $this->paiementRepository->update($id, $data);
+        return redirect()->back()->withStatus("Paiement a bien été prise en compte");
     }
 
     public function done (Request $request, $id) {
         //die('Fonctionnality nOt available');
 
-        $service = $this->serviceRepository->getById($id);
+        $paiement = $this->paiementRepository->getById($id);
         if($request->hasFile('proof')) {
             $fileModel = new File;
             
             $fileName = time().'_'.$request->file('proof')->getClientOriginalName();
-            $filePath = $request->file('proof')->storeAs("uploads/proof/service/".$service->id, $fileName, 'public');
+            $filePath = $request->file('proof')->storeAs("uploads/proof/paiement/".$paiement->id, $fileName, 'public');
             $fileModel->libelle = $fileName;
             $fileModel->file_path = '/storage/' . $filePath;
 
@@ -149,12 +149,12 @@ class ServiceController extends Controller
             }
 
             $fileModel->type = 'justificatif';
-            $fileModel->service_id = $service->id;
+            $fileModel->paiement_id = $paiement->id;
             $fileModel->save();
         } 
         $data = array('etat' => 'done');
-        $this->serviceRepository->update($id, $data);
+        $this->paiementRepository->update($id, $data);
         
-        return redirect()->back()->withStatus("Service marquer comme terminé");
+        return redirect()->back()->withStatus("Paiement marquer comme terminé");
     }
 }
