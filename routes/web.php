@@ -48,9 +48,11 @@ Route::get('/product_per_category/{category}', [PageController::class, 'product_
 Route::get('/product/{id}', [ProductController::class, 'product'])->name('product');
 Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('recettes');
 
-Route::resource('commande', CommandeController::class);
-Route::get('/my_commande/{user_id}', [CommandeController::class, 'my_commande'])->name('my_commande');
-Route::get('/delivered/{id}', [CommandeController::class, 'delivered'])->name('delivered');
+Route::resource('commande', CommandeController::class)->middleware('auth');
+Route::get('/my_commande/{user_id}', [CommandeController::class, 'my_commande'])->name('my_commande')->middleware('auth');
+Route::get('/delivered/{id}', [CommandeController::class, 'delivered'])->name('delivered')->middleware('auth');
+Route::get('/commande/{id}/paiement', [CommandeController::class, 'create_paiement'])->name('commande.create_paiement')->middleware('auth');
+Route::post('/commande/{id}/paiement', [CommandeController::class, 'store_paiement'])->name('commande.store_paiement')->middleware('auth');
 
 
 Route::resource('service', ServiceController::class);

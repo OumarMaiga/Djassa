@@ -117,17 +117,12 @@
                                     <div class="d-flex justify-content-between mb-4">
                                         <p class="mb-2" style="font-weight:600">Total(taxes incluses)</p>
                                         <p class="mb-2" style="font-weight:600">{{ $total + 1000 }} FCFA</p>
+                                        <input type="hidden" name="montant_du" id="montant_du" value="{{ $total + 1000 }}">
                                     </div>
 
                                     <button type="submit" class="btn btn-block btn-lg" style="background-color:#ec6333">
                                         <div class="d-flex justify-content-between">
                                             <span style="font-weight:600; color:#fff">COMMANDER <i class="fas fa-long-arrow-alt-right ms-2"></i></span>
-                                        </div>
-                                    </button>
-
-                                    <button type="submit" class="btn btn-block btn-md" style="background-color:#ec6333">
-                                        <div class="d-flex justify-content-between">
-                                            <a href="{{ route("") }}" style="font-weight:600; color:#fff">PAYEZ MAINTENANT <i class="fas fa-long-arrow-alt-right ms-2"></i></a>
                                         </div>
                                     </button>
                                 </form>

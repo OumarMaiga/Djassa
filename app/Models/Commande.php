@@ -24,5 +24,7 @@ class Commande extends Model
         'user_id',
         'paid',
         'delivered',
+        'montant_du',
+        'montant_payer',
     ];
 }

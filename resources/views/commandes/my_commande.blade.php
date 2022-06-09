@@ -15,6 +15,8 @@
                         <th scope="col">Code</th>
                         <th scope="col">Produits</th>
                         <th scope="col">Utilisateur</th>
+                        <th scope="col">Montant dû</th>
+                        <th scope="col">Montant payer</th>
                         <th scope="col">Etat</th>
                         <th scope="col">Action</th>
                         </tr>
@@ -27,7 +29,7 @@
                             $commande_products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
                                                             products.id as product_id FROM products LEFT JOIN commande_product
                                                             ON products.id = commande_product.product_id WHERE commande_product.commande_id = $commande->commande_id");
-
+                        
                         ?>
                             <tr>
                                 <th scope="row">{{ $n }}</th>
@@ -45,8 +47,16 @@
                                     ?>
                                 </td>
                                 <td>{{ $commande->user_name }}</td>
+                                <td>{{ $commande->commande_montant_du }}</td>
+                                <td>{{ $commande->commande_montant_payer }}</td>
                                 <td>{!! $commande->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
-                                <td><a href="{{ route('commande.show', $commande->commande_id) }}">Voir</a></td>
+                                <td>
+                                    @if($commande->commande_paid)
+                                        <b style=color:green>Solder</b>
+                                    @else
+                                        <a href="{{ route('commande.create_paiement', $commande->commande_id) }}">Payer</a>
+                                    @endif
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
