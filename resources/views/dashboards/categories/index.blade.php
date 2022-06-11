@@ -3,7 +3,7 @@
         <div class="container">
             <h3 class="mb-3 d-flex align-items-center ">
                     LES CATEGORIES
-                    <a href="{{ route('category.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
+                    <a href="{{ route('dashboard.category.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
                 </div>
             </h3>
 
@@ -26,12 +26,12 @@
                             <th scope="row">{{ $n }}</th>
                             <td>{{ $category->title }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('category.show', $category->id) }}">Voir</a>
-                                <a href="{{ route('category.edit', $category->id) }}" class="col icon-action icon-edit">
+                                <a href="{{ route('dashboard.category.show', $category->id) }}">Voir</a>
+                                <a href="{{ route('dashboard.category.edit', $category->id) }}" class="col icon-action icon-edit">
                                     Edit
                                 </a>
                                 <span class="col icon-action">
-                                    <form method="POST" action="{{ route('category.destroy', $category->id) }}">
+                                    <form method="POST" action="{{ route('dashboard.category.destroy', $category->id) }}">
                                         @csrf
                                         @method('delete')
                                             <button class="" type="submit" onclick="return confirm('Vraiment supprimer ce category ?')">

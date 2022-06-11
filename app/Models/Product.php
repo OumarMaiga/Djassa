@@ -24,5 +24,11 @@ class Product extends Model
         'user_id',
         'quantity',
         'published',
+        'category_id',
     ];
+        
+    public function files()
+    {
+        return $this->hasMany('App\File', 'product_id');
+    }
 }

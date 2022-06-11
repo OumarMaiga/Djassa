@@ -3,7 +3,7 @@
         <div class="container">
             <h3 class="mb-3 d-flex align-items-center ">
                     LES RAYONS
-                    <a href="{{ route('rayon.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
+                    <a href="{{ route('dashboard.rayon.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
                 </div>
             </h3>
 
@@ -26,12 +26,12 @@
                             <th scope="row">{{ $n }}</th>
                             <td>{{ $rayon->title }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('rayon.show', $rayon->id) }}">Voir</a>
-                                <a href="{{ route('rayon.edit', $rayon->id) }}" class="col icon-action icon-edit">
+                                <a href="{{ route('dashboard.rayon.show', $rayon->id) }}">Voir</a>
+                                <a href="{{ route('dashboard.rayon.edit', $rayon->id) }}" class="col icon-action icon-edit">
                                     Edit
                                 </a>
                                 <span class="col icon-action">
-                                    <form method="POST" action="{{ route('rayon.destroy', $rayon->id) }}">
+                                    <form method="POST" action="{{ route('dashboard.rayon.destroy', $rayon->id) }}">
                                         @csrf
                                         @method('delete')
                                             <button class="" type="submit" onclick="return confirm('Vraiment supprimer ce rayon ?')">

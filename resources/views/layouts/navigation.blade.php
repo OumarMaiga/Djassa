@@ -15,12 +15,14 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <!-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('product.index')">
-                        {{ __('Product') }}
-                    </x-nav-link> -->
+                    @if(Auth::check() && Auth::user()->type === "admin")
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('dashbord.product.index')">
+                            {{ __('Product') }}
+                        </x-nav-link> 
+                    @endif
                     <!-- @if($cartCount ?? '' )
                         <span style="margin-top:1.5rem" class="position-relative">
                             <a href="{{ route('panier.index') }}">
@@ -30,15 +32,21 @@
                         </span>
                     @endif -->
                     @if (Auth::check())
-                        <!-- <x-nav-link :href="route('my_commande', Auth::user()->id)">
+                        <x-nav-link :href="route('my_commande', Auth::user()->id)">
                             Commandes
-                        </x-nav-link>
-                        <x-nav-link :href="route('recettes')">
-                            Recettes
-                        </x-nav-link>
-                        <x-nav-link :href="route('category.index')">
-                            Categories
-                        </x-nav-link> -->
+                        </x-nav-link> 
+                        
+                        @if(Auth::user()->type === "admin")
+                            <x-nav-link :href="route('recettes')">
+                                Recettes
+                            </x-nav-link>
+                            <x-nav-link :href="route('dashboard.category.index')">
+                                Rayons
+                            </x-nav-link>
+                            <x-nav-link :href="route('dashboard.rayon.index')">
+                                Categories
+                            </x-nav-link>
+                        @endif
                     @endif
                         <x-nav-link :href="route('service.index')" style="font-size:16px; color:#1A1A1A">
                             Services

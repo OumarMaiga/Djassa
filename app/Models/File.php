@@ -19,4 +19,9 @@ class File extends Model
         'rayon_id',
         'service_id',
     ];
+    
+    public function product()
+    {
+        return $this->belongsTo('App\Product', 'product_id');
+    }
 }

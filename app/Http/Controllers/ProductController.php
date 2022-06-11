@@ -2,23 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\File;
 
 use App\Repositories\ProductRepository;
+use App\Repositories\FileRepository;
+use App\Repositories\CategoryRepository;
 
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     protected $productRepository;
+    protected $fileRepository;
+    protected $categoryRepository;
 
-    public function __construct(ProductRepository $productRepository) {
+    public function __construct(ProductRepository $productRepository, FileRepository $fileRepository, CategoryRepository $categoryRepository) {
         $this->productRepository = $productRepository;
+        $this->fileRepository = $fileRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.
@@ -38,16 +44,17 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('dashboards.products.create');
+        $categories = $this->categoryRepository->getBy('etat', 'enabled');
+        return view('dashboards.products.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreProductRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProductRequest $request)
+    public function store(Request $request)
     {
         
         $request->validate([
@@ -63,22 +70,18 @@ class ProductController extends Controller
             
         $product = $this->productRepository->store($request->all());
 
-        $fileModel = new File;
-
         if($request->hasFile('product_image')) {
-
-            $fileName = time().'_'.$request->file('product_image')->getClientOriginalName();
-            $filePath = $request->file('product_image')->storeAs("uploads/product_image/".$product->id, $fileName, 'public');
-            $fileModel->libelle = $fileName;
-            $fileModel->file_path = '/storage/' . $filePath;
-            /*
-            if (Auth::check()) {
-                $fileModel->user_id = Auth::user()->id;
+            foreach ($request->file('product_image') as $imagefile) {
+                $fileModel = new File;
+                $fileName = time().'_'.$imagefile->getClientOriginalName();
+                $filePath = $imagefile->storeAs("uploads/product_image/".$product->id, $fileName, 'public');
+                $fileModel->libelle = $fileName;
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->user_id =  Auth::check() ? Auth::user()->id : null;
+                $fileModel->product_id = $product->id;
+                $fileModel->type = 'product_image';
+                $fileModel->save();
             }
-            */
-            $fileModel->product_id = $product->id;
-            $fileModel->type = 'product_image';
-            $fileModel->save();
         } 
 
         return redirect('/dashboard/product/')->withStatus("Nouveau product (".$product->title.") vient d'être ajouté");
@@ -91,8 +94,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show($id)
     {
+        $product = $this->productRepository->getById($id);
         return view('dashboards.products.show', compact('product'));
     }
 
@@ -102,21 +106,41 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit($id)
     {
+        $product = $this->productRepository->getById($id);
         return view('dashboards.products.edit', compact('product'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateProductRequest  $request
+     * @param  \App\Http\Requests\Request  $request
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(Request $request, Product $product)
     {
         $this->productRepository->update($product->id, $request->all());
+
+        if($request->hasFile('product_image')) {
+            // On supprime toutes les images du produit
+            $this->fileRepository->deleteBy('product_id', $product->id);
+
+            //On upload les images selectionner
+            foreach ($request->file('product_image') as $imagefile) {
+                $fileModel = new File;
+                $fileName = time().'_'.$imagefile->getClientOriginalName();
+                $filePath = $imagefile->storeAs("uploads/product_image/".$product->id, $fileName, 'public');
+                $fileModel->libelle = $fileName;
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->user_id =  Auth::check() ? Auth::user()->id : null;
+                $fileModel->product_id = $product->id;
+                $fileModel->type = 'product_image';
+                $fileModel->save();
+            }
+        } 
+
         return redirect('/dashboard/product')->withStatus("Product a bien été modifier");
     }
 
@@ -126,10 +150,32 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $this->productRepository->destroy($product->id);
+        $this->productRepository->destroy($id);
         return redirect()->back()->withError("Product a bien été supprimer");
     }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function detail($id)
+    {
+        $product = $this->productRepository->getById($id);
+        $images = $this->fileRepository->getBy("product_id", $product->id);
+
+        return view('pages.products.show', compact('product', 'images'));
+    }
+    
+    public function list()
+    {
+        $products = $this->productRepository->get();
+
+        return view('pages.products.show', compact('products'));
+    }
+
     
 }

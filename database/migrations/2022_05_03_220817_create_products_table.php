@@ -24,6 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('price')->nullable();
             $table->string('quantity')->nullable();
             $table->boolean('published')->default(1);
+            $table->foreignId('category_id')->reference('id')->on('categories')->nullable();
             $table->timestamps();
         });
     }

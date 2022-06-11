@@ -8,21 +8,9 @@
         public function get() {
             return $this->model->get();
         }
-
-        public function getBySlug($slug) {
-            return $this->model->where('slug', $slug)->first();
-        }
         
-        public function getByField($name, $value) {
+        public function getBy($name, $value) {
             return $this->model->where($name, $value)->get();
-        }
-
-        public function getByType($type) {
-            return $this->model->where('type', $type)->get();
-        }
-        
-        public function getByEmail($email) {
-            return $this->model->where('email', $email)->first();
         }
 
         public function store(Array $inputs) {
@@ -39,5 +27,9 @@
 
         public function destroy($id) {
             $this->getById($id)->delete();
+        }
+
+        public function deleteBy($name, $value) {
+            return $this->model->where($name, $value)->delete();
         }
     }

@@ -32,7 +32,10 @@ class PageController extends Controller
      */
     public function welcome()
     {
-        $products = $this->productRepository->get();
+        $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published 
+            FROM products
+            WHERE products.published = 1");
         $rayons = $this->rayonRepository->get();
         return view('pages.welcome', compact('products', 'rayons'));
     }
@@ -56,7 +59,7 @@ class PageController extends Controller
     public function product_per_category($category)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBySlug($category);
+        $category = $this->categoryRepository->getBy('slug', $category);
         return view('pages.product_per_category', compact('rayons', 'category'));
     }
     
