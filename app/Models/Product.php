@@ -18,8 +18,6 @@ class Product extends Model
         'title',
         'slug',
         'overview',
-        'email',
-        'telephone',
         'price',
         'user_id',
         'quantity',

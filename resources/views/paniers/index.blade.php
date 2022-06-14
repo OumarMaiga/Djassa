@@ -94,9 +94,9 @@
                                         <input id="lastname" class="form-control" type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Nom" />
                                     </div>
 
-                                    <div class="form-outline form-white mb-4">
+                                    <!-- <div class="form-outline form-white mb-4">
                                         <input id="email" class="form-control" type="email" name="email" value="{{ old('email') }}" placeholder="Email" />
-                                    </div>
+                                    </div> -->
 
                                     <div class="form-outline form-white mb-4">
                                         <input id="telephone" class="form-control" type="text" name="telephone" value="{{ old('telephone') }}" placeholder="Telephone" />

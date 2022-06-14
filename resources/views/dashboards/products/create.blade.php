@@ -27,18 +27,6 @@
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <label for="email">Email</label>
-                        <input id="email" class="form-control" type="text" name="email" value="{{ old('email') }}" placeholder="email" />
-                    </div>
-                    <div class="form-item col-md-6">
-                        <label for="telephone">Telephone</label>
-                        <input id="telephone" class="form-control" type="text" name="telephone" value="{{ old('telephone') }}" placeholder="telephone" />
-                    </div>
-                </div>
-                
-                <!-- Email Address -->
-                <div class="row">
-                    <div class="form-item col-md-6">
                         <label for="price">Prix</label>
                         <input id="price" class="form-control" type="text" name="price" value="{{ old('price') }}" placeholder="price" />
                     </div>
@@ -48,9 +36,20 @@
                     </div>
                 </div>
                 
-                <div class="form-item col-md-6">
-                    <label for="product_image">Ajouter l'image du product</label>
-                    <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple/>
+                <div class="row">
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6">
+                        <select name="category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-item col-md-6">
+                        <label for="product_image">Ajouter l'image du product</label>
+                        <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple/>
+                    </div>
                 </div>
     
                 <div class="mt-4">

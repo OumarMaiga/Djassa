@@ -20,6 +20,18 @@
                     </div>
                 </div>
                 
+                <!-- Email Address -->
+                <div class="row">
+                    <div class="form-item col-md-6">
+                        <select name="rayon_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($rayons as $rayon)
+                                <option value="{{ $rayon->id }}" <?= ($rayon->id == $category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                    
                 <div class="mt-4">
                     <button type="submit" class="">
                         {{ __('AJOUTER') }}

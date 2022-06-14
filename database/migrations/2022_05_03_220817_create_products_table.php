@@ -17,8 +17,6 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('email')->nullable();
-            $table->string('telephone')->nullable();
             $table->foreignId('user_id')->reference('id')->on('users');
             $table->text('overview')->nullable();
             $table->string('price')->nullable();

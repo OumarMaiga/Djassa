@@ -5,17 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 
 use App\Repositories\CategoryRepository;
+use App\Repositories\RayonRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
     protected $categoryRepository;
+    protected $rayonRepository;
 
-    public function __construct(CategoryRepository $categoryRepository) {
+    public function __construct(CategoryRepository $categoryRepository, RayonRepository $rayonRepository) {
         $this->categoryRepository = $categoryRepository;
+        $this->rayonRepository = $rayonRepository;
     }
     /**
      * Display a listing of the resource.
@@ -24,7 +28,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryRepository->get();
+        $categories = DB::select('SELECT categories.id as category_id, categories.rayon_id as category_rayon_id, categories.title as category_title,
+        rayons.id as rayon_id, rayons.title as rayon_title
+        FROM categories LEFT JOIN rayons ON categories.rayon_id = rayons.id
+        WHERE categories.etat="enabled"');
+
         return view('dashboards.categories.index', compact('categories'));
     }
 
@@ -35,7 +43,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('dashboards.categories.create');
+        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+        return view('dashboards.categories.create', compact('rayons'));
     }
 
     /**
@@ -49,11 +58,13 @@ class CategoryController extends Controller
         
         $request->validate([
             'title' => 'required|max:255',
+            'rayon_id' => 'required',
         ]);
 
         $request->merge([
             'slug' => Str::slug($request->get('title')),
             'user_id' => Auth::user()->id,
+            'etat' => 'enabled',
         ]);
             
         $category = $this->categoryRepository->store($request->all());
@@ -82,8 +93,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
         $category = $this->categoryRepository->getById($id);
-        return view('dashboards.categories.edit', compact('category'));
+        return view('dashboards.categories.edit', compact('category', 'rayons'));
     }
 
     /**

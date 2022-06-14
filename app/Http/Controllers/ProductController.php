@@ -13,6 +13,7 @@ use App\Models\File;
 use App\Repositories\ProductRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\RayonRepository;
 
 
 class ProductController extends Controller
@@ -20,11 +21,14 @@ class ProductController extends Controller
     protected $productRepository;
     protected $fileRepository;
     protected $categoryRepository;
+    protected $rayonRepository;
 
-    public function __construct(ProductRepository $productRepository, FileRepository $fileRepository, CategoryRepository $categoryRepository) {
+    public function __construct(ProductRepository $productRepository, FileRepository $fileRepository, CategoryRepository $categoryRepository,
+                                RayonRepository $rayonRepository) {
         $this->productRepository = $productRepository;
         $this->fileRepository = $fileRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->rayonRepository = $rayonRepository;
     }
     /**
      * Display a listing of the resource.
@@ -33,7 +37,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = $this->productRepository->get();
+        $products = DB::select('SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.price as product_price,
+        products.overview as product_overview, products.quantity as product_quantity, products.published as product_publised,
+        categories.id as categorie_id, categories.title as category_title, categories.slug as categorie_slug
+        FROM products LEFT JOIN categories ON products.category_id = categories.id
+        WHERE products.quantity > 0 AND products.published = 1 ');
         return view('dashboards.products.index', compact('products'));
     }
 
@@ -109,7 +117,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->productRepository->getById($id);
-        return view('dashboards.products.edit', compact('product'));
+        $categories = $this->categoryRepository->getBy('etat', 'enabled');
+        return view('dashboards.products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -119,8 +128,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
+        $product = $this->productRepository->getById($id);
         $this->productRepository->update($product->id, $request->all());
 
         if($request->hasFile('product_image')) {
@@ -166,8 +176,10 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->getById($id);
         $images = $this->fileRepository->getBy("product_id", $product->id);
+        $category = $this->categoryRepository->getById($product->category_id);
+        $rayon = $this->rayonRepository->getById($category->rayon_id);
 
-        return view('pages.products.show', compact('product', 'images'));
+        return view('pages.products.show', compact('product', 'images', 'category', 'rayon'));
     }
     
     public function list()

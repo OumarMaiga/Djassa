@@ -16,8 +16,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Titre</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telephone</th>
+                    <th scope="col">Categorie</th>
                     <th scope="col">Prix</th>
                     <th scope="col">Quantités</th>
                     <th scope="col">Action</th>
@@ -29,19 +28,18 @@
                     <?php $n = $n + 1 ?>
                         <tr>
                             <th scope="row">{{ $n }}</th>
-                            <td>{{ $product->title }}</td>
-                            <td>{{ $product->overview }}</td>
-                            <td>{{ $product->email }}</td>
-                            <td>{{ $product->telephone }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>{{ $product->quantity }}</td>
+                            <td>{{ $product->product_title }}</td>
+                            <td>{{ $product->product_overview }}</td>
+                            <td>{{ $product->category_title }}</td>
+                            <td>{{ $product->product_price }}</td>
+                            <td>{{ $product->product_quantity }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('dashboard.product.show', $product->id) }}">Voir</a>
-                                <a href="{{ route('dashboard.product.edit', $product->id) }}" class="col icon-action icon-edit">
+                                <a href="{{ route('dashboard.product.show', $product->product_id) }}">Voir</a>
+                                <a href="{{ route('dashboard.product.edit', $product->product_id) }}" class="col icon-action icon-edit">
                                     Edit
                                 </a>
                                 <span class="col icon-action">
-                                    <form method="POST" action="{{ route('dashboard.product.destroy', $product->id) }}">
+                                    <form method="POST" action="{{ route('dashboard.product.destroy', $product->product_id) }}">
                                         @csrf
                                         @method('delete')
                                             <button class="" type="submit" onclick="return confirm('Vraiment supprimer ce product ?')">

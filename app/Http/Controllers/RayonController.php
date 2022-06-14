@@ -54,6 +54,7 @@ class RayonController extends Controller
         $request->merge([
             'slug' => Str::slug($request->get('title')),
             'user_id' => Auth::user()->id,
+            'etat' => 'enabled',
         ]);
             
         $rayon = $this->rayonRepository->store($request->all());

@@ -15,6 +15,7 @@
                     <tr>
                     <th scope="col">#</th>
                     <th scope="col">Titre</th>
+                    <th scope="col">Rayon</th>
                     <th scope="col">Action</th>
                     </tr>
                 </thead>
@@ -24,14 +25,15 @@
                     <?php $n = $n + 1 ?>
                         <tr>
                             <th scope="row">{{ $n }}</th>
-                            <td>{{ $category->title }}</td>
+                            <td>{{ $category->category_title }}</td>
+                            <td>{{ $category->rayon_title }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('dashboard.category.show', $category->id) }}">Voir</a>
-                                <a href="{{ route('dashboard.category.edit', $category->id) }}" class="col icon-action icon-edit">
+                                <a href="{{ route('dashboard.category.show', $category->category_id) }}">Voir</a>
+                                <a href="{{ route('dashboard.category.edit', $category->category_id) }}" class="col icon-action icon-edit">
                                     Edit
                                 </a>
                                 <span class="col icon-action">
-                                    <form method="POST" action="{{ route('dashboard.category.destroy', $category->id) }}">
+                                    <form method="POST" action="{{ route('dashboard.category.destroy', $category->category_id) }}">
                                         @csrf
                                         @method('delete')
                                             <button class="" type="submit" onclick="return confirm('Vraiment supprimer ce category ?')">

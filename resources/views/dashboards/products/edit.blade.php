@@ -23,19 +23,7 @@
                         <textarea id="overview" class="form-control" name="overview" placeholder="overview" >{{ $product->overview }}</textarea>
                     </div>
                 </div>
-                
-                <!-- Email Address -->
-                <div class="row">
-                    <div class="form-item col-md-6">
-                        <label for="email">Email</label>
-                        <input id="email" class="form-control" type="text" name="email" value="{{ $product->email }}" placeholder="email" />
-                    </div>
-                    <div class="form-item col-md-6">
-                        <label for="telephone">Telephone</label>
-                        <input id="telephone" class="form-control" type="text" name="telephone" value="{{ $product->telephone }}" placeholder="telephone" />
-                    </div>
-                </div>
-                
+
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
@@ -47,10 +35,21 @@
                         <input id="quantity" class="form-control" type="text" name="quantity" value="{{ $product->quantity }}" placeholder="quantity" required />
                     </div>
                 </div>
-                
-                <div class="form-item col-md-6">
-                    <label for="product_image">Ajouter l'image du product</label>
-                    <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple />
+
+                <div class="row">
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6">
+                        <select name="category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}" <?= ($category->id == $product->category_id) ? "selected=true" : "" ?>>{{ $category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-item col-md-6">
+                        <label for="product_image">Ajouter l'image du product</label>
+                        <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple/>
+                    </div>
                 </div>
 
                 <div class="mt-4">

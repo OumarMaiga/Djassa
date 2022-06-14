@@ -40,10 +40,10 @@
                             <x-nav-link :href="route('recettes')">
                                 Recettes
                             </x-nav-link>
-                            <x-nav-link :href="route('dashboard.category.index')">
+                            <x-nav-link :href="route('dashboard.rayon.index')">
                                 Rayons
                             </x-nav-link>
-                            <x-nav-link :href="route('dashboard.rayon.index')">
+                            <x-nav-link :href="route('dashboard.category.index')">
                                 Categories
                             </x-nav-link>
                         @endif

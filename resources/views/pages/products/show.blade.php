@@ -1,12 +1,19 @@
 <x-app-layout>
+    <?php
+    if (empty($images[0]->file_path)) {
+        $image_path = "images/pomme-de-terre.webp";
+    } else {
+        $image_path = $images[0]->file_path;
+    }
+        //$image_path = "images/pomme-de-terre.webp";
+    ?>
     <div class="container" style="margin-top: 7rem">
-    <p style="font-size:18px; font-weight:500">Djassa > Fruits & Légumes > Légumes à racine > Pommes de terre</p>
-        <div class="row" style="margin-top:3%; margin-bottom:5%">
+    <p style="font-size:18px; font-weight:500">Djassa > {{ ($rayon->title != null) ? $rayon->title : "Rayon" }} > {{ ($category->title != null) ? $category->title : "categorie" }} > {{ $product->title }}</p>
+        <div class="row" style="margin-top:3%; margin-bottom:5%;">
             <div class="col-7" style="display:flex; justify-content:center">
-                <img src="{{ asset('images/pomme-de-terre.webp') }}" alt="">
+                <img src="{{ asset($image_path) }}" alt="" style="width:480px; height:360px; object-fit:cover;">
             </div>
             <div class="col-5" style="margin-top:5%">
-                
                 <div class="card shadow-sm" style="border-radius:15px;display:flex; align-items:center; padding:1.5rem">
                     <div class="card-body">
                         <form  method="POST" action="{{ route('panier.store') }}">
