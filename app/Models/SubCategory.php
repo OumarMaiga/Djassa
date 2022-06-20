@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class SubCategory extends Model
 {
     use HasFactory;
 
@@ -17,18 +17,8 @@ class Product extends Model
     protected $fillable = [
         'title',
         'slug',
-        'overview',
-        'price',
         'user_id',
-        'quantity',
-        'published',
         'category_id',
-        'subcategory_id',
-        'category_id',
+        'etat',
     ];
-        
-    public function files()
-    {
-        return $this->hasMany('App\File', 'product_id');
-    }
 }

@@ -53,7 +53,8 @@ class ProductController extends Controller
     public function create()
     {
         $categories = $this->categoryRepository->getBy('etat', 'enabled');
-        return view('dashboards.products.create', compact('categories'));
+        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+        return view('dashboards.products.create', compact('categories', 'rayons'));
     }
 
     /**

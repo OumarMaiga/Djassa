@@ -60,4 +60,32 @@
             </form>
         </div>
     </div>
+    
+    <script>
+        jQuery(document).ready(function(){
+            jQuery('#rayon_id').change(function(e){
+                e.preventDefault();
+                var id = document.getElementById('rayon_id').value;
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                jQuery.ajax({
+                    url: "/dashboard/rayon/" +id + "/categories",
+                    method: 'get',
+                    success: function(result){
+                        /*<select name="category_id" id="category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                            @endforeach
+                        </select>*/
+                        console.log(result);
+                   }
+                });
+            });
+        });
+
+    </script>
 </x-app-layout>

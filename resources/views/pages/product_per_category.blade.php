@@ -7,6 +7,7 @@
         
         <!-- Cards -->
         <div class="row gx-1" style="margin-bottom:3%">
+            @foreach ($products as $product)
             <div class="col-3 mb-3">
                 <div class="card shadow-sm" style="width:17rem">
                 <div class="row">
@@ -39,6 +40,7 @@
                     </div>
                 </div>
             </div>
+            @endforeach
             <div class="col-3">
                 <div class="card shadow-sm" style="width:17rem">
                 <div class="row">

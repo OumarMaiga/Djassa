@@ -36,7 +36,7 @@
                         <img src="{{ asset($image_path) }}" class="img-responsive mx-3" style="margin-bottom:10%;height:75px;object-fit:cover;" alt="...">
                         <div class="card-body">
                             <p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">30%</p>
-                            <p style="font-size:13px; font-weight:600">{{$product->product_title }}</p>
+                            <p class="item-offre-title" style="font-size:13px; font-weight:600">{{$product->product_title }}</p>
                         </div>
                     </div>
                 </div>

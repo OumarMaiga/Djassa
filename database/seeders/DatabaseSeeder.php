@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 use \App\Models\User;
 use \App\Models\Category;
+use \App\Models\SubCategory;
 use \App\Models\Rayon;
 class DatabaseSeeder extends Seeder
 {
@@ -35,6 +36,14 @@ class DatabaseSeeder extends Seeder
         ])->save();
 
         Category::create([
+            'title' => 'Fruits & Légume',
+            'slug' => Str::slug('Fruits & Légume'),
+            'etat' => 'enabled',
+            'user_id' => 1,
+            'rayon_id' => 1,
+        ])->save();
+
+        SubCategory::create([
             'title' => 'Fruits & Légume',
             'slug' => Str::slug('Fruits & Légume'),
             'etat' => 'enabled',

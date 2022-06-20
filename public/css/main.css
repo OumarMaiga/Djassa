@@ -1,0 +1,11 @@
+.item-offre-title {
+    /* Avoids text being rendered outside the container */
+    overflow: hidden;
+    /* Avoid text going to multiple lines */
+    white-space: nowrap;
+    /* Sets the ... once the text overflows */
+    text-overflow: ellipsis;
+}
+#category_id_container{
+    display: none;
+}
