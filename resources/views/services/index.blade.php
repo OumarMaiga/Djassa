@@ -1,65 +1,63 @@
 <x-app-layout>
     <div class="" style="margin-top: 6rem">
         <div class="container">
-            <h3 class="mb-3 d-flex align-items-center ">
-                    LES SERVICES DEMANDES
-                    <a href="{{ route('service.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
-                </div>
+            <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
+                    MES DEMANDES DE SERVICE
             </h3>
+            <a href="{{ route('service.create') }}" style="display: inline-block; float: right; padding-top:1rem;"><x-button class="btn-custom">AJOUTER</x-button></a>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <table class="table table-hover table-responsive-md">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Telephone</th>
-                    <th scope="col">Montant</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $n = 0 ?>
-                    @foreach ($services as $service)
-                    <?php $n = $n + 1 ?>
-                        <tr>
-                            <th scope="row">{{ $n }}</th>
-                            <td>{{ $service->title }}</td>
-                            <td>{{ $service->overview }}</td>
-                            <td>{{ $service->email }}</td>
-                            <td>{{ $service->telephone }}</td>
-                            <td>{{ $service->montant }}</td>
-                            <td>{{ $service->etat }}</td>
-                            <td class="justify-content-between icon-content">
-                                <a href="{{ route('service.show', $service->id) }}">Voir</a>
-                                <a href="{{ route('service.edit', $service->id) }}" class="col icon-action icon-edit">
-                                    Edit
-                                </a>
-                                <span class="col icon-action">
-                                    <form method="POST" action="{{ route('service.destroy', $service->id) }}">
-                                        @csrf
-                                        @method('delete')
-                                            <button class="" type="submit" onclick="return confirm('Vraiment supprimer ce service ?')">
-                                                Del
-                                            </button>
-                                    </form>
-                                </span>
-                                @if ($service->etat === "request")
-                                    <a href="{{ route('service.inprogress', $service->id) }}">In proccess</a>
-                                @endif
-                                @if ($service->etat === "inprogress")
-                                    <!--<a href="{{ route('service.done', $service->id) }}">Done</a>-->
-                                @endif
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="row" style="margin-top: 2rem">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Titre du service
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p><br>
+                            <a href="#" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Prend fin le 17 juillet 2022
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Titre du service
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p><br>
+                            <a href="#" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Prend fin le 17 juillet 2022
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                <div class="card">
+                        <div class="card-header">
+                            Titre du service
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">Special title treatment</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p><br>
+                            <a href="#" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
+                        </div>
+                        <div class="card-footer text-muted">
+                            Prend fin le 17 juillet 2022
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </x-app-layout>
