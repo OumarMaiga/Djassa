@@ -46,6 +46,12 @@
                             <x-nav-link :href="route('dashboard.category.index')">
                                 Categories
                             </x-nav-link>
+                            <x-nav-link :href="route('dashboard.sub_category.index')">
+                                Sous-categories
+                            </x-nav-link>
+                            <x-nav-link :href="route('dashboard.sub_sub_category.index')">
+                                Sous-sous-categories
+                            </x-nav-link>
                         @endif
                     @endif
                         <x-nav-link :href="route('service.index')" style="font-size:16px; color:#1A1A1A">

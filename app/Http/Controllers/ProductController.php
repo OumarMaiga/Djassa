@@ -13,6 +13,8 @@ use App\Models\File;
 use App\Repositories\ProductRepository;
 use App\Repositories\FileRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\SubCategoryRepository;
+use App\Repositories\SubSubCategoryRepository;
 use App\Repositories\RayonRepository;
 
 
@@ -21,14 +23,22 @@ class ProductController extends Controller
     protected $productRepository;
     protected $fileRepository;
     protected $categoryRepository;
+    protected $subCategoryRepository;
+    protected $subSubCategoryRepository;
     protected $rayonRepository;
 
-    public function __construct(ProductRepository $productRepository, FileRepository $fileRepository, CategoryRepository $categoryRepository,
-                                RayonRepository $rayonRepository) {
+    public function __construct(ProductRepository $productRepository, FileRepository $fileRepository, 
+                                CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, CategoryRepository $subSubCategoryRepository,
+                                RayonRepository $rayonRepository) 
+    {
+
         $this->productRepository = $productRepository;
         $this->fileRepository = $fileRepository;
-        $this->categoryRepository = $categoryRepository;
         $this->rayonRepository = $rayonRepository;
+        $this->categoryRepository = $categoryRepository;
+        $this->subCategoryRepository = $subCategoryRepository;
+        $this->subSubCategoryRepository = $subSubCategoryRepository;
+        
     }
     /**
      * Display a listing of the resource.
@@ -52,9 +62,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = $this->categoryRepository->getBy('etat', 'enabled');
         $rayons = $this->rayonRepository->getBy('etat', 'enabled');
-        return view('dashboards.products.create', compact('categories', 'rayons'));
+        $categories = $this->categoryRepository->getBy('etat', 'enabled');
+        $sub_categories = $this->subCategoryRepository->getBy('etat', 'enabled');
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('etat', 'enabled');
+        return view('dashboards.products.create', compact('rayons', 'categories', 'sub_categories', 'sub_sub_categories' ));
     }
 
     /**

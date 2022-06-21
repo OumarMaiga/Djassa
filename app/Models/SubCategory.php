@@ -18,6 +18,7 @@ class SubCategory extends Model
         'title',
         'slug',
         'user_id',
+        'rayon_id',
         'category_id',
         'etat',
     ];

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 
 use App\Repositories\CategoryRepository;
+use App\Repositories\SubCategoryRepository;
 use App\Repositories\RayonRepository;
 
 use Illuminate\Support\Facades\Auth;
@@ -15,10 +16,14 @@ use Illuminate\Support\Facades\DB;
 class CategoryController extends Controller
 {
     protected $categoryRepository;
+    protected $subCategoryRepository;
     protected $rayonRepository;
 
-    public function __construct(CategoryRepository $categoryRepository, RayonRepository $rayonRepository) {
+    public function __construct(CategoryRepository $categoryRepository, RayonRepository $rayonRepository, 
+        SubCategoryRepository $subCategoryRepository) 
+    {
         $this->categoryRepository = $categoryRepository;
+        $this->subCategoryRepository = $subCategoryRepository;
         $this->rayonRepository = $rayonRepository;
     }
     /**
@@ -121,6 +126,18 @@ class CategoryController extends Controller
     {
         $this->categoryRepository->destroy($id);
         return redirect()->back()->withError("Category a bien été supprimer");
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Category  $rayon_id
+     * @return \Illuminate\Http\Response
+     */
+    public function sub_categories($id)
+    {
+        $sub_categories = $this->subCategoryRepository->getBy('category_id', $id);
+        return response()->json(['sub_categories' => $sub_categories]);
     }
     
 }

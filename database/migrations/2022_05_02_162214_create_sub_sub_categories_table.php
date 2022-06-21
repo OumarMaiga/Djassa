@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubSubCategorieTable extends Migration
+class CreateSubSubCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSubSubCategorieTable extends Migration
      */
     public function up()
     {
-        Schema::create('sub_sub_categorie', function (Blueprint $table) {
+        Schema::create('sub_sub_categories', function (Blueprint $table) {
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();

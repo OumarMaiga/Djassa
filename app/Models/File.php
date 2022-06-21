@@ -15,8 +15,10 @@ class File extends Model
         'type',
         'product_id',
         'user_id',
-        'category_id',
         'rayon_id',
+        'category_id',
+        'sub_category_id',
+        'sub_sub_category_id',
         'service_id',
     ];
     

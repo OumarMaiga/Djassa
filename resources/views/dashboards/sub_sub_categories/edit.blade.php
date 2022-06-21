@@ -9,14 +9,14 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('dashboard.category.update', $category->id) }}">
+            <form method="POST" action="{{ route('dashboard.sub_category.update', $sub_category->id) }}">
                 @csrf
                 @method('put')
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
                         <label for="title">Titre</label>
-                        <input id="title" class="form-control" type="text" name="title" value="{{ $category->title }}" placeholder="title" />
+                        <input id="title" class="form-control" type="text" name="title" value="{{ $sub_category->title }}" placeholder="title" />
                     </div>
                 </div>
                 
@@ -26,7 +26,19 @@
                         <select name="rayon_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($rayons as $rayon)
-                                <option value="{{ $rayon->id }}" <?= ($rayon->id == $category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
+                                <option value="{{ $rayon->id }}" <?= ($rayon->id == $sub_category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Email Address -->
+                <div class="row">
+                    <div class="form-item col-md-6">
+                        <select name="category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endforeach
                         </select>
                     </div>

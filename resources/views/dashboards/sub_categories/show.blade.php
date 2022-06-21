@@ -2,7 +2,7 @@
     <div class="container" style="margin-top: 6rem">
         <div class="row">
             <div class="">
-                {{ $category->title }}
+                {{ $sub_category->title }}
             </div>
         </div>
     </div>

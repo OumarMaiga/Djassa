@@ -6,8 +6,8 @@
 
     class SubCategoryRepository extends ResourceRepository {
 
-        public function __construct(SubCategory $subCategory) {
-            $this->model = $subCategory;
+        public function __construct(SubCategory $sub_category) {
+            $this->model = $sub_category;
         }
 
     }

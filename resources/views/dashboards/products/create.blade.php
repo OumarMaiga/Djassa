@@ -60,6 +60,29 @@
                 </div>
                 
                 <div class="row">
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6" id="sub_category_id_container">
+                        <label for="sub_category_id">Sous-categorie</label>
+                        <select name="sub_category_id" id="sub_category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($sub_categories as $sub_category)
+                                <option value="{{ $sub_category->id }}">{{ $sub_category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6" id="sub_sub_category_id_container">
+                        <label for="sub_sub_category_id">Sous-sous-Categorie</label>
+                        <select name="sub_sub_category_id" id="sub_sub_category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($sub_sub_categories as $sub_sub_category)
+                                <option value="{{ $sub_sub_category->id }}">{{ $sub_sub_category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
                     <div class="form-item col-md-6">
                         <label for="product_image">Ajouter l'image du product</label>
                         <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple/>
@@ -109,6 +132,78 @@
                         }
                         var category_id_container = $('#category_id_container');
                         category_id_container.show();
+                   }
+                });
+            });
+            
+            jQuery('#category_id').change(function(e){
+                e.preventDefault();
+                var id = document.getElementById('category_id').value;
+                if (id == "") {
+                    var sub_category_id_container = $('#sub_category_id_container');
+                    sub_category_id_container.hide();
+                    var sub_category_id = $('#sub_category_id');
+                    sub_category_id.empty();
+                    return false;
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                jQuery.ajax({
+                    url: "/dashboard/category/" +id + "/sub_categories",
+                    method: 'get',
+                    success: function(result){
+                        var data = result['sub_categories'];
+                        var sub_category_id = $('#sub_category_id');
+                        sub_category_id.empty();
+                        sub_category_id.append(
+                            '<option value="">-- SELECTIONNEZ ICI --</option>'
+                        )
+                        for (var i = 0; i < data.length; i++) {
+                            sub_category_id.append(
+                                '<option id=' + data[i].id + ' value=' + data[i].id + '>' + data[i].title + '</option>'
+                            );
+                        }
+                        var sub_category_id_container = $('#sub_category_id_container');
+                        sub_category_id_container.show();
+                   }
+                });
+            });
+            
+            jQuery('#sub_category_id').change(function(e){
+                e.preventDefault();
+                var id = document.getElementById('sub_category_id').value;
+                if (id == "") {
+                    var sub_sub_category_id_container = $('#sub_sub_category_id_container');
+                    sub_sub_category_id_container.hide();
+                    var sub_sub_category_id = $('#sub_sub_category_id');
+                    sub_sub_category_id.empty();
+                    return false;
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                jQuery.ajax({
+                    url: "/dashboard/sub_category/" +id + "/sub_sub_categories",
+                    method: 'get',
+                    success: function(result){
+                        var data = result['sub_sub_categories'];
+                        var sub_sub_category_id = $('#sub_sub_category_id');
+                        sub_sub_category_id.empty();
+                        sub_sub_category_id.append(
+                            '<option value="">-- SELECTIONNEZ ICI --</option>'
+                        )
+                        for (var i = 0; i < data.length; i++) {
+                            sub_sub_category_id.append(
+                                '<option id=' + data[i].id + ' value=' + data[i].id + '>' + data[i].title + '</option>'
+                            );
+                        }
+                        var sub_sub_category_id_container = $('#sub_sub_category_id_container');
+                        sub_sub_category_id_container.show();
                    }
                 });
             });

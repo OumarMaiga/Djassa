@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\RayonController;
 use App\Http\Controllers\PaiementController;
 
@@ -86,6 +87,7 @@ Route::get('dashboard/category/{id}/edit', [CategoryController::class, 'edit'])-
 Route::put('dashboard/category/{id}', [CategoryController::class, 'update'])->name('dashboard.category.update')->middleware('auth');
 Route::delete('dashboard/category/{id}', [CategoryController::class, 'destroy'])->name('dashboard.category.destroy')->middleware('auth');
 
+Route::get('dashboard/category/{id}/sub_categories', [CategoryController::class, 'sub_categories'])->name('dashboard.category.sub_categories')->middleware('auth');
 
 Route::get('dashboard/sub_category', [SubCategoryController::class, 'index'])->name('dashboard.sub_category.index')->middleware('auth');
 Route::get('dashboard/sub_category/create', [SubCategoryController::class, 'create'])->name('dashboard.sub_category.create')->middleware('auth');
@@ -94,6 +96,16 @@ Route::post('dashboard/sub_category', [SubCategoryController::class, 'store'])->
 Route::get('dashboard/sub_category/{id}/edit', [SubCategoryController::class, 'edit'])->name('dashboard.sub_category.edit')->middleware('auth');
 Route::put('dashboard/sub_category/{id}', [SubCategoryController::class, 'update'])->name('dashboard.sub_category.update')->middleware('auth');
 Route::delete('dashboard/sub_category/{id}', [SubCategoryController::class, 'destroy'])->name('dashboard.sub_category.destroy')->middleware('auth');
+
+Route::get('dashboard/sub_category/{id}/sub_sub_categories', [SubCategoryController::class, 'sub_sub_categories'])->name('dashboard.sub_category.sub_sub_categories')->middleware('auth');
+
+Route::get('dashboard/sub_sub_category', [SubSubCategoryController::class, 'index'])->name('dashboard.sub_sub_category.index')->middleware('auth');
+Route::get('dashboard/sub_sub_category/create', [SubSubCategoryController::class, 'create'])->name('dashboard.sub_sub_category.create')->middleware('auth');
+Route::get('dashboard/sub_sub_category/{id}', [SubSubCategoryController::class, 'show'])->name('dashboard.sub_sub_category.show')->middleware('auth');
+Route::post('dashboard/sub_sub_category', [SubSubCategoryController::class, 'store'])->name('dashboard.sub_sub_category.store')->middleware('auth');
+Route::get('dashboard/sub_sub_category/{id}/edit', [SubSubCategoryController::class, 'edit'])->name('dashboard.sub_sub_category.edit')->middleware('auth');
+Route::put('dashboard/sub_sub_category/{id}', [SubSubCategoryController::class, 'update'])->name('dashboard.sub_sub_category.update')->middleware('auth');
+Route::delete('dashboard/sub_sub_category/{id}', [SubSubCategoryController::class, 'destroy'])->name('dashboard.sub_sub_category.destroy')->middleware('auth');
 
 
 Route::resource('paiement', PaiementController::class);
