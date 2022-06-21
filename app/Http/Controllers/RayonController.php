@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Rayon;
 
 use App\Repositories\RayonRepository;
+use App\Repositories\CategoryRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -13,9 +14,11 @@ use Illuminate\Http\Request;
 class RayonController extends Controller
 {
     protected $rayonRepository;
+    protected $categoryRepository;
 
-    public function __construct(RayonRepository $rayonRepository) {
+    public function __construct(RayonRepository $rayonRepository, CategoryRepository $categoryRepository) {
         $this->rayonRepository = $rayonRepository;
+        $this->categoryRepository = $categoryRepository;
     }
     /**
      * Display a listing of the resource.
@@ -110,6 +113,21 @@ class RayonController extends Controller
     {
         $this->rayonRepository->destroy($id);
         return redirect()->back()->withError("Rayon a bien été supprimer");
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Rayon  $rayon_id
+     * @return \Illuminate\Http\Response
+     */
+    public function categories($id)
+    {
+        $categories = $this->categoryRepository->getBy('rayon_id', $id);
+        /*var_dump($categories);
+        die();*/
+        return response()->json(['categories' => $categories]);
+        //return view('dashboards.categories.rayon', compact('category'));
     }
     
 }

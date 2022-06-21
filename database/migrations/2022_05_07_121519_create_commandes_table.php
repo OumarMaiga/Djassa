@@ -18,6 +18,8 @@ class CreateCommandesTable extends Migration
             $table->string('code')->unique()->nullable();
             $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
+            $table->string('telephone')->nullable();
+            $table->string('email')->nullable();
             $table->string('montant_du')->nullable();
             $table->string('montant_payer')->nullable();
             $table->foreignId('user_id')->reference('id')->on('users')->nullable();

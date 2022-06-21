@@ -39,13 +39,27 @@
                 <div class="row">
                     <!-- Email Address -->
                     <div class="form-item col-md-6">
-                        <select name="category_id">
+                        <label for="rayon_id">Rayon</label>
+                        <select name="rayon_id" id="rayon_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($rayons as $rayon)
+                                <option value="{{ $rayon->id }}">{{ $rayon->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6" id="category_id_container">
+                        <label for="category_id">Categorie</label>
+                        <select name="category_id" id="category_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endforeach
                         </select>
                     </div>
+                </div>
+                
+                <div class="row">
                     <div class="form-item col-md-6">
                         <label for="product_image">Ajouter l'image du product</label>
                         <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple/>
@@ -60,4 +74,45 @@
             </form>
         </div>
     </div>
+
+    <script>
+        jQuery(document).ready(function(){
+            jQuery('#rayon_id').change(function(e){
+                e.preventDefault();
+                var id = document.getElementById('rayon_id').value;
+                if (id == "") {
+                    var category_id_container = $('#category_id_container');
+                    category_id_container.hide();
+                    var category_id = $('#category_id');
+                    category_id.empty();
+                    return false;
+                }
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                jQuery.ajax({
+                    url: "/dashboard/rayon/" +id + "/categories",
+                    method: 'get',
+                    success: function(result){
+                        var data = result['categories'];
+                        var category_id = $('#category_id');
+                        category_id.empty();
+                        category_id.append(
+                            '<option value="">-- SELECTIONNEZ ICI --</option>'
+                        )
+                        for (var i = 0; i < data.length; i++) {
+                            category_id.append(
+                                '<option id=' + data[i].id + ' value=' + data[i].id + '>' + data[i].title + '</option>'
+                            );
+                        }
+                        var category_id_container = $('#category_id_container');
+                        category_id_container.show();
+                   }
+                });
+            });
+        });
+
+    </script>
 </x-app-layout>
