@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="dashboard-content" style="margin-top: 6rem">
         <div class="container content">
-            <div class="content-title">{{ __('MODIFICATION DE CATEGORY') }}</div>
+            <div class="content-title">{{ __('MODIFICATION DE SOUS-CATEGORY') }}</div>
     
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -23,7 +23,8 @@
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <select name="rayon_id">
+                        <label for="rayon_id">Rayon</label>
+                        <select name="rayon_id" id="rayon_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($rayons as $rayon)
                                 <option value="{{ $rayon->id }}" <?= ($rayon->id == $sub_category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
@@ -35,10 +36,11 @@
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <select name="category_id">
+                        <label for="category_id">Categorie</label>
+                        <select name="category_id" id="category_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                <option value="{{ $category->id }}" <?= ($category->id == $sub_category->category_id) ? "selected=true" : "" ?>>{{ $category->title }}</option>
                             @endforeach
                         </select>
                     </div>

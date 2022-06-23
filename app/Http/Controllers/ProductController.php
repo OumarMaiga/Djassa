@@ -130,8 +130,13 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = $this->productRepository->getById($id);
-        $categories = $this->categoryRepository->getBy('etat', 'enabled');
-        return view('dashboards.products.edit', compact('product', 'categories'));
+
+        $rayons = $this->rayonRepository->getBy('id', $product->rayon_id);
+        $categories = $this->categoryRepository->getBy('id', $product->category_id);
+        $sub_categories = $this->subCategoryRepository->getBy('id', $product->sub_category_id);
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('id', $product->sub_sub_category_id);
+        
+        return view('dashboards.products.edit', compact('product', 'categories', 'rayons', 'sub_categories', 'sub_sub_categories'));
     }
 
     /**

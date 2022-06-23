@@ -23,19 +23,17 @@
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <select name="rayon_id">
+                        <label for="rayon_id">Rayon</label>
+                        <select name="rayon_id" id="rayon_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($rayons as $rayon)
-                                <option value="{{ $rayon->id }}" <?= ($rayon->id == $sub_category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
+                                <option value="{{ $rayon->id }}">{{ $rayon->title }}</option>
                             @endforeach
                         </select>
                     </div>
-                </div>
-                
-                <!-- Email Address -->
-                <div class="row">
-                    <div class="form-item col-md-6">
-                        <select name="category_id">
+                    <div class="form-item col-md-6" id="category_id_container">
+                        <label for="category_id">Categorie</label>
+                        <select name="category_id" id="category_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}">{{ $category->title }}</option>

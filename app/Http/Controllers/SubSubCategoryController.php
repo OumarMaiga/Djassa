@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SubSubCategory;
 
+use App\Repositories\RayonRepository;
 use App\Repositories\SubSubCategoryRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\CategoryRepository;
@@ -15,11 +16,13 @@ use Illuminate\Support\Facades\DB;
 
 class SubSubCategoryController extends Controller
 {
+    protected $rayonRepository;
     protected $subSubCategoryRepository;
     protected $subCategoryRepository;
     protected $categoryRepository;
 
-    public function __construct(SubSubCategoryRepository $subSubCategoryRepository, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository) {
+    public function __construct(RayonRepository $rayonRepository, SubSubCategoryRepository $subSubCategoryRepository, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository) {
+        $this->rayonRepository = $rayonRepository;
         $this->subSubCategoryRepository = $subSubCategoryRepository;
         $this->subCategoryRepository = $subCategoryRepository;
         $this->categoryRepository = $categoryRepository;
@@ -52,8 +55,10 @@ class SubSubCategoryController extends Controller
      */
     public function create()
     {
-        $categorys = $this->categoryRepository->getBy('etat', 'enabled');
-        return view('dashboards.categories.create', compact('categorys'));
+        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+        $categories = $this->categoryRepository->getBy('etat', 'enabled');
+        $sub_categories = $this->subCategoryRepository->getBy('etat', 'enabled');
+        return view('dashboards.sub_sub_categories.create', compact('categories', 'rayons', 'sub_categories'));
     }
 
     /**
@@ -76,9 +81,9 @@ class SubSubCategoryController extends Controller
             'etat' => 'enabled',
         ]);
             
-        $subCategory = $this->subCategoryRepository->store($request->all());
+        $subCategory = $this->subSubCategoryRepository->store($request->all());
 
-        return redirect('/dashboard/subCategory/')->withStatus("Nouveau subCategory (".$subCategory->title.") vient d'être ajouté");
+        return redirect('/dashboard/sub_sub_categories/')->withStatus("Nouveau subCategory (".$subCategory->title.") vient d'être ajouté");
     
     }
 
@@ -90,8 +95,8 @@ class SubSubCategoryController extends Controller
      */
     public function show($id)
     {
-        $subCategory = $this->subCategoryRepository->getById($id);
-        return view('dashboards.categories.show', compact('subCategory'));
+        $subCategory = $this->subSubCategoryRepository->getById($id);
+        return view('dashboards.sub_sub_categories.show', compact('subCategory'));
     }
 
     /**
@@ -102,9 +107,14 @@ class SubSubCategoryController extends Controller
      */
     public function edit($id)
     {
-        $categorys = $this->categoryRepository->getBy('etat', 'enabled');
-        $subCategory = $this->subCategoryRepository->getById($id);
-        return view('dashboards.categories.edit', compact('subCategory', 'categorys'));
+        $sub_sub_category = $this->subSubCategoryRepository->getById($id);
+
+        $rayons = $this->rayonRepository->getBy('id', $sub_sub_category->rayon_id);
+        $categories = $this->categoryRepository->getBy('id', $sub_sub_category->category_id);
+        $sub_categories = $this->subCategoryRepository->getBy('id', $sub_sub_category->sub_category_id);
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('id', $sub_sub_category->sub_sub_category_id);
+
+        return view('dashboards.sub_sub_categories.edit', compact('sub_sub_category', 'categories', 'rayons', 'sub_categories'));
     }
 
     /**
@@ -116,8 +126,8 @@ class SubSubCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->subCategoryRepository->update($id, $request->all());
-        return redirect('/dashboard/subCategory')->withStatus("SubSubCategory a bien été modifier");
+        $this->subSubCategoryRepository->update($id, $request->all());
+        return redirect('/dashboard/sub_sub_categories')->withStatus("SubSubCategory a bien été modifier");
     }
 
     /**
@@ -128,7 +138,7 @@ class SubSubCategoryController extends Controller
      */
     public function destroy($id)
     {
-        $this->subCategoryRepository->destroy($id);
+        $this->subSubCategoryRepository->destroy($id);
         return redirect()->back()->withError("SubSubCategory a bien été supprimer");
     }
     

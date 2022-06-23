@@ -2,7 +2,7 @@
     <div class="" style="margin-top: 6rem">
         <div class="container">
             <h3 class="mb-3 d-flex align-items-center ">
-                    LES SOUS-CATEGORIES
+                    LES SOUS-SOUS-CATEGORIES
                     <a href="{{ route('dashboard.sub_sub_category.create') }}" class="ml-auto"><button class="btn-custom">AJOUTER</button></a>
                 </div>
             </h3>

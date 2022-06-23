@@ -39,13 +39,50 @@
                 <div class="row">
                     <!-- Email Address -->
                     <div class="form-item col-md-6">
-                        <select name="category_id">
+                        <label for="rayon_id">Rayon</label>
+                        <select name="rayon_id" id="rayon_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($rayons as $rayon)
+                                <option value="{{ $rayon->id }}" <?= ($rayon->id == $product->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6">
+                        <label for="category_id">Categorie</label>
+                        <select name="category_id" id="category_id">
                             <option value="">-- SELECTIONNEZ ICI --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" <?= ($category->id == $product->category_id) ? "selected=true" : "" ?>>{{ $category->title }}</option>
                             @endforeach
                         </select>
                     </div>
+                </div>
+                
+                <div class="row">
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6">
+                        <label for="sub_category_id">Sous-categorie</label>
+                        <select name="sub_category_id" id="sub_category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($sub_categories as $sub_category)
+                                <option value="{{ $sub_category->id }}" <?= ($sub_category->id == $product->sub_category_id) ? "selected=true" : "" ?>>{{ $sub_category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <!-- Email Address -->
+                    <div class="form-item col-md-6">
+                        <label for="sub_sub_category_id">Sous-sous-Categorie</label>
+                        <select name="sub_sub_category_id" id="sub_sub_category_id">
+                            <option value="">-- SELECTIONNEZ ICI --</option>
+                            @foreach($sub_sub_categories as $sub_sub_category)
+                                <option value="{{ $sub_sub_category->id }}" <?= ($sub_sub_category->id == $product->sub_sub_category_id) ? "selected=true" : "" ?>>{{ $sub_sub_category->title }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
                     <div class="form-item col-md-6">
                         <label for="product_image">Ajouter l'image du product</label>
                         <input id="product_image" class="form-control" type="file" name="product_image[]" value="" placeholder="" multiple/>
@@ -61,31 +98,4 @@
         </div>
     </div>
     
-    <script>
-        jQuery(document).ready(function(){
-            jQuery('#rayon_id').change(function(e){
-                e.preventDefault();
-                var id = document.getElementById('rayon_id').value;
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                    }
-                });
-                jQuery.ajax({
-                    url: "/dashboard/rayon/" +id + "/categories",
-                    method: 'get',
-                    success: function(result){
-                        /*<select name="category_id" id="category_id">
-                            <option value="">-- SELECTIONNEZ ICI --</option>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->title }}</option>
-                            @endforeach
-                        </select>*/
-                        console.log(result);
-                   }
-                });
-            });
-        });
-
-    </script>
 </x-app-layout>

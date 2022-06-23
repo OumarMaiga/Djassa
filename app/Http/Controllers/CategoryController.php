@@ -98,8 +98,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
         $category = $this->categoryRepository->getById($id);
+        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+
         return view('dashboards.categories.edit', compact('category', 'rayons'));
     }
 
