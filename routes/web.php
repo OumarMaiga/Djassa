@@ -57,7 +57,10 @@ Route::get('/products', [PageController::class, 'products'])->name('products');
 Route::get('/product_per_category/{category}', [PageController::class, 'product_per_category'])->name('product_per_category');
 Route::get('/product', [ProductController::class, 'list'])->name('product.index');
 Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
+Route::get('/product/files/{product_id}', [ProductController::class, 'product_files_ajax'])->name('product.product_files_ajax');
+Route::get('/products/more-products/{page_number}', [ProductController::class, 'more_products_ajax'])->name('product.more_products_ajax');
 Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('recettes');
+
 
 Route::resource('commande', CommandeController::class)->middleware('auth');
 Route::get('/my_commande/{user_id}', [CommandeController::class, 'my_commande'])->name('my_commande')->middleware('auth');

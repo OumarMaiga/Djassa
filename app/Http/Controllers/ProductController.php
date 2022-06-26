@@ -207,5 +207,48 @@ class ProductController extends Controller
         return view('pages.products.show', compact('products'));
     }
 
-    
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function more_products_ajax($page_number)
+    {
+        // variable to store the number of rows per page
+        $limit = 12;
+        // get the initial page number
+        $initial_page = ($page_number-1) * $limit; 
+        // query to retrieve all rows from the table Countries
+        $getQuery = "select * from products";  
+        // get the result
+        $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published 
+            FROM products
+            WHERE products.published = 1");
+
+        $total_rows = count($products);
+        // get the required number of pages
+        $total_pages = ceil ($total_rows / $limit);
+
+        $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published,
+            files.file_path as files_file_path
+            FROM products
+            LEFT JOIN files ON files.product_id = products.id 
+            WHERE products.published = 1
+            GROUP BY products.id
+            LIMIT $initial_page , $limit");
+
+        $rayons = $this->rayonRepository->get();
+
+        return response()->json(['rayons' => $rayons, 'products' => $products, 'total_pages' => $total_pages, 'page_number' => $page_number]);
+    }
+
+    public function product_files_ajax($product_id) 
+    {
+        $files = getProductFiles($product_id);
+        return response()->json($files);
+    }
+
+
 }

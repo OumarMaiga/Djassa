@@ -36,8 +36,12 @@ class PageController extends Controller
             products.price as product_price, products.quantity as product_quantity, products.published as product_published 
             FROM products
             WHERE products.published = 1");
+
         $rayons = $this->rayonRepository->get();
-        return view('pages.welcome', compact('products', 'rayons'));
+
+        $page_number = 1;
+
+        return view('pages.welcome', compact('products', 'rayons', 'page_number'));
     }
     
     /**

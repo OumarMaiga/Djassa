@@ -5,8 +5,9 @@
         <?php 
             $categories = App\Models\Category::where('rayon_id', $rayon->id)->get();
             foreach ($categories as $category) {
+                $products_count = App\Models\Product::where('category_id', $category->id)->where('published', 1)->get()->count();
         ?>
-            <x-menu-item :href="route('product_per_category', $category->slug)">{{ $category->title }}</x-menu-item>
+            <x-menu-item :href="route('product_per_category', $category->slug)">{{ $category->title }}<span style="float:right;margin-right:10px">{{ $products_count > 0 ? $products_count : "" }}</></x-menu-item>
         <?php } ?>
 
         <hr class="border-gray-800 mt-3 mb-3" style="margin-right:1rem; margin-left:1rem" />
