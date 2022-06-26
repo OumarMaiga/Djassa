@@ -54,7 +54,9 @@ Route::delete('dashboard/user/{id}', [UserController::class, 'destroy'])->name('
 Route::resource('panier', PanierController::class);
 
 Route::get('/products', [PageController::class, 'products'])->name('products');
-Route::get('/product_per_category/{category}', [PageController::class, 'product_per_category'])->name('product_per_category');
+Route::get('/category/{category}', [PageController::class, 'product_per_category'])->name('product_per_category');
+Route::get('/category/{category}/{sub_category}', [PageController::class, 'product_per_sub_category'])->name('product_per_sub_category');
+Route::get('/category/{category}/{sub_category}/{sub_sub_category}', [PageController::class, 'product_per_sub_sub_category'])->name('product_per_sub_sub_category');
 Route::get('/product', [ProductController::class, 'list'])->name('product.index');
 Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/product/files/{product_id}', [ProductController::class, 'product_files_ajax'])->name('product.product_files_ajax');

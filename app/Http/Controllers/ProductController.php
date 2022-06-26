@@ -235,7 +235,7 @@ class ProductController extends Controller
             files.file_path as files_file_path
             FROM products
             LEFT JOIN files ON files.product_id = products.id 
-            WHERE products.published = 1
+            WHERE products.published = 1 AND products.quantity > 0
             GROUP BY products.id
             LIMIT $initial_page , $limit");
 
