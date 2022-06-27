@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="dashboard-content" style="margin-top: 6rem">
         <div class="container content">
-            <div class="content-title">{{ __('AJOUT DE RAYON') }}</div>
+            <h1 class="content-title" style="margin-bottom:2rem; padding-top:1rem; font-weight:500; font-size:20px">{{ __('AJOUTER UN RAYON') }}</h1>
     
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -15,15 +15,18 @@
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <label for="title">Titre</label>
-                        <input id="title" class="form-control" type="text" name="title" value="{{ old('title') }}" placeholder="title" required />
+                        <!-- Rayon -->
+                        <div>
+                            <x-label for="rayon" :value="__('Entrer un nouveau rayon')" />
+                            <x-input id="rayon" class="form-control" type="text" name="title" value="{{ old('title') }}" required autofocus />
+                        </div>
                     </div>
                 </div>
                     
                 <div class="mt-4">
-                    <button type="submit" class="">
+                    <x-button type="submit" class="">
                         {{ __('AJOUTER') }}
-                    </button>
+                    </x-button>
                 </div>
             </form>
         </div>
