@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="dashboard-content" style="margin-top: 6rem">
         <div class="container content">
-            <div class="content-title">{{ __('MODIFICATION DE CATEGORY') }}</div>
+        <h1 class="content-title" style="margin-bottom:2rem; padding-top:1rem; font-weight:500; font-size:20px">{{ __('MODIFIER UNE CATÉGORIE') }}</h1>
     
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -15,16 +15,19 @@
                 <!-- Email Address -->
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <label for="title">Titre</label>
-                        <input id="title" class="form-control" type="text" name="title" value="{{ $category->title }}" placeholder="title" />
+                        <!-- Category -->
+                        <div>
+                            <x-label for="category" :value="__('Entrer une nouvelle catégorie')" />
+                            <x-input id="category" class="form-control" type="text" name="title" value="{{ $category->title }}" />
+                        </div>
                     </div>
                 </div>
                 
                 <!-- Email Address -->
-                <div class="row">
+                <div class="row" style="margin-top: 0.75rem">
                     <div class="form-item col-md-6">
-                        <select name="rayon_id">
-                            <option value="">-- SELECTIONNEZ ICI --</option>
+                        <select name="rayon_id" class="form-control">
+                            <option value="">-- SELECTIONNEZ UN RAYON --</option>
                             @foreach($rayons as $rayon)
                                 <option value="{{ $rayon->id }}" <?= ($rayon->id == $category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
                             @endforeach
@@ -33,9 +36,9 @@
                 </div>
                     
                 <div class="mt-4">
-                    <button type="submit" class="">
-                        {{ __('AJOUTER') }}
-                    </button>
+                    <x-button type="submit" class="">
+                        {{ __('Modifier') }}
+                    </x-button>
                 </div>
             </form>
         </div>
