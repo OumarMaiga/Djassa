@@ -35,7 +35,7 @@
                                         @method('PUT')
                                             <div style="display:inline-block">
                                             <img
-                                                src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp"
+                                                src="{{ asset($item->attributes->image) }}"
                                                 class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
                                             </div>
                                             <div class="ms-3" style="display:inline-block; width:290px">
