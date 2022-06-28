@@ -9,7 +9,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('dashboard.sub_category.update', $sub_category->id) }}">
+            <form method="POST" action="{{ route('dashboard.sub_category.update', $sub_category->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
                 <!-- Email Address -->
@@ -43,6 +43,13 @@
                                 <option value="{{ $category->id }}" <?= ($category->id == $sub_category->category_id) ? "selected=true" : "" ?>>{{ $category->title }}</option>
                             @endforeach
                         </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-item col-md-6">
+                        <label for="image">Ajouter l'image du sous-categorie</label>
+                        <input id="image" class="form-control" type="file" name="image" value="" placeholder="" />
                     </div>
                 </div>
                     

@@ -18,10 +18,11 @@ class Service extends Model
         'title',
         'slug',
         'overview',
-        'email',
+        'beneficiaire',
         'telephone',
         'montant',
         'user_id',
+        'expire',
         'paid',
         'etat',
     ];

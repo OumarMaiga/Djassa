@@ -157,4 +157,9 @@ class ServiceController extends Controller
         
         return redirect()->back()->withStatus("Service marquer comme terminé");
     }
+
+    public function dashboard_index() {
+        $services = $this->serviceRepository->get();
+        return view('dashboard.services', compact('services'));
+    }
 }

@@ -17,11 +17,12 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->string('email')->nullable();
+            $table->string('beneficiaire')->nullable();
             $table->string('telephone')->nullable();
             $table->foreignId('user_id')->reference('id')->on('users')->nullable();
             $table->text('overview')->nullable();
             $table->string('montant')->nullable();
+            $table->date('expire')->nullable();
             $table->boolean('paid')->default(0);
             $table->string('etat');
             $table->timestamps();

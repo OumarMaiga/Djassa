@@ -62,6 +62,7 @@ Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product
 Route::get('/product/files/{product_id}', [ProductController::class, 'product_files_ajax'])->name('product.product_files_ajax');
 Route::get('/products/more-products/{page_number}', [ProductController::class, 'more_products_ajax'])->name('product.more_products_ajax');
 Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('recettes');
+Route::get('/dashboard/config', [PageController::class, 'config'])->name('dashboard.config')->middleware('auth');
 
 
 Route::resource('commande', CommandeController::class)->middleware('auth');
@@ -72,7 +73,8 @@ Route::post('/commande/{id}/paiement', [CommandeController::class, 'store_paieme
 
 Route::resource('service', ServiceController::class);
 Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
-Route::post('service/{id}/done', [ServiceController::class, 'done'])->name('service.done');
+Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
+Route::post('dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index');
 
 Route::get('dashboard/rayon', [RayonController::class, 'index'])->name('dashboard.rayon.index')->middleware('auth');
 Route::get('dashboard/rayon/create', [RayonController::class, 'create'])->name('dashboard.rayon.create')->middleware('auth');

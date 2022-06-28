@@ -22,7 +22,10 @@
             </div>
             <div><b>L'utilisateur: </b>{{ $commande->user_name }}</div>
             <div><b>Livré: </b>{!! $commande->commande_delivered ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}</div>
-            <div><i><a href="{{ route('delivered', $commande->commande_id) }}">Marqué comme livré</a></i></div>
+            
+            @if($commande->commande_delivered != 1)
+                <div><i><a href="{{ route('delivered', $commande->commande_id) }}">Marqué comme livré</a></i></div>
+            @endif
 
         </div>
     </div>

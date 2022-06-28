@@ -18,38 +18,7 @@
 
         <div id="">
             <div id="products-container" class="row" style="margin-right:1rem">
-                @foreach ($products as $product) 
-                    <div class="col-2 mt-4">
-                        <div class="card shadow-sm">
-                            <a href="{{ route('product.detail', $product->product_id) }}" class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%; cursor:pointer">Voir les offres</a>
-                            <img src="{{ asset($product->files_file_path) }}" class="img-responsive mx-3" style="margin-bottom:10%;height:75px;object-fit:cover;" alt="...">
-                            <div class="card-body">
-                                <p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">30%</p>
-                                <p class="item-offre-title" style="font-size:13px; font-weight:600">{{$product->product_title }}</p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                    <div class="col-2 mt-4">
-                        <div class="card shadow-sm">
-                            <p class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%">Voir les offres</p>
-                            <img src="images/lunettes.webp" class="img-responsive mx-3" style="margin-bottom:10%" alt="...">
-                            <div class="card-body">
-                                <p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">30%</p>
-                                <p style="font-size:13px; font-weight:600">Some quick example text to build on the card title and make up</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-2 mt-4">
-                        <div class="card shadow-sm">
-                            <p class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%">Voir les offres</p>
-                            <img src="images/lunettes.webp" class="img-responsive mx-3" style="margin-bottom:10%" alt="...">
-                            <div class="card-body">
-                                <p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">30%</p>
-                                <p style="font-size:13px; font-weight:600">Some quick example text to build on the card title and make up</p>
-                            </div>
-                        </div>
-                    </div>
+                @include('layouts.products-list')
             </div>
         </div>
         

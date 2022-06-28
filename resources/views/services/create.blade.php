@@ -20,7 +20,7 @@
                         <!-- Title -->
                         <div>
                             <x-label for="title" :value="__('Titre')" />
-                            <x-input id="title" class="form-control" type="text" name="name" :value="old('name')" required autofocus />
+                            <x-input id="title" class="form-control" type="text" name="title" :value="old('title')" required autofocus />
                         </div>
                     </div>
                     <div class="form-item col-md-6">
@@ -33,15 +33,15 @@
                     <div class="form-item col-md-6">
                         <!-- recipient -->
                         <div>
-                            <x-label for="recipient" :value="__('Nom et prénom')" />
-                            <x-input id="recipient" class="form-control" type="text" name="name" :value="old('name')" required />
+                            <x-label for="beneficiaire" :value="__('Nom et prénom')" />
+                            <x-input id="beneficiaire" class="form-control" type="text" name="beneficiaire" :value="old('beneficiaire')" required />
                         </div>
                     </div>
                     <div class="form-item col-md-6">
                         <!-- recipient's number -->
                         <div>
-                            <x-label for="phonenumber" :value="__('Contact')" />
-                            <x-input id="phonenumber" class="form-control" type="number" name="name" :value="old('name')" required />
+                            <x-label for="telephone" :value="__('Contact')" />
+                            <x-input id="telephone" class="form-control" type="number" name="telephone" :value="old('telephone')" required />
                         </div>
                     </div>
                 </div>
@@ -51,14 +51,14 @@
                         <!-- Montant -->
                         <div>
                             <x-label for="montant" :value="__('Montant')" />
-                            <x-input id="montant" class="form-control" type="number" name="name" :value="old('name')" required />
+                            <x-input id="montant" class="form-control" type="number" name="montant" :value="old('montant')" required />
                         </div>
                     </div>
                     <div class="form-item col-md-6">
                         <!-- deadline -->
                         <div>
-                            <x-label for="deadline" :value="__('Date limite')" />
-                            <x-input id="deadline" class="form-control" type="date" name="name" :value="old('name')" required />
+                            <x-label for="expire" :value="__('Date limite')" />
+                            <x-input id="expire" class="form-control" type="date" name="expire" :value="old('expire')" required />
                         </div>
                     </div>
                 </div>

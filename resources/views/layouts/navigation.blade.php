@@ -40,17 +40,11 @@
                             <x-nav-link :href="route('recettes')">
                                 Recettes
                             </x-nav-link>
-                            <x-nav-link :href="route('dashboard.rayon.index')">
-                                Rayons
+                            <x-nav-link :href="route('dashboard.config')">
+                                Config
                             </x-nav-link>
-                            <x-nav-link :href="route('dashboard.category.index')">
-                                Categories
-                            </x-nav-link>
-                            <x-nav-link :href="route('dashboard.sub_category.index')">
-                                Sous-categories
-                            </x-nav-link>
-                            <x-nav-link :href="route('dashboard.sub_sub_category.index')">
-                                Sous-sous-categories
+                            <x-nav-link :href="route('service.dashboard_index')">
+                                Services
                             </x-nav-link>
                         @endif
                     @endif
@@ -70,6 +64,7 @@
                         </a>
                     </span>
                 @endif
+                @if (Auth::check())
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
@@ -84,18 +79,34 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                        
+                        @if (Auth::check())
+                            @if(Auth::user()->type === "admin")
+                                <x-dropdown-link :href="route('dashboard')">
+                                    Dashboard
+                                </x-dropdown-link>
+                            @endif
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                    this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        @endif
                     </x-slot>
                 </x-dropdown>
+                @else
+                <x-nav-link :href="route('login')">
+                    Login
+                </x-nav-link>
+                <x-nav-link :href="route('register')">
+                    register
+                </x-nav-link>
+                @endif
             </div>
 
             <!-- Hamburger -->

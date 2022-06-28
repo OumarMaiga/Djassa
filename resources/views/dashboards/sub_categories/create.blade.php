@@ -41,6 +41,13 @@
                         </select>
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="form-item col-md-6">
+                        <label for="image">Ajouter l'image du sous-categorie</label>
+                        <input id="image" class="form-control" type="file" name="image" value="" placeholder="" />
+                    </div>
+                </div>
                     
                 <div class="mt-4">
                     <button type="submit" class="">
