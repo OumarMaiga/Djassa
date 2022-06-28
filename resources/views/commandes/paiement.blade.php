@@ -2,6 +2,7 @@
     <div class="container" style="margin-top: 6rem">
         <div class="row">
         <div class="col s12">
+        <span class="mr-2" style="float: left; display: inline-block; padding-top:0.5rem; cursor: pointer;" id="go-back"><ion-icon name="return-up-back-outline" style="font-size:36px;"></ion-icon></span>
             <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                 PAIEMENT
             </h3>
