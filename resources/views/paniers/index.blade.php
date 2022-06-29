@@ -11,7 +11,7 @@
 
                     <div class="col-lg-7">
                     @if($total)
-                        <h5 class="mb-3"><a href="{{ route('products') }}" style="font-size:18px; font-weight:600"><i
+                        <h5 class="mb-3"><a href="http://127.0.0.1:8000/" style="font-size:18px; font-weight:600"><i
                             class="fas fa-long-arrow-alt-left me-2"></i>Continuer mes achats</a></h5>
                         <hr>
 

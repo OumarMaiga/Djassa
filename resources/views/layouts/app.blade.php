@@ -39,6 +39,10 @@
                 {{ $slot }}
             </main>
         </div>
-
+        <script>
+            document.getElementById('go-back').addEventListener('click', () => {
+                history.back();
+            });
+        </script>
     </body>
 </html>
