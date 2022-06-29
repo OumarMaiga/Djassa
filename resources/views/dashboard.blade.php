@@ -6,10 +6,12 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <center>
+                            <a href="{{ route('dashboard.product.index') }}">
                             <div class="mt-2"><ion-icon name="cube-outline" style="font-size:36px"></ion-icon></div>
                             <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                                 PRODUITS
                             </h2>
+                            </a>
                         </center>
                     </div>
                 </div>
@@ -18,10 +20,12 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <center>
+                            <a href="{{ route('recettes') }}">
                             <div class="mt-2"><ion-icon name="cash-outline" style="font-size:36px"></ion-icon></div>
                             <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                                 RECETTES
                             </h2>
+                            </a>
                         </center>
                     </div>
                 </div>
@@ -30,10 +34,12 @@
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <center>
+                            <a href="{{ route('dashboard.user.index') }}">
                             <div class="mt-2"><ion-icon name="people-outline" style="font-size:36px"></ion-icon></div>
                             <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                                 UTILISATEURS
                             </h2>
+                            </a>
                         </center>
                     </div>
                 </div>

@@ -75,6 +75,7 @@ Route::resource('service', ServiceController::class);
 Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
 Route::get('service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
 Route::post('dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index');
+Route::get('dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index');
 
 Route::get('dashboard/rayon', [RayonController::class, 'index'])->name('dashboard.rayon.index')->middleware('auth');
 Route::get('dashboard/rayon/create', [RayonController::class, 'create'])->name('dashboard.rayon.create')->middleware('auth');

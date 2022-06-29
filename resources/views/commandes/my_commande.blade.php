@@ -20,7 +20,7 @@
                     <th scope="col">Montant dû</th>
                     <th scope="col">Montant payer</th>
                     <th scope="col">Etat</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Paiement</th>
                     </tr>
                 </thead>
                 <tbody>

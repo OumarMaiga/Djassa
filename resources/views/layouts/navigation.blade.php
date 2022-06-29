@@ -19,9 +19,6 @@
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('dashboard.product.index')">
-                            {{ __('Product') }}
-                        </x-nav-link> 
                     @endif
                     <!-- @if($cartCount ?? '' )
                         <span style="margin-top:1.5rem" class="position-relative">
@@ -37,15 +34,12 @@
                         </x-nav-link> 
                         
                         @if(Auth::user()->type === "admin")
-                            <x-nav-link :href="route('recettes')">
-                                Recettes
-                            </x-nav-link>
                             <x-nav-link :href="route('dashboard.config')">
                                 Config
                             </x-nav-link>
-                            <x-nav-link :href="route('service.dashboard_index')">
+                            <!--<x-nav-link :href="route('service.dashboard_index')">
                                 Services
-                            </x-nav-link>
+                            </x-nav-link>-->
                         @endif
                     @endif
                         <x-nav-link :href="route('service.index')" style="font-size:16px; color:#1A1A1A">
