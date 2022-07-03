@@ -41,10 +41,10 @@
                                 Services
                             </x-nav-link>-->
                         @endif
-                    @endif
-                        <x-nav-link :href="route('service.index')" style="font-size:16px; color:#1A1A1A">
+                        <x-nav-link :href="route('service.index', Auth::user()->id)">
                             Services
                         </x-nav-link>
+                    @endif
                 </div>
             </div>
 

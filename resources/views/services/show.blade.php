@@ -89,7 +89,7 @@
                 @csrf
                 <div>
                     <label for="proof">Fiche justificatif</label>
-                    <input type="file" name="proof" id="proof">
+                    <input type="file" name="proof" id="proof" />
                 </div>
                 <button type="submit" class="">
                     Terminer

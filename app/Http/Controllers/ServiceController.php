@@ -11,6 +11,7 @@ use App\Repositories\ServiceRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -19,14 +20,21 @@ class ServiceController extends Controller
     public function __construct(ServiceRepository $serviceRepository) {
         $this->serviceRepository = $serviceRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
-        $services = $this->serviceRepository->get();
+        $services = DB::select("SELECT services.id as service_id, services.title as service_title, services.slug as service_slug, services.overview as service_overview,
+        services.beneficiaire as service_beneficiaire, services.telephone as service_telephone, services.expire as service_expire, services.montant as service_montant,
+        services.etat as service_etat, services.paid as service_paid, users.id as user_id, users.name as user_name
+        FROM services 
+        LEFT JOIN users ON services.user_id = users.id
+        WHERE services.etat <> 'done' && services.user_id = $user_id");
+
         return view('services.index', compact('services'));
     }
 
@@ -69,7 +77,7 @@ class ServiceController extends Controller
             
         $service = $this->serviceRepository->store($request->all());
 
-        return redirect('/service')->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
+        return redirect("/service/me/".Auth::user()->id)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
     
     }
 
@@ -111,7 +119,7 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $this->serviceRepository->update($id, $request->all());
-        return redirect('/service')->withStatus("Service a bien été modifier");
+        return redirect("/service/me/".Auth::user()->id)->withStatus("Service a bien été modifier");
     }
 
     /**

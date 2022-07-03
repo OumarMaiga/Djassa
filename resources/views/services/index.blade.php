@@ -10,53 +10,25 @@
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
             <div class="row" style="margin-top: 2rem">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Titre du service
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p><br>
-                            <a href="#" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Prend fin le 17 juillet 2022
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-header">
-                            Titre du service
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p><br>
-                            <a href="#" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Prend fin le 17 juillet 2022
+                
+                @foreach($services as $service)
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                {{ $service->service_title}}
+                            </div>
+                            <div class="card-body">
+                                <!-- <h5 class="card-title">Special title treatment</h5> -->
+                                <p class="card-text">{{ $service->service_overview }}</p><br>
+                                <a href="{{ route('service.show', $service->service_id) }}" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
+                            </div>
+                            <div class="card-footer text-muted">
+                                Prend fin le {{ custom_date($service->service_expire) }}
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-4">
-                <div class="card">
-                        <div class="card-header">
-                            Titre du service
-                        </div>
-                        <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p><br>
-                            <a href="#" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
-                        </div>
-                        <div class="card-footer text-muted">
-                            Prend fin le 17 juillet 2022
-                        </div>
-                    </div>
-                </div>
+                @endforeach
+                
             </div>
         </div>
     </div>
