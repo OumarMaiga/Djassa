@@ -41,7 +41,7 @@ class PageController extends Controller
     public function welcome()
     {
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-            products.price as product_price, products.quantity as product_quantity, products.published as product_published, 
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
             files.file_path as files_file_path
             FROM products
             LEFT JOIN files ON files.product_id = products.id AND products.quantity > 0
@@ -77,7 +77,7 @@ class PageController extends Controller
         $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
         $sub_categories = $this->subCategoryRepository->getBy('category_id', $category->id);
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-                        products.price as product_price, products.quantity as product_quantity, products.published as product_published,
+                        products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path
                         FROM products
                         LEFT JOIN files ON files.product_id = products.id 
@@ -98,7 +98,7 @@ class PageController extends Controller
         $sub_category = $this->subCategoryRepository->getBy('slug', $sub_category_slug)->first();        
         $sub_sub_categories = $this->subSubCategoryRepository->getBy('sub_category_id', $sub_category->id);
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-                        products.price as product_price, products.quantity as product_quantity, products.published as product_published,
+                        products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path
                         FROM products
                         LEFT JOIN files ON files.product_id = products.id 
@@ -119,7 +119,7 @@ class PageController extends Controller
         $sub_category = $this->subCategoryRepository->getBy('slug', $sub_category_slug)->first();
         $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', $sub_sub_category_slug)->first();
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-                        products.price as product_price, products.quantity as product_quantity, products.published as product_published,
+                        products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path
                         FROM products
                         LEFT JOIN files ON files.product_id = products.id 

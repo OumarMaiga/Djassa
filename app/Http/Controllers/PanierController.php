@@ -47,12 +47,17 @@ class PanierController extends Controller
         ]);
         
         $product = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-        products.price as product_price, products.quantity as product_quantity, products.published as product_published,
+        products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
         files.file_path as files_file_path
         FROM products
         LEFT JOIN files ON files.product_id = products.id
         WHERE products.id = $request->id
         GROUP BY products.id")[0];
+
+        if($product->product_discount != null &&  $product->product_discount > 0) 
+        {
+            $product->product_price = $product->product_price - ($product->product_price * ($product->product_discount / 100));
+        }
 
         $product = array(
             'id' => $product->product_id,

@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function index()
     {
         $products = DB::select('SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.price as product_price,
-        products.overview as product_overview, products.quantity as product_quantity, products.published as product_publised,
+        products.overview as product_overview, products.quantity as product_quantity, products.published as product_publised, products.discount as product_discount,
         categories.id as categorie_id, categories.title as category_title, categories.slug as categorie_slug
         FROM products LEFT JOIN categories ON products.category_id = categories.id
         WHERE products.quantity > 0 AND products.published = 1 ');
@@ -77,7 +77,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        
+        var_dump($request->all());
+        die();
         $request->validate([
             'title' => 'required|max:255',
             'overview' => 'required',
@@ -85,7 +86,7 @@ class ProductController extends Controller
         ]);
 
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
+            'slug' => time()."-".Str::slug($request->get('title')),
             'user_id' => Auth::user()->id,
         ]);
             
@@ -118,6 +119,12 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productRepository->getById($id);
+        
+        if($product->product_discount != null &&  $product->product_discount > 0) 
+        {
+            $product->product_price = $product->product_price - ($product->product_price * ($product->product_discount / 100));
+        }
+
         return view('dashboards.products.show', compact('product'));
     }
 
@@ -131,10 +138,10 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->getById($id);
 
-        $rayons = $this->rayonRepository->getBy('id', $product->rayon_id);
-        $categories = $this->categoryRepository->getBy('id', $product->category_id);
-        $sub_categories = $this->subCategoryRepository->getBy('id', $product->sub_category_id);
-        $sub_sub_categories = $this->subSubCategoryRepository->getBy('id', $product->sub_sub_category_id);
+        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+        $categories = $this->categoryRepository->getBy('etat', 'enabled');
+        $sub_categories = $this->subCategoryRepository->getBy('etat', 'enabled');
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('etat', 'enabled');
         
         return view('dashboards.products.edit', compact('product', 'categories', 'rayons', 'sub_categories', 'sub_sub_categories'));
     }
@@ -148,6 +155,16 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(isset($request->valeur_nutritionnelle) && $request->valeur_nutritionnelle = 1) {
+            $request->merge([
+                'valeur_nutritionnelle' => 1,
+            ]);
+        } else {
+            $request->merge([
+                'valeur_nutritionnelle' => 0,
+            ]);
+        }   
+        
         $product = $this->productRepository->getById($id);
         $this->productRepository->update($product->id, $request->all());
 
@@ -197,6 +214,11 @@ class ProductController extends Controller
         $category = $this->categoryRepository->getById($product->category_id);
         $rayon = $this->rayonRepository->getById($category->rayon_id);
 
+        if($product->discount != null &&  $product->discount > 0) 
+        {
+            $product->price = $product->price - ($product->price * ($product->discount / 100));
+        }
+
         return view('pages.products.show', compact('product', 'images', 'category', 'rayon'));
     }
     
@@ -222,7 +244,7 @@ class ProductController extends Controller
         $getQuery = "select * from products";  
         // get the result
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-            products.price as product_price, products.quantity as product_quantity, products.published as product_published 
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount
             FROM products
             WHERE products.published = 1");
 
@@ -231,7 +253,7 @@ class ProductController extends Controller
         $total_pages = ceil ($total_rows / $limit);
 
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-            products.price as product_price, products.quantity as product_quantity, products.published as product_published,
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
             files.file_path as files_file_path
             FROM products
             LEFT JOIN files ON files.product_id = products.id 
