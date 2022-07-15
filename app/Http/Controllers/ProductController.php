@@ -216,7 +216,7 @@ class ProductController extends Controller
 
         if($product->discount != null &&  $product->discount > 0) 
         {
-            $product->price = $product->price - ($product->price * ($product->discount / 100));
+            $product->discount_price();
         }
 
         return view('pages.products.show', compact('product', 'images', 'category', 'rayon'));

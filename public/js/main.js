@@ -27,7 +27,7 @@ $(document).ready(function() {
                                 '<a href="/product/'+products[i].product_id+'" class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%; cursor:pointer">Voir les offres</a>'+
                                 '<img src="'+image+'" class="img-responsive mx-3" style="margin-bottom:10%;height:75px;object-fit:cover;" alt="...">'+
                                 '<div class="card-body">'+
-                                    '<p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">30%</p>'+
+                                    '<p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">-'+products[i].product_discount+'%</p>'+
                                     '<p class="item-offre-title" style="font-size:13px; font-weight:600">'+products[i].product_title+'</p>'+
                                 '</div>'+
                             '</div>'+

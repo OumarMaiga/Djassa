@@ -53,6 +53,11 @@ class Product extends Model
         'numero_article',
         'duree_conservation',
     ];
+
+    public function discount_price()
+    {
+        return $this->price - ($this->price * ($this->discount / 100));
+    }
         
     public function files()
     {

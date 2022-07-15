@@ -20,7 +20,20 @@
                             @csrf
                                 <input type="hidden" id="id" name="id" value="{{ $product->id }}">
                             <p class="py-1 mt-2" style="font-weight:700;font-size:18px">{{ $product->title }}</p>
-                            <p class="py-3" style="font-weight:700;font-size:18px">{{ $product->price }} FCFA<span style="margin-left:5.8rem">Qté:&nbsp;<input id="quantity" name="quantity" type="number" value="1" min="1" style="width:5rem"></span></p>
+                            <?php
+                                if($product->discount != null &&  $product->discount > 0) 
+                                {
+                            ?>
+                                <p class="py-3" style="font-weight:700;font-size:18px">{{ $product->discount_price() }} FCFA<span style="margin-left:5.8rem">Qté:&nbsp;<input id="quantity" name="quantity" type="number" value="1" min="1" style="width:5rem"></span></p>
+                            
+                                <p class="py-3" style="font-weight:600;font-size:14px">au lieu de {{ $product->price; }} FCFA</p>
+                            <?php
+                                } else {
+                            ?>
+                                    <p class="py-3" style="font-weight:700;font-size:18px">{{ $product->price }} FCFA<span style="margin-left:5.8rem">Qté:&nbsp;<input id="quantity" name="quantity" type="number" value="1" min="1" style="width:5rem"></span></p>
+                            <?php    
+                                }
+                            ?>
                             <button type="submit" id="addcart" style="background-color:#ec6333; color:#fff; padding:0.75em 4.5em; border-radius:0.3em; font-size:18px; font-weight:800; text-align:center;">Ajouter au panier</button>
                         </form>
                     </div>
