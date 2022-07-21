@@ -39,4 +39,106 @@ $(document).ready(function() {
             }
         });
     });
+    
+    // Paiement (CinetPay)
+        var form = document.getElementById('paiement');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = Object.fromEntries(new FormData(e.target).entries());
+            console.log(data);
+
+            CinetPay.setConfig({
+                apikey: '112927115762d1e45cb26ef2.15035831', // YOUR APIKEY
+                site_id: 'http://oumarmaiga.com', // YOUR_SITE_ID
+                notify_url: 'http://oumarmaiga.com/notify/',
+                mode: 'PRODUCTION',
+                return_url: 'http://localhost:8000/commande/1/paiement'
+            });
+            CinetPay.getCheckout({
+                transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
+                amount: data.montant,
+                currency: 'XOF',
+                channels: 'ALL',
+                description: 'Paiement sur djassa',   
+                    
+                //Fournir ces variables pour le paiements par carte bancaire
+                customer_name: data.customer_name,
+                customer_surname: data.customer_surname,
+                customer_email:  data.customer_email,
+                customer_phone_number:  data.customer_phone_number,
+                customer_address :  data.customer_address,
+                customer_city:  data.customer_city,
+                customer_country :  data.customer_country,
+                customer_state :  data.customer_state,
+                customer_zip_code :  data.customer_zip_code,
+            });
+            CinetPay.waitResponse(function(data) {
+                console.log("REFUSED");
+                if (data.status == "REFUSED") {
+                    if (alert("Votre paiement a échoué")) {
+                        window.location.reload();
+                    }
+                } else if (data.status == "ACCEPTED") {
+                    console.log("ACCEPTED");
+                    if (alert("Votre paiement a été effectué avec succès")) {
+                        window.location.reload();
+                    }
+                }
+            });
+            CinetPay.onError(function(data) {
+                console.log(data);
+            });
+
+            /*var axios = require('axios');
+            var data = JSON.stringify({
+                "apikey": '112927115762d1e45cb26ef2.15035831', // YOUR APIKEY
+                "site_id": 'http://oumarmaiga.com', // YOUR_SITE_ID
+                "notify_url": 'http://oumarmaiga.com/notify/',
+                "mode": 'PRODUCTION',
+                "return_url": 'http://localhost:8000/commande/1/paiement',
+                "transaction_id":  Math.floor(Math.random() * 100000000).toString(), //
+                "amount": form_data.montant,
+                "currency": 'XOF',
+                "channels": 'ALL',
+                "description": 'Paiement sur djassa',   
+                    
+                //Fournir ces variables pour le paiements par carte bancaire
+                "customer_name": form_data.customer_name, 
+                "customer_surname": form_data.customer_surname,
+                "customer_email": form_data.customer_email, 
+                "customer_phone_number": form_data.customer_phone_number,
+                "customer_address" :form_data.customer_address, 
+                "customer_city": form_data.customer_city,
+                "customer_country" :form_data.customer_country, 
+                "customer_state" :form_data.customer_state,
+                "customer_zip_code" :form_data.customer_zip_code,
+                "alternative_currency": "",
+                "customer_id": "172",
+                "metadata": "user1",
+                "lang": "FR",
+                "invoice_data": {
+                    "Donnee1": "",
+                    "Donnee2": "",
+                    "Donnee3": ""
+                }
+            });
+        
+            var config = {
+              method: 'post',
+              url: 'https://api-checkout.cinetpay.com/v2/payment',
+              headers: { 
+                'Content-Type': 'application/json'
+              },
+              data : data
+            };
+        
+            axios(config)
+            .then(function (response) {
+              console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+              console.log(error);
+            });*/
+        
+        });
 });

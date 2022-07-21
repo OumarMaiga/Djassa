@@ -77,7 +77,7 @@ class CommandeController extends Controller
 
         }
         
-        return redirect('/my_commande/'.$user_id)->withStatus("Nouveau commande (".$commande['code'].") vient d'être ajouté");
+        return redirect('/commande/'.$commande['id'].'/paiement')->withStatus("Nouveau commande (".$commande['code'].") vient d'être ajouté");
     
     }
 
@@ -217,6 +217,8 @@ class CommandeController extends Controller
             exit;
         }
         
+        die("p");
+        
         $commande = $this->commandeRepository->getById($id);
         $montant_du = $commande->montant_du - $request->montant;
         $montant_payer = $commande->montant_payer + $request->montant;
@@ -231,7 +233,6 @@ class CommandeController extends Controller
         );
         $this->commandeRepository->update($id, $inputs1);
         
-
         $inputs2 = array( 
             "montant" => $request->montant, 
             "user_id" => $user_id, 
@@ -239,7 +240,7 @@ class CommandeController extends Controller
         );
         $this->paiementRepository->store($inputs2);
 
-        return redirect('/my_commande/'.$user_id)->withSuccess("Paiement effectué");
+        return redirect('/my-commande/'.$user_id)->withSuccess("Paiement effectué");
         //return redirect()->back()->withError("User must login");
     }
 

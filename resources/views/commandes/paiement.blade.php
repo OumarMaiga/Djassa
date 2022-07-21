@@ -59,14 +59,24 @@
         <div class="row">
             
             <div class="col s12">
-                <form method="POST" action="{{ route('commande.store_paiement', $commande->id) }}">
+                <form method="POST" action="{{ route('commande.store_paiement', $commande->id) }}" id="paiement">
                     @csrf
                     <!-- Montant -->
                     <div class="row">
                         <div class="form-item col-md-4">
                             <label for="montant">Montant</label>
-                            <input id="montant" class="form-control" type="text" name="montant" value="{{ $commande->montant_du }}" readonly />
+                            <!--<input id="montant" class="form-control" type="text" name="montant" value="{{ $commande->montant_du }}" readonly />-->
+                            <input id="montant" class="form-control" type="text" name="montant" value="100" readonly />
                             <input id="commande_id" class="form-control" type="hidden" name="commande_id" value="{{ $commande->id }}" readonly />
+                            <input id="customer_name" class="form-control" type="hidden" name="customer_name" value="Joe" readonly />
+                            <input id="customer_surname" class="form-control" type="hidden" name="customer_surname" value="Down" readonly />
+                            <input id="customer_email" class="form-control" type="hidden" name="customer_email" value="down@test.com" readonly />
+                            <input id="customer_phone_number" class="form-control" type="hidden" name="customer_phone_number" value="088767611" readonly />
+                            <input id="customer_address" class="form-control" type="hidden" name="customer_address" value="BP 0024" readonly />
+                            <input id="customer_city" class="form-control" type="hidden" name="customer_city" value="Antananarivo" readonly />
+                            <input id="customer_country" class="form-control" type="hidden" name="customer_country" value="CM" readonly />
+                            <input id="customer_state" class="form-control" type="hidden" name="customer_state" value="CM" readonly />
+                            <input id="customer_zip_code" class="form-control" type="hidden" name="customer_zip_code" value="06510" readonly />
                             
                             <x-button type="submit" class="mt-4">
                                 {{ __('Payez') }}

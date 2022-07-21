@@ -63,6 +63,7 @@ Route::get('/product/files/{product_id}', [ProductController::class, 'product_fi
 Route::get('/products/more-products/{page_number}', [ProductController::class, 'more_products_ajax'])->name('product.more_products_ajax');
 Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('recettes');
 Route::get('/dashboard/config', [PageController::class, 'config'])->name('dashboard.config')->middleware('auth');
+Route::get('/search/query={query}', [PageController::class, 'search'])->name('search');
 
 
 Route::resource('commande', CommandeController::class)->middleware('auth');
@@ -125,3 +126,7 @@ Route::delete('/dashboard/sub_sub_category/{id}', [SubSubCategoryController::cla
 
 
 Route::resource('paiement', PaiementController::class);
+
+Route::get('/cinetpay', function () {
+    return view('pages.cinetPay');
+})->middleware(['auth'])->name('cinetpay');
