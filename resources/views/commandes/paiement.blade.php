@@ -59,7 +59,7 @@
         <div class="row">
             
             <div class="col s12">
-                <form method="POST" action="{{ route('commande.store_paiement', $commande->id) }}" id="paiement">
+                <form method="POST" action="{{ route('commande.store_paiement', $commande->id) }}" id="paiement-form">
                     @csrf
                     <!-- Montant -->
                     <div class="row">

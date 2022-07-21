@@ -12,6 +12,8 @@ use App\Repositories\SubSubCategoryRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
+use App\Models\Product;
+
 class PageController extends Controller
 {
     
@@ -160,5 +162,21 @@ class PageController extends Controller
     public function config()
     {
         return view('dashboards.config');
+    }
+
+    public function search()
+    {
+        $query = $_GET['query'];
+        $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
+            products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
+            files.file_path as files_file_path
+            FROM products
+            LEFT JOIN files ON files.product_id = products.id AND products.quantity > 0
+            WHERE products.title LIKE '%$query%'
+            AND products.published = 1 
+            GROUP BY products.id");
+        
+        return response()->json(['products' => $products]);
+            
     }
 }

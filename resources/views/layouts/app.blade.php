@@ -43,7 +43,7 @@
             </main>
         </div>
         <script>
-            document.getElementById('go-back').addEventListener('click', () => {
+            jQuery('#go-back').click( (e) => {
                 history.back();
             });
         </script>

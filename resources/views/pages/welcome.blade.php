@@ -1,7 +1,7 @@
 <x-app-layout>
     @include('layouts.sidebar')
 
-    <div style="margin-left:19rem; margin-top:6.5rem">
+    <div style="margin-left:19rem; margin-top:6.5rem" id="container">
         <!-- Banners -->
         <div class="row" style="margin-right:1rem">
             <div class="col">

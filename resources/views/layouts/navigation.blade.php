@@ -10,9 +10,10 @@
                     </a>
                 </div>
 
-                <!-- Search input -->
-                <input style="height:70%; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:0.75rem" placeholder="Rechercher un produit"/>
-
+                <!-- Search -->
+                <form action="{{route('search')}}" id="search-form" method="GET">
+                    <input style="height:70%; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:0.75rem" name="query" placeholder="Rechercher un produit"/>
+                </form>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     @if(Auth::check() && Auth::user()->type === "admin")
