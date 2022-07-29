@@ -77,7 +77,7 @@
                 @if($product->conservation != "") 
                     <h3 style="font-weight:700;font-size:18px; margin-top:2rem">
                         Conservation
-                        <span style="font-weight:400;font-size:17PX; margin-left:2.4%">{{ $product->conservation }}</span>
+                        <span style="font-weight:400;font-size:17PX; margin-left:8.5%">{{ $product->conservation }}</span>
                     </h3>
                 @endif
                 @if($product->emballage != "") 

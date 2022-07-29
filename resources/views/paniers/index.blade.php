@@ -11,7 +11,7 @@
 
                     <div class="col-lg-7">
                     @if($total)
-                        <h5 class="mb-3"><a href="http://127.0.0.1:8000/" style="font-size:18px; font-weight:600"><i
+                        <h5 class="mb-3"><a href="{{ route('welcome') }}" style="font-size:18px; font-weight:600"><i
                             class="fas fa-long-arrow-alt-left me-2"></i>Continuer mes achats</a></h5>
                         <hr>
 
@@ -64,7 +64,7 @@
                         @else
                         <span class="card-title center-align">Le panier est vide</span>
                         @endif
-                        <a  href="{{ route('products') }}" style="margin-top:1rem; display:block; color:#ec6333">Continuer mes achats</a>
+                        <a  href="{{ route('welcome') }}" style="margin-top:1rem; display:block; color:#ec6333">Continuer mes achats</a>
                     </div>
                     <div class="col-lg-5">
 
@@ -87,11 +87,11 @@
                                 <form  method="POST" action="{{ route('commande.store') }}" style="margin-top:2.5rem">
                                     @csrf
                                     <div class="form-outline form-white mb-4">
-                                        <input id="firstname" class="form-control" type="text" name="firstname" value="{{ old('firstname') }}" placeholder="Prenom" />
+                                        <input id="firstname" class="form-control" type="text" name="firstname" value="{{ old('firstname') }}" placeholder="Prenom" required />
                                     </div>
 
                                     <div class="form-outline form-white mb-4">
-                                        <input id="lastname" class="form-control" type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Nom" />
+                                        <input id="lastname" class="form-control" type="text" name="lastname" value="{{ old('lastname') }}" placeholder="Nom" required />
                                     </div>
 
                                     <!-- <div class="form-outline form-white mb-4">
@@ -99,7 +99,7 @@
                                     </div> -->
 
                                     <div class="form-outline form-white mb-4">
-                                        <input id="telephone" class="form-control" type="text" name="telephone" value="{{ old('telephone') }}" placeholder="Telephone" />
+                                        <input id="telephone" class="form-control" type="text" name="telephone" value="{{ old('telephone') }}" placeholder="Telephone" required />
                                     </div>
 
                                     <hr class="my-4">

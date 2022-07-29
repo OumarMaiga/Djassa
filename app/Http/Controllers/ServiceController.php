@@ -77,7 +77,7 @@ class ServiceController extends Controller
             
         $service = $this->serviceRepository->store($request->all());
 
-        return redirect("/service/me/".Auth::user()->id)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
+        return redirect("/service/".Auth::user()->id)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
     
     }
 
@@ -104,8 +104,9 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function edit(Service $service)
+    public function edit($id)
     {
+        $service = $this->serviceRepository->getById($id);
         return view('services.edit', compact('service'));
     }
 

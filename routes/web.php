@@ -81,10 +81,10 @@ Route::post('/service', [ServiceController::class, 'store'])->name('service.stor
 Route::get('/service/{id}/edit', [ServiceController::class, 'edit'])->name('service.edit')->middleware('auth');
 Route::put('/service/{id}', [ServiceController::class, 'update'])->name('service.update')->middleware('auth');
 Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy')->middleware('auth');
-Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
-Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress');
-Route::post('/dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index');
-Route::get('/dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index');
+Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
+Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
+Route::post('/dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
+Route::get('/dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
 
 Route::get('/dashboard/rayon', [RayonController::class, 'index'])->name('dashboard.rayon.index')->middleware('auth');
 Route::get('/dashboard/rayon/create', [RayonController::class, 'create'])->name('dashboard.rayon.create')->middleware('auth');

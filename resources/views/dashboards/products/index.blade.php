@@ -32,7 +32,7 @@
                             <td>{{ $product->product_price }}</td>
                             <td>{{ $product->product_quantity }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('dashboard.product.show', $product->product_id) }}" style="display:inline-block; margin-right:0.75rem">
+                                <a href="{{ route('product.detail', $product->product_id) }}" style="display:inline-block; margin-right:0.75rem">
                                     <ion-icon name="eye-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                                 <a href="{{ route('dashboard.product.edit', $product->product_id) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem">
