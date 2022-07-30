@@ -12,10 +12,10 @@
             <table class="table table-hover table-responsive" style="margin-top: 2rem">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Catégorie</th>
-                    <th scope="col">Rayon</th>
-                    <th scope="col">Action</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Catégorie</th>
+                        <th scope="col">Rayon</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>

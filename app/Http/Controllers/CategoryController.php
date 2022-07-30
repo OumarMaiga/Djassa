@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\File;
 
 use App\Repositories\CategoryRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\RayonRepository;
+use App\Repositories\FileRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -18,13 +20,15 @@ class CategoryController extends Controller
     protected $categoryRepository;
     protected $subCategoryRepository;
     protected $rayonRepository;
+    protected $fileRepository;
 
     public function __construct(CategoryRepository $categoryRepository, RayonRepository $rayonRepository, 
-        SubCategoryRepository $subCategoryRepository) 
+        SubCategoryRepository $subCategoryRepository, FileRepository $fileRepository) 
     {
         $this->categoryRepository = $categoryRepository;
         $this->subCategoryRepository = $subCategoryRepository;
         $this->rayonRepository = $rayonRepository;
+        $this->fileRepository = $fileRepository;
     }
     /**
      * Display a listing of the resource.
@@ -34,9 +38,13 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = DB::select('SELECT categories.id as category_id, categories.rayon_id as category_rayon_id, categories.title as category_title,
-        rayons.id as rayon_id, rayons.title as rayon_title
-        FROM categories LEFT JOIN rayons ON categories.rayon_id = rayons.id
-        WHERE categories.etat="enabled"');
+        rayons.id as rayon_id, rayons.title as rayon_title,
+        files.file_path as category_image
+        FROM categories 
+        LEFT JOIN rayons ON categories.rayon_id = rayons.id
+        LEFT JOIN files ON categories.id = files.category_id
+        WHERE categories.etat="enabled"
+        ORDER BY category_id ASC');
 
         return view('dashboards.categories.index', compact('categories'));
     }
@@ -74,6 +82,21 @@ class CategoryController extends Controller
             
         $category = $this->categoryRepository->store($request->all());
 
+        // Enregistrement de l'image
+        if($request->hasFile('category_image')) {
+            //On upload l'image selectionner
+            if ($imagefile = $request->file('category_image')) {
+                $fileModel = new File;
+                $fileName = time().'_'.$imagefile->getClientOriginalName();
+                $filePath = $imagefile->storeAs("uploads/category_image/".$category->id, $fileName, 'public');
+                $fileModel->libelle = $fileName;
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->user_id =  Auth::check() ? Auth::user()->id : null;
+                $fileModel->category_id = $category->id;
+                $fileModel->type = 'category_image';
+                $fileModel->save();
+            }
+        }
         return redirect('/dashboard/category/')->withStatus("Nouveau category (".$category->title.") vient d'être ajouté");
     
     }
@@ -113,7 +136,27 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $category = $this->categoryRepository->getById($id);
         $this->categoryRepository->update($id, $request->all());
+        
+        if($request->hasFile('category_image')) {
+            // On supprime toutes les images de la categorie
+            $this->fileRepository->deleteBy('category_id', $category->id);
+
+            //On upload l'image selectionner
+            if ($imagefile = $request->file('category_image')) {
+                $fileModel = new File;
+                $fileName = time().'_'.$imagefile->getClientOriginalName();
+                $filePath = $imagefile->storeAs("uploads/category_image/".$category->id, $fileName, 'public');
+                $fileModel->libelle = $fileName;
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->user_id =  Auth::check() ? Auth::user()->id : null;
+                $fileModel->category_id = $category->id;
+                $fileModel->type = 'category_image';
+                $fileModel->save();
+            }
+        } 
+
         return redirect('/dashboard/category')->withStatus("Category a bien été modifier");
     }
 

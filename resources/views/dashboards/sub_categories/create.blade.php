@@ -9,7 +9,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('dashboard.sub_category.store') }}">
+            <form method="POST" action="{{ route('dashboard.sub_category.store') }}" enctype="multipart/form-data">
                 @csrf
     
                 <!-- Email Address -->
@@ -42,10 +42,10 @@
                     </div>
                 </div>
                 
-                <div class="row">
+                <div class="row  mt-4">
                     <div class="form-item col-md-6">
-                        <label for="image">Ajouter l'image du sous-categorie</label>
-                        <input id="image" class="form-control" type="file" name="image" value="" placeholder="" />
+                        <label for="sub_category_image">Ajouter l'image de la categrie</label>
+                        <x-input id="sub_category_image" class="form-control" type="file" name="sub_category_image" value="" />
                     </div>
                 </div>
                     

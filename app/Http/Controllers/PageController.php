@@ -77,7 +77,14 @@ class PageController extends Controller
     {
         $rayons = $this->rayonRepository->get();
         $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
-        $sub_categories = $this->subCategoryRepository->getBy('category_id', $category->id);
+        $sub_categories = DB::select("SELECT sub_categories.id as sub_category_id, sub_categories.slug as sub_category_slug, sub_categories.title as sub_category_title,
+        files.file_path as sub_category_image
+        FROM sub_categories 
+        LEFT JOIN rayons ON sub_categories.rayon_id = rayons.id
+        LEFT JOIN categories ON sub_categories.category_id = categories.id
+        LEFT JOIN files ON sub_categories.id = files.sub_category_id
+        WHERE sub_categories.category_id=$category->id
+        ORDER BY sub_category_id ASC");
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
                         products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path

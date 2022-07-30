@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\SubCategory;
+use App\Models\File;
 
 use App\Repositories\RayonRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\SubSubCategoryRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\FileRepository;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -20,12 +22,15 @@ class SubCategoryController extends Controller
     protected $subCategoryRepository;
     protected $categoryRepository;
     protected $subSubCategoryRepository;
+    protected $fileRepository;
 
-    public function __construct(RayonRepository $rayonRepository, SubCategoryRepository $subCategoryRepository, SubSubCategoryRepository $subSubCategoryRepository, CategoryRepository $categoryRepository) {
+    public function __construct(RayonRepository $rayonRepository, SubCategoryRepository $subCategoryRepository, 
+            SubSubCategoryRepository $subSubCategoryRepository, CategoryRepository $categoryRepository, FileRepository $fileRepository) {
         $this->rayonRepository = $rayonRepository;
         $this->subCategoryRepository = $subCategoryRepository;
         $this->subSubCategoryRepository = $subSubCategoryRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->fileRepository = $fileRepository;
     }
     /**
      * Display a listing of the resource.
@@ -36,12 +41,15 @@ class SubCategoryController extends Controller
     {
         $sub_categories = DB::select('SELECT sub_categories.id as sub_category_id, sub_categories.slug as sub_category_slug, sub_categories.title as sub_category_title,
         rayons.id as rayon_id, rayons.slug as rayon_slug, rayons.title as rayon_title,
-        categories.id as category_id, categories.slug as category_slug, categories.title as category_title
+        categories.id as category_id, categories.slug as category_slug, categories.title as category_title,
+        files.file_path as sub_category_image
         FROM sub_categories 
         LEFT JOIN rayons ON sub_categories.rayon_id = rayons.id
         LEFT JOIN categories ON sub_categories.category_id = categories.id
-        WHERE sub_categories.etat="enabled"');
-
+        LEFT JOIN files ON sub_categories.id = files.sub_category_id
+        WHERE sub_categories.etat="enabled"
+        ORDER BY sub_category_id ASC');
+        
         return view('dashboards.sub_categories.index', compact('sub_categories'));
     }
 
@@ -77,9 +85,24 @@ class SubCategoryController extends Controller
             'etat' => 'enabled',
         ]);
             
-        $subCategory = $this->subCategoryRepository->store($request->all());
+        $sub_category = $this->subCategoryRepository->store($request->all());
 
-        return redirect('/dashboard/sub_category/')->withStatus("Nouveau subCategory (".$subCategory->title.") vient d'être ajouté");
+        // Enregistrement de l'image
+        if($request->hasFile('sub_category_image')) {
+            //On upload l'image selectionner
+            if ($imagefile = $request->file('sub_category_image')) {
+                $fileModel = new File;
+                $fileName = time().'_'.$imagefile->getClientOriginalName();
+                $filePath = $imagefile->storeAs("uploads/sub_category_image/".$sub_category->id, $fileName, 'public');
+                $fileModel->libelle = $fileName;
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->user_id =  Auth::check() ? Auth::user()->id : null;
+                $fileModel->sub_category_id = $sub_category->id;
+                $fileModel->type = 'sub_category_image';
+                $fileModel->save();
+            }
+        }
+        return redirect('/dashboard/sub_category/')->withStatus("Nouveau subCategory (".$sub_category->title.") vient d'être ajouté");
     
     }
 
@@ -119,8 +142,29 @@ class SubCategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $sub_category = $this->subCategoryRepository->getById($id);
         $this->subCategoryRepository->update($id, $request->all());
-        return redirect('/dashboard/sub_categories')->withStatus("SubCategory a bien été modifier");
+        
+        // Enregistrement de l'image
+        if($request->hasFile('sub_category_image')) {
+            // On supprime toutes les images de la categorie
+            $this->fileRepository->deleteBy('sub_category_id', $sub_category->id);
+
+            //On upload l'image selectionner
+            if ($imagefile = $request->file('sub_category_image')) {
+                $fileModel = new File;
+                $fileName = time().'_'.$imagefile->getClientOriginalName();
+                $filePath = $imagefile->storeAs("uploads/sub_category_image/".$sub_category->id, $fileName, 'public');
+                $fileModel->libelle = $fileName;
+                $fileModel->file_path = '/storage/' . $filePath;
+                $fileModel->user_id =  Auth::check() ? Auth::user()->id : null;
+                $fileModel->sub_category_id = $sub_category->id;
+                $fileModel->type = 'sub_category_image';
+                $fileModel->save();
+            }
+        }
+
+        return redirect('/dashboard/sub_category')->withStatus("SubCategory a bien été modifier");
     }
 
     /**
