@@ -23,10 +23,10 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         User::create([
             'name' => 'Admin',
-            'email' => 'admin@djassa.com',
+            'email' => 'superadmin@djassa.com',
             'password' => Hash::make('password123'),
             'etat' => 'enabled',
-            'type' => 'admin'
+            'type' => 'super-admin'
         ])->save();
  
         Rayon::create([

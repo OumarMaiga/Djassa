@@ -183,7 +183,10 @@ class PageController extends Controller
             AND products.published = 1 
             GROUP BY products.id");
         
-        return response()->json(['products' => $products]);
+        $rayons = $this->rayonRepository->get();
+
+        //return response()->json(['products' => $products]);
+        return view('pages.search', compact('products', 'query', 'rayons'));
             
     }
 }
