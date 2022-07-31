@@ -16,7 +16,7 @@
                 </form>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    @if(Auth::check() && Auth::user()->type === "admin")
+                    @if(Auth::check() && (Auth::user()->type === "super-admin" || Auth::user()->type === "admin"))
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
@@ -34,7 +34,7 @@
                             Commandes
                         </x-nav-link> 
                         
-                        @if(Auth::user()->type === "admin")
+                        @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
                             <x-nav-link :href="route('dashboard.config')">
                                 Config
                             </x-nav-link>
@@ -76,7 +76,7 @@
                     <x-slot name="content">
                         
                         @if (Auth::check())
-                            @if(Auth::user()->type === "admin")
+                            @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
                                 <x-dropdown-link :href="route('dashboard')">
                                     Dashboard
                                 </x-dropdown-link>

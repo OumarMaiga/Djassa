@@ -12,6 +12,7 @@ use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\RayonController;
 use App\Http\Controllers\PaiementController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +45,16 @@ Route::post('/dashboard/product', [ProductController::class, 'store'])->name('da
 Route::get('/dashboard/product/{id}/edit', [ProductController::class, 'edit'])->name('dashboard.product.edit')->middleware('auth');
 Route::put('/dashboard/product/{id}', [ProductController::class, 'update'])->name('dashboard.product.update')->middleware('auth');
 Route::delete('/dashboard/product/{id}', [ProductController::class, 'destroy'])->name('dashboard.product.destroy')->middleware('auth');
+
+Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin.index')->middleware('auth');
+Route::get('/dashboard/admin/create', [AdminController::class, 'create'])->name('dashboard.admin.create')->middleware('auth');
+Route::get('/dashboard/admin/{id}', [AdminController::class, 'show'])->name('dashboard.admin.show')->middleware('auth');
+Route::post('/dashboard/admin', [AdminController::class, 'store'])->name('dashboard.admin.store')->middleware('auth');
+Route::get('/dashboard/admin/{id}/edit', [AdminController::class, 'edit'])->name('dashboard.admin.edit')->middleware('auth');
+Route::put('/dashboard/admin/{id}', [AdminController::class, 'update'])->name('dashboard.admin.update')->middleware('auth');
+Route::delete('/dashboard/admin/{id}', [AdminController::class, 'destroy'])->name('dashboard.admin.destroy')->middleware('auth');
+Route::get('/dashboard/admin/{id}/blocked', [AdminController::class, 'blocked'])->name('dashboard.admin.blocked')->middleware('auth');
+Route::get('/dashboard/admin/{id}/unblocked', [AdminController::class, 'unblocked'])->name('dashboard.admin.unblocked')->middleware('auth');
 
 Route::get('/dashboard/user/', [UserController::class, 'index'])->name('dashboard.user.index')->middleware('auth');
 Route::get('/dashboard/user/{id}', [UserController::class, 'show'])->name('dashboard.user.show')->middleware('auth');
