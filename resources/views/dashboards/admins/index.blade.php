@@ -52,7 +52,7 @@
                                 <form method="POST" action="{{ route('dashboard.admin.destroy', $admin->id) }}" style="display:inline-block">
                                     @csrf
                                     @method('delete')
-                                        <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette admin ?')">
+                                        <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette admin ?')" title="Supprimer">
                                             <ion-icon name="trash-outline" style="font-size:24px; color:red;"></ion-icon>
                                         </button>
                                 </form>

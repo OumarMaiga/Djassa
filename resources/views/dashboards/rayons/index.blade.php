@@ -71,14 +71,14 @@
                             <td>{{ $rayon->title }}</td>
                             <td class="justify-content-between icon-content">
                                 <!-- <a href="{{ route('dashboard.rayon.show', $rayon->id) }}">Voir</a> -->
-                                <a href="{{ route('dashboard.rayon.edit', $rayon->id) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem">
+                                <a href="{{ route('dashboard.rayon.edit', $rayon->id) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
                                     <ion-icon name="create-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                                 <span class="col icon-action" style="display:inline-block">
                                     <form method="POST" action="{{ route('dashboard.rayon.destroy', $rayon->id) }}">
                                         @csrf
                                         @method('delete')
-                                            <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce rayon?')">
+                                            <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce rayon?')" title="Supprimer">
                                                 <ion-icon name="trash-outline" style="font-size:24px; color:red;"></ion-icon>
                                             </button>
                                     </form>

@@ -15,3 +15,8 @@
 #sub_sub_category_id_container{
     display: none;
 }
+
+/* Icon */
+ion-icon {
+    pointer-events: none;
+}
