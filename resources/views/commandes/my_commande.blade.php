@@ -12,11 +12,9 @@
                 <thead>
                     <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Fullname</th>
-                    <th scope="col">Telephone</th>
+                    <th scope="col">Nom & Prénom</th>
                     <th scope="col">Code</th>
                     <th scope="col">Produits</th>
-                    <th scope="col">Utilisateur</th>
                     <th scope="col">Montant dû</th>
                     <th scope="col">Montant payer</th>
                     <th scope="col">Etat</th>
@@ -35,8 +33,7 @@
                     ?>
                         <tr>
                             <th scope="row">{{ $n }}</th>
-                            <td>{{ "$commande->commande_firstname $commande->commande_lastname" }}</td>
-                            <td>{{ $commande->commande_telephone }}</td>
+                            <td>{{ $commande->user_name }}</td>
                             <td>{{ $commande->commande_code }}</td>
                             <td>
                                 <?php 
@@ -48,7 +45,6 @@
                                 }
                                 ?>
                             </td>
-                            <td>{{ $commande->user_name }}</td>
                             <td>{{ $commande->commande_montant_du }}</td>
                             <td>{{ $commande->commande_montant_payer }}</td>
                             <td>{!! $commande->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>

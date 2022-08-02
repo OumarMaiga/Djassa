@@ -11,19 +11,16 @@
                 <table class="table table-hover table-responsive" style="margin-top: 2rem">
                     <thead>
                         <tr>
-                        <th scope="col">Fullname</th>
-                        <th scope="col">Telephone</th>
+                        <th scope="col">Utilisateur</th>
                         <th scope="col">Code</th>
                         <th scope="col">Produits</th>
-                        <th scope="col">Utilisateur</th>
                         <th scope="col">Etat</th>
                         <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                             <tr>
-                                <td>{{ "$commande->firstname $commande->lastname" }}</td>
-                                <td>{{ $commande->telephone }}</td>
+                                <td>{{ $commande->user_name }}</td>
                                 <td>{{ $commande->code }}</td>
                                 <td>
                                     <?php 
@@ -35,7 +32,6 @@
                                     }
                                     ?>
                                 </td>
-                                <td>{{ $commande->user_name }}</td>
                                 <td>{!! $commande->delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
                                 <td>
                                     @if($commande->paid)
