@@ -92,58 +92,73 @@
                 <div class="tab-pane fade" id="valeurs_nutritionnelles" role="tabpanel" aria-labelledby="valeurs_nutritionnelles-tab" style="margin-top:3%"> 
                     <ul>
                         @if($product->sodium != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Sodium</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->sodium }}</span>
+                            <li style="display:inline">
+                                <span style="font-weight:700;font-size:18px">Sodium</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->sodium }}</span>
                             </li>
                         @endif
                         @if($product->potassium != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Potassium</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->potassium }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Potassium</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->potassium }}</span>
                             </li>
                         @endif
                         @if($product->magnesium != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Magnesium</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->magnesium }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Magnesium</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->magnesium }}</span>
                             </li>
                         @endif
                         @if($product->fluorure != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Fluorure</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->fluorure }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Fluorure</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->fluorure }}</span>
                             </li>
                         @endif
+                    </ul>
+                    <ul style="margin-top:2%">
                         @if($product->silicium_siO2 != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Silicium_siO2</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->silicium_siO2 }}</span>
+                            <li style="display:inline">
+                                <span style="font-weight:700;font-size:18px">Silicium_siO2</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->silicium_siO2 }}</span>
                             </li>
                         @endif
                         @if($product->cendres != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Cendres</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->cendres }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Cendres</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->cendres }}</span>
                             </li>
                         @endif
                         @if($product->bicarbonate != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Bicarbonate</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->bicarbonate }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Bicarbonate</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->bicarbonate }}</span>
                             </li>
                         @endif
                         @if($product->sels_minéraux_totaux_sels_minéraux != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Sels minéraux totaux et sels minéraux</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->sels_minéraux_totaux_sels_minéraux }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Sels minéraux totaux et sels minéraux</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->sels_minéraux_totaux_sels_minéraux }}</span>
                             </li>
                         @endif
+                    </ul>
+                    <ul style="margin-top:2%">
                         @if($product->nitrate != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Nitrate</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->nitrate }}</span>
+                            <li style="display:inline">
+                                <span style="font-weight:700;font-size:18px">Nitrate</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->nitrate }}</span>
                             </li>
                         @endif
                         @if($product->strontium != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Strontium</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->strontium }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Strontium</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->strontium }}</span>
                             </li>
                         @endif
                         @if($product->sulfate != "") 
-                            <li>
-                                <span style="font-weight:700;font-size:18px">Sulfate</span><span style="font-weight:400;font-size:17PX; margin-left:9%">{{ $product->sulfate }}</span>
+                            <li style="display:inline; margin-left:3%">
+                                <span style="font-weight:700;font-size:18px">Sulfate</span>
+                                <span style="font-weight:400;font-size:17PX; margin-left:2%">{{ $product->sulfate }}</span>
                             </li>
                         @endif
                     </ul>
@@ -154,17 +169,20 @@
                 
                 @if($product->designation_legale != "") 
                     <p>
-                    <span style="font-weight:700;font-size:18px">Désignation légale</span><span style="font-weight:400;font-size:17PX; margin-left:6.5%">{{ $product->designation_legale }}</span>
+                    <span style="font-weight:700;font-size:18px">Désignation légale</span>
+                    <span style="font-weight:400;font-size:17PX; margin-left:6.5%">{{ $product->designation_legale }}</span>
                     </p>
                 @endif
                 @if($product->distributeur != "") 
                     <p style="margin-top:2rem">
-                    <span style="font-weight:700;font-size:18px; margin-top:2rem">Distributeur</span><span style="font-weight:400;font-size:17PX; margin-left:7.5%">{{ $product->distributeur }}</span>
+                    <span style="font-weight:700;font-size:18px; margin-top:2rem">Distributeur</span>
+                    <span style="font-weight:400;font-size:17PX; margin-left:10.8%">{{ $product->distributeur }}</span>
                     </p> 
                 @endif
                 @if($product->duree_conservation != "") 
                     <p style="margin-top:2rem">
-                    <span style="font-weight:700;font-size:18px; margin-top:2rem">Duree de conservation</span><span style="font-weight:400;font-size:17PX; margin-left:7.5%">{{ $product->duree_conservation }}</span>
+                    <span style="font-weight:700;font-size:18px; margin-top:2rem">Duree de conservation</span>
+                    <span style="font-weight:400;font-size:17PX; margin-left:4%">{{ $product->duree_conservation }}</span>
                     </p> 
                 @endif
             </div>
