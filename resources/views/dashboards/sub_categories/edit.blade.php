@@ -1,7 +1,13 @@
 <x-app-layout>
     <div class="dashboard-content" style="margin-top: 6rem">
         <div class="container content">
-            <div class="content-title">{{ __('MODIFICATION DE SOUS-CATEGORY') }}</div>
+            <div class="container content">
+                <div style="margin-bottom:1rem">
+                <span class="mr-2" style="float: left; display: inline-block; padding-top:0.5rem; cursor: pointer;" id="go-back"><ion-icon name="return-up-back-outline" style="font-size:36px;"></ion-icon></span>
+                <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
+                    {{ __('MODIFICATION DE LA SOUS-CATÉGORIE') }}
+                </h3>
+            </div>
     
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -12,20 +18,21 @@
             <form method="POST" action="{{ route('dashboard.sub_category.update', $sub_category->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
-                <!-- Email Address -->
+
                 <div class="row">
                     <div class="form-item col-md-6">
-                        <label for="title">Titre</label>
-                        <input id="title" class="form-control" type="text" name="title" value="{{ $sub_category->title }}" placeholder="title" />
+                        <!-- Subcategory -->
+                        <div>
+                            <x-label for="title" :value="__('Modifier la sous catégorie')" />
+                            <x-input id="title" class="form-control" type="text" name="title" value="{{ $sub_category->title }}" required autofocus />
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Email Address -->
-                <div class="row">
+                <div class="row" style="margin-top: 0.75rem">
                     <div class="form-item col-md-6">
-                        <label for="rayon_id">Rayon</label>
-                        <select name="rayon_id" id="rayon_id">
-                            <option value="">-- SELECTIONNEZ ICI --</option>
+                        <select name="rayon_id" id="rayon_id" class="form-control">
+                            <option value="">-- SELECTIONNEZ UN RAYON --</option>
                             @foreach($rayons as $rayon)
                                 <option value="{{ $rayon->id }}" <?= ($rayon->id == $sub_category->rayon_id) ? "selected=true" : "" ?>>{{ $rayon->title }}</option>
                             @endforeach
@@ -33,12 +40,10 @@
                     </div>
                 </div>
                 
-                <!-- Email Address -->
-                <div class="row">
+                <div class="row" style="margin-top: 0.75rem">
                     <div class="form-item col-md-6">
-                        <label for="category_id">Categorie</label>
-                        <select name="category_id" id="category_id">
-                            <option value="">-- SELECTIONNEZ ICI --</option>
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="">-- SELECTIONNEZ UNE CATÉGORIE --</option>
                             @foreach($categories as $category)
                                 <option value="{{ $category->id }}" <?= ($category->id == $sub_category->category_id) ? "selected=true" : "" ?>>{{ $category->title }}</option>
                             @endforeach
@@ -46,17 +51,17 @@
                     </div>
                 </div>
                 
-                <div class="row  mt-4">
+                <!-- <div class="row mt-4">
                     <div class="form-item col-md-6">
                         <label for="sub_category_image">Ajouter l'image de la sous-categrie</label>
                         <x-input id="sub_category_image" class="form-control" type="file" name="sub_category_image" value="" />
                     </div>
-                </div>
+                </div> -->
                     
                 <div class="mt-4">
-                    <button type="submit" class="">
+                    <x-button type="submit" class="">
                         {{ __('AJOUTER') }}
-                    </button>
+                    </x-button>
                 </div>
             </form>
         </div>

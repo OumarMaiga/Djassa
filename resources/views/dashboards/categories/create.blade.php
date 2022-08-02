@@ -1,7 +1,12 @@
 <x-app-layout>
     <div class="dashboard-content" style="margin-top: 6rem">
         <div class="container content">
-            <h1 class="content-title" style="margin-bottom:2rem; padding-top:1rem; font-weight:500; font-size:20px">{{ __('AJOUTER UNE CATÉGORIE') }}</h1>
+            <div style="margin-bottom:1rem">
+            <span class="mr-2" style="float: left; display: inline-block; padding-top:0.5rem; cursor: pointer;" id="go-back"><ion-icon name="return-up-back-outline" style="font-size:36px;"></ion-icon></span>
+            <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
+                {{ __('AJOUTER UNE CATÉGORIE') }}
+            </h3>
+        </div>
     
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
