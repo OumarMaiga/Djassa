@@ -31,6 +31,7 @@ class ProductController extends Controller
                                 CategoryRepository $categoryRepository, SubCategoryRepository $subCategoryRepository, CategoryRepository $subSubCategoryRepository,
                                 RayonRepository $rayonRepository) 
     {
+        $this->middleware('admin', ['only' => ['index', 'edit', 'update', 'destroy']]);
 
         $this->productRepository = $productRepository;
         $this->fileRepository = $fileRepository;

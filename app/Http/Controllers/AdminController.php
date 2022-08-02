@@ -16,6 +16,8 @@ class AdminController extends Controller
     protected $userRepository;
     
     public function __construct(UserRepository $userRepository) {
+        $this->middleware('superAdmin', ['only' => ['index', 'create', 'store', 'destroy',  'blocked', 'unblocked']]);
+        $this->middleware('admin', ['only' => ['show', 'edit', 'update']]);
         $this->userRepository = $userRepository;
     }
 

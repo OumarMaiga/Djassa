@@ -17,6 +17,7 @@ class CommandeController extends Controller
     protected $paiementRepository;
 
     public function __construct(CommandeRepository $commandeRepository, PaiementRepository $paiementRepository) {
+        $this->middleware('admin', ['only' => ['index']]);
         $this->commandeRepository = $commandeRepository;
         $this->paiementRepository = $paiementRepository;
     }
@@ -216,9 +217,7 @@ class CommandeController extends Controller
             die("User must login");
             exit;
         }
-        
-        die("p");
-        
+                
         $commande = $this->commandeRepository->getById($id);
         $montant_du = $commande->montant_du - $request->montant;
         $montant_payer = $commande->montant_payer + $request->montant;

@@ -25,6 +25,7 @@ class CategoryController extends Controller
     public function __construct(CategoryRepository $categoryRepository, RayonRepository $rayonRepository, 
         SubCategoryRepository $subCategoryRepository, FileRepository $fileRepository) 
     {
+        $this->middleware('superAdmin', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->categoryRepository = $categoryRepository;
         $this->subCategoryRepository = $subCategoryRepository;
         $this->rayonRepository = $rayonRepository;

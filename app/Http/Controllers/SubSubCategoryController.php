@@ -22,6 +22,7 @@ class SubSubCategoryController extends Controller
     protected $categoryRepository;
 
     public function __construct(RayonRepository $rayonRepository, SubSubCategoryRepository $subSubCategoryRepository, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository) {
+        $this->middleware('superAdmin', ['only' => ['index', 'create', 'store', 'destroy', 'show', 'edit', 'update']]);
         $this->rayonRepository = $rayonRepository;
         $this->subSubCategoryRepository = $subSubCategoryRepository;
         $this->subCategoryRepository = $subCategoryRepository;

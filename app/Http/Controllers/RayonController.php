@@ -17,6 +17,7 @@ class RayonController extends Controller
     protected $categoryRepository;
 
     public function __construct(RayonRepository $rayonRepository, CategoryRepository $categoryRepository) {
+        $this->middleware('superAdmin', ['only' => ['index', 'create', 'store', 'destroy', 'show', 'edit', 'update']]);
         $this->rayonRepository = $rayonRepository;
         $this->categoryRepository = $categoryRepository;
     }

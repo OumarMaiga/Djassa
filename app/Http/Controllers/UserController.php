@@ -16,6 +16,7 @@ class UserController extends Controller
     protected $userRepository;
 
     public function __construct(UserRepository $userRepository) {
+        $this->middleware('admin', ['only' => ['index', 'blocked', 'unblocked']]);
         $this->userRepository = $userRepository;
     }
     /**
