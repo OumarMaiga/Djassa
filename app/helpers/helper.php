@@ -20,3 +20,13 @@ function custom_date($date)
 
     return "$day $mois[$month] $year";
 }
+
+function custom_month_year($date) 
+{
+    $mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    $month = date("m", strtotime($date));
+    $month = $month - 1;
+    $year = date("Y", strtotime($date));
+
+    return "$mois[$month] $year";
+}

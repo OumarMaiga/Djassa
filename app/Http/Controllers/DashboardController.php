@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 
-class PageController extends Controller
+class DashboardController extends Controller
 {
     
     protected $productRepository;
@@ -38,29 +38,70 @@ class PageController extends Controller
         $this->subSubCategoryRepository = $subSubCategoryRepository;
         $this->userRepository = $userRepository;
     }
+        
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $admins = $this->userRepository->getBy('type', 'admin');
+        $users = $this->userRepository->getBy('type', 'user');
+        $commandes = $this->commandeRepository->getBy('delivered', 0);
+        $month = date('m');
+        $year = date('Y');
+        $ventes = DB::select("SELECT * FROM commandes 
+                            WHERE commandes.delivered = 1 && $month = MONTH(commandes.created_at) 
+                            AND $year = YEAR(commandes.created_at)");
+
+        return view('dashboards.dashboard', compact('admins', 'users', 'commandes', 'ventes'));
+    }
     
     /**
      * Display a listing of the product.
      *
      * @return \Illuminate\Http\Response
      */
-    public function welcome()
+    public function sells()
     {
-        $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
-            products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
-            files.file_path as files_file_path
-            FROM products
-            LEFT JOIN files ON files.product_id = products.id AND products.quantity > 0
-            WHERE products.published = 1
-            GROUP BY products.id");
+        $month = date('m');
+        $year = date('Y');
+        $sells = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+        commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
+        commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer,
+        users.name as user_name, 
+        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+        FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+        LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+        LEFT JOIN products ON commande_product.product_id = products.id 
+        WHERE commandes.delivered = 1 AND MONTH(commandes.created_at) = $month
+        AND YEAR(commandes.created_at) = $year GROUP BY commande_code
+        ");
 
-        $rayons = $this->rayonRepository->get();
-
-        $page_number = 1;
-
-        return view('pages.welcome', compact('products', 'rayons', 'page_number'));
+        return view('dashboards.sells', compact('sells'));
     }
-        
+    
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function commandes()
+    {        
+        $commandes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+        commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
+        commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer,
+        users.name as user_name, 
+        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+        FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+        LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+        LEFT JOIN products ON commande_product.product_id = products.id 
+        WHERE commandes.delivered = 0");
+
+        return view('dashboards.commandes', compact('commandes'));
+    }
+    
     /**
      * Display a listing of the product.
      *
@@ -69,7 +110,7 @@ class PageController extends Controller
     public function products()
     {
         $products = $this->productRepository->get();
-        return view('pages.products.index', compact('products'));
+        return view('dashboards.products.index', compact('products'));
     }
 
     /**
@@ -96,7 +137,7 @@ class PageController extends Controller
                         LEFT JOIN files ON files.product_id = products.id 
                         WHERE products.category_id = $category->id AND products.published = 1 AND products.quantity > 0
                         GROUP BY products.id");
-        return view('pages.product_per_category', compact('rayons', 'category', 'products', 'sub_categories'));
+        return view('dashboards.product_per_category', compact('rayons', 'category', 'products', 'sub_categories'));
     }
     
     /**
@@ -117,7 +158,7 @@ class PageController extends Controller
                         LEFT JOIN files ON files.product_id = products.id 
                         WHERE products.sub_category_id = $sub_category->id AND products.published = 1 AND products.quantity > 0
                         GROUP BY products.id");
-        return view('pages.product_per_sub_category', compact('rayons', 'category', 'sub_category', 'products', 'sub_sub_categories'));
+        return view('dashboards.product_per_sub_category', compact('rayons', 'category', 'sub_category', 'products', 'sub_sub_categories'));
     }
     
     /**
@@ -138,7 +179,25 @@ class PageController extends Controller
                         LEFT JOIN files ON files.product_id = products.id 
                         WHERE products.sub_sub_category_id = $sub_sub_category->id AND products.published = 1 AND products.quantity > 0
                         GROUP BY products.id");
-        return view('pages.product_per_sub_sub_category', compact('rayons', 'category', 'sub_category', 'products', 'sub_sub_category'));
+        return view('dashboards.product_per_sub_sub_category', compact('rayons', 'category', 'sub_category', 'products', 'sub_sub_category'));
+    }
+    
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function recettes()
+    {
+        // On recupère les commandes d'un utilisateur, les infos sur les produits
+        $recettes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, commandes.paid as commande_paid, users.name as user_name, 
+                                products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+                                FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+                                LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+                                LEFT JOIN products ON commande_product.product_id = products.id 
+                                WHERE commandes.paid = 1 GROUP BY commande_code");
+        return view('dashboards.recettes.index', compact('recettes'));
     }
     
     /**
@@ -149,7 +208,7 @@ class PageController extends Controller
      */
     public function product(Product $product)
     {
-        return view('pages.products.show', compact('product'));
+        return view('dashboards.products.show', compact('product'));
     }
 
     public function search()
@@ -167,7 +226,7 @@ class PageController extends Controller
         $rayons = $this->rayonRepository->get();
 
         //return response()->json(['products' => $products]);
-        return view('pages.search', compact('products', 'query', 'rayons'));
+        return view('dashboards.search', compact('products', 'query', 'rayons'));
             
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\SubSubCategoryController;
 use App\Http\Controllers\RayonController;
 use App\Http\Controllers\PaiementController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,13 +30,10 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [PageController::class, 'welcome'])->name('welcome');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard.index');
+Route::get('/dashboard/sells', [DashboardController::class, 'sells'])->middleware(['auth'])->name('dashboard.sells');
+Route::get('/dashboard/commandes', [DashboardController::class, 'commandes'])->middleware(['auth'])->name('dashboard.commandes');
+Route::get('/dashboard/recettes', [DashboardController::class, 'recettes'])->name('dashboard.recettes');
 
 //Route::resource('dashboard/product', ProductController::class)->middleware('auth');
 Route::get('/dashboard/product', [ProductController::class, 'index'])->name('dashboard.product.index')->middleware('auth');
@@ -72,8 +70,6 @@ Route::get('/product', [ProductController::class, 'list'])->name('product.index'
 Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/product/files/{product_id}', [ProductController::class, 'product_files_ajax'])->name('product.product_files_ajax');
 Route::get('/products/more-products/{page_number}', [ProductController::class, 'more_products_ajax'])->name('product.more_products_ajax');
-Route::get('/dashboard/recettes', [PageController::class, 'recettes'])->name('recettes');
-Route::get('/dashboard/config', [PageController::class, 'config'])->name('dashboard.config')->middleware('auth');
 Route::get('/search', [PageController::class, 'search'])->name('search');
 
 

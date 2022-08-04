@@ -52,7 +52,7 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="people-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">02</div>
+                                <div style="font-size:32px">{{ count($admins) }}</div>
                                 <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                                     ADMINISTRATEURS
                                 </h2>
@@ -67,8 +67,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="people-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">10</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
+                                <div style="font-size:32px">{{ count($users) }}</div>
+                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
                                     UTILISATEURS
                                 </h2>
                             </center>
@@ -77,13 +77,13 @@
                 </a>
             </div>
             <div class="col-4 mt-3">
-                <a href="#">
+                <a href="{{  route('dashboard.sells')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="bag-check-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">627</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
+                                <div style="font-size:32px">{{ count($ventes) }}</div>
+                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
                                     VENTE DU MOIS
                                 </h2>
                             </center>
@@ -92,13 +92,13 @@
                 </a>
             </div>
             <div class="col-4 mt-3">
-                <a href="#">
+                <a href="{{  route('dashboard.commandes')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="file-tray-full-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">17</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
+                                <div style="font-size:32px">{{ count($commandes) }}</div>
+                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
                                     COMMANDES EN COURS
                                 </h2>
                             </center>
