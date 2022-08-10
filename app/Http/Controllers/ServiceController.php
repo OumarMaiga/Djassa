@@ -120,7 +120,7 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         $this->serviceRepository->update($id, $request->all());
-        return redirect("/service/me/".Auth::user()->id)->withStatus("Service a bien été modifier");
+        return redirect("/my-service/".Auth::user()->id)->withStatus("Service a bien été modifier");
     }
 
     /**
@@ -142,7 +142,6 @@ class ServiceController extends Controller
     }
 
     public function done (Request $request, $id) {
-        //die('Fonctionnality nOt available');
 
         $service = $this->serviceRepository->getById($id);
         if($request->hasFile('proof')) {

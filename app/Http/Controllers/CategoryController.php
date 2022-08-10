@@ -57,7 +57,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+        $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
         return view('dashboards.categories.create', compact('rayons'));
     }
 
@@ -123,7 +123,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = $this->categoryRepository->getById($id);
-        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
+        $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
 
         return view('dashboards.categories.edit', compact('category', 'rayons'));
     }
@@ -181,7 +181,7 @@ class CategoryController extends Controller
      */
     public function sub_categories($id)
     {
-        $sub_categories = $this->subCategoryRepository->getBy('category_id', $id);
+        $sub_categories = $this->subCategoryRepository->getBy('category_id', '=', $id);
         return response()->json(['sub_categories' => $sub_categories]);
     }
     

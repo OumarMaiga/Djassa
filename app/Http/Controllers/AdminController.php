@@ -28,7 +28,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = $this->userRepository->getBy('type', 'admin');
+        $admins = $this->userRepository->getBy('type', '=', 'admin');
         return view('dashboards.admins.index', compact('admins'));
     }
 

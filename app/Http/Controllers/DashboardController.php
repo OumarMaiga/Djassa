@@ -9,6 +9,7 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\SubCategoryRepository;
 use App\Repositories\SubSubCategoryRepository;
 use App\Repositories\UserRepository;
+use App\Repositories\ServiceRepository;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -24,11 +25,12 @@ class DashboardController extends Controller
     protected $subCategoryRepository;
     protected $subSubCategoryRepository;
     protected $userRepository;
+    protected $serviceRepository;
     
     public function __construct(ProductRepository $productRepository, CommandeRepository $commandeRepository, 
                         RayonRepository $rayonRepository, CategoryRepository $categoryRepository, 
                         SubCategoryRepository $subCategoryRepository, SubSubCategoryRepository $subSubCategoryRepository,
-                        UserRepository $userRepository) {
+                        UserRepository $userRepository, ServiceRepository $serviceRepository) {
         //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->productRepository = $productRepository;
         $this->commandeRepository = $commandeRepository;
@@ -37,6 +39,7 @@ class DashboardController extends Controller
         $this->subCategoryRepository = $subCategoryRepository;
         $this->subSubCategoryRepository = $subSubCategoryRepository;
         $this->userRepository = $userRepository;
+        $this->serviceRepository = $serviceRepository;
     }
         
     /**
@@ -46,16 +49,17 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $admins = $this->userRepository->getBy('type', 'admin');
-        $users = $this->userRepository->getBy('type', 'user');
-        $commandes = $this->commandeRepository->getBy('delivered', 0);
+        $admins = $this->userRepository->getBy('type', '=', 'admin');
+        $users = $this->userRepository->getBy('type', '=', 'user');
+        $commandes = $this->commandeRepository->getBy('delivered', '=', 0);
         $month = date('m');
         $year = date('Y');
         $ventes = DB::select("SELECT * FROM commandes 
                             WHERE commandes.delivered = 1 && $month = MONTH(commandes.created_at) 
                             AND $year = YEAR(commandes.created_at)");
+        $services = $this->serviceRepository->getBy('etat', '<>', 'done');
 
-        return view('dashboards.dashboard', compact('admins', 'users', 'commandes', 'ventes'));
+        return view('dashboards.dashboard', compact('admins', 'users', 'commandes', 'ventes', 'services'));
     }
     
     /**
@@ -107,6 +111,24 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function services()
+    {
+        $services = DB::select("SELECT services.title as service_title, services.id as service_id, services.slug as service_slug,
+        services.beneficiaire as service_beneficiaire, services.telephone as service_telephone, services.user_id as service_user_id, 
+        services.montant as service_montant, services.paid as service_paid, services.expire as service_expire, services.etat as service_etat,
+        users.name as user_name
+        FROM services 
+        LEFT JOIN users ON services.user_id = users.id
+        WHERE services.etat != 'done'");
+
+        return view('dashboards.services', compact('services'));
+    }
+    
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function products()
     {
         $products = $this->productRepository->get();
@@ -121,7 +143,7 @@ class DashboardController extends Controller
     public function product_per_category($category_slug)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
+        $category = $this->categoryRepository->getBy('slug', '=', $category_slug)->first();
         $sub_categories = DB::select("SELECT sub_categories.id as sub_category_id, sub_categories.slug as sub_category_slug, sub_categories.title as sub_category_title,
         files.file_path as sub_category_image
         FROM sub_categories 
@@ -148,9 +170,9 @@ class DashboardController extends Controller
     public function product_per_sub_category($category_slug, $sub_category_slug)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
-        $sub_category = $this->subCategoryRepository->getBy('slug', $sub_category_slug)->first();        
-        $sub_sub_categories = $this->subSubCategoryRepository->getBy('sub_category_id', $sub_category->id);
+        $category = $this->categoryRepository->getBy('slug', '=', $category_slug)->first();
+        $sub_category = $this->subCategoryRepository->getBy('slug', '=', $sub_category_slug)->first();        
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('sub_category_id', '=', $sub_category->id);
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
                         products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path
@@ -169,9 +191,9 @@ class DashboardController extends Controller
     public function product_per_sub_sub_category($category_slug, $sub_category_slug, $sub_sub_category_slug)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
-        $sub_category = $this->subCategoryRepository->getBy('slug', $sub_category_slug)->first();
-        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', $sub_sub_category_slug)->first();
+        $category = $this->categoryRepository->getBy('slug', '=', $category_slug)->first();
+        $sub_category = $this->subCategoryRepository->getBy('slug', '=', $sub_category_slug)->first();
+        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', '=', $sub_sub_category_slug)->first();
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
                         products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path

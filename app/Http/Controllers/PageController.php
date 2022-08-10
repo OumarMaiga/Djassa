@@ -80,7 +80,7 @@ class PageController extends Controller
     public function product_per_category($category_slug)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
+        $category = $this->categoryRepository->getBy('slug', '=', $category_slug)->first();
         $sub_categories = DB::select("SELECT sub_categories.id as sub_category_id, sub_categories.slug as sub_category_slug, sub_categories.title as sub_category_title,
         files.file_path as sub_category_image
         FROM sub_categories 
@@ -107,9 +107,9 @@ class PageController extends Controller
     public function product_per_sub_category($category_slug, $sub_category_slug)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
-        $sub_category = $this->subCategoryRepository->getBy('slug', $sub_category_slug)->first();        
-        $sub_sub_categories = $this->subSubCategoryRepository->getBy('sub_category_id', $sub_category->id);
+        $category = $this->categoryRepository->getBy('slug', '=', $category_slug)->first();
+        $sub_category = $this->subCategoryRepository->getBy('slug', '=', $sub_category_slug)->first();        
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('sub_category_id', '=', $sub_category->id);
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
                         products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path
@@ -128,9 +128,9 @@ class PageController extends Controller
     public function product_per_sub_sub_category($category_slug, $sub_category_slug, $sub_sub_category_slug)
     {
         $rayons = $this->rayonRepository->get();
-        $category = $this->categoryRepository->getBy('slug', $category_slug)->first();
-        $sub_category = $this->subCategoryRepository->getBy('slug', $sub_category_slug)->first();
-        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', $sub_sub_category_slug)->first();
+        $category = $this->categoryRepository->getBy('slug', '=', $category_slug)->first();
+        $sub_category = $this->subCategoryRepository->getBy('slug', '=', $sub_category_slug)->first();
+        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', '=', $sub_sub_category_slug)->first();
         $products = DB::select("SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.overview as product_overview, 
                         products.price as product_price, products.quantity as product_quantity, products.published as product_published, products.discount as product_discount,
                         files.file_path as files_file_path

@@ -124,7 +124,7 @@ class RayonController extends Controller
      */
     public function categories($id)
     {
-        $categories = $this->categoryRepository->getBy('rayon_id', $id);
+        $categories = $this->categoryRepository->getBy('rayon_id', '=', $id);
         /*var_dump($categories);
         die();*/
         return response()->json(['categories' => $categories]);

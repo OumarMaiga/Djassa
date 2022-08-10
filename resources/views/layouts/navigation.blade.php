@@ -31,7 +31,7 @@
                     @endif -->
                     @if (Auth::check())
                         <x-nav-link :href="route('my_commande', Auth::user()->id)">
-                            Commandes
+                            Mes commandes
                         </x-nav-link> 
                         
                         @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
@@ -40,7 +40,7 @@
                             </x-nav-link>-->
                         @endif
                         <x-nav-link :href="route('service.index', Auth::user()->id)">
-                            Services
+                            Mes services
                         </x-nav-link>
                     @endif
                 </div>

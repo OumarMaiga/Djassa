@@ -63,10 +63,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
-        $categories = $this->categoryRepository->getBy('etat', 'enabled');
-        $sub_categories = $this->subCategoryRepository->getBy('etat', 'enabled');
-        $sub_sub_categories = $this->subSubCategoryRepository->getBy('etat', 'enabled');
+        $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
+        $categories = $this->categoryRepository->getBy('etat', '=', 'enabled');
+        $sub_categories = $this->subCategoryRepository->getBy('etat', '=', 'enabled');
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('etat', '=', 'enabled');
         return view('dashboards.products.create', compact('rayons', 'categories', 'sub_categories', 'sub_sub_categories' ));
     }
 
@@ -139,10 +139,10 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->getById($id);
 
-        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
-        $categories = $this->categoryRepository->getBy('etat', 'enabled');
-        $sub_categories = $this->subCategoryRepository->getBy('etat', 'enabled');
-        $sub_sub_categories = $this->subSubCategoryRepository->getBy('etat', 'enabled');
+        $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
+        $categories = $this->categoryRepository->getBy('etat', '=', 'enabled');
+        $sub_categories = $this->subCategoryRepository->getBy('etat', '=', 'enabled');
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('etat', '=', 'enabled');
         
         return view('dashboards.products.edit', compact('product', 'categories', 'rayons', 'sub_categories', 'sub_sub_categories'));
     }
@@ -211,7 +211,7 @@ class ProductController extends Controller
     public function detail($id)
     {
         $product = $this->productRepository->getById($id);
-        $images = $this->fileRepository->getBy("product_id", $product->id);
+        $images = $this->fileRepository->getBy("product_id", '=', $product->id);
         $category = $this->categoryRepository->getById($product->category_id);
         $rayon = $this->rayonRepository->getById($category->rayon_id);
 

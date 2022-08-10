@@ -106,6 +106,21 @@
                     </div>
                 </a>
             </div>
+            <div class="col-4 mt-3">
+                <a href="{{  route('dashboard.services')}}">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <center>
+                                <div class="mt-2"><ion-icon name="file-tray-full-outline" style="font-size:36px"></ion-icon></div>
+                                <div style="font-size:32px">{{ count($services) }}</div>
+                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                    SERVICES
+                                </h2>
+                            </center>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
     </div>
 

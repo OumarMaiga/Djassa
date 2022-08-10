@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepository->getBy('type', 'user');
+        $users = $this->userRepository->getBy('type', '=', 'user');
         return view('dashboards.users.index', compact('users'));
     }
 

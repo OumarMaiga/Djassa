@@ -34,6 +34,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['au
 Route::get('/dashboard/sells', [DashboardController::class, 'sells'])->middleware(['auth'])->name('dashboard.sells');
 Route::get('/dashboard/commandes', [DashboardController::class, 'commandes'])->middleware(['auth'])->name('dashboard.commandes');
 Route::get('/dashboard/recettes', [DashboardController::class, 'recettes'])->name('dashboard.recettes');
+Route::get('/dashboard/services', [DashboardController::class, 'services'])->name('dashboard.services');
 
 //Route::resource('dashboard/product', ProductController::class)->middleware('auth');
 Route::get('/dashboard/product', [ProductController::class, 'index'])->name('dashboard.product.index')->middleware('auth');
@@ -90,8 +91,8 @@ Route::put('/service/{id}', [ServiceController::class, 'update'])->name('service
 Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy')->middleware('auth');
 Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
 Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
-Route::post('/dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
-Route::get('/dashborad/service/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
+Route::post('/dashborad/services/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
+Route::get('/dashborad/services/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
 
 Route::get('/dashboard/rayon', [RayonController::class, 'index'])->name('dashboard.rayon.index')->middleware('auth');
 Route::get('/dashboard/rayon/create', [RayonController::class, 'create'])->name('dashboard.rayon.create')->middleware('auth');

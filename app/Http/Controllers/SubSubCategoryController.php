@@ -56,9 +56,9 @@ class SubSubCategoryController extends Controller
      */
     public function create()
     {
-        $rayons = $this->rayonRepository->getBy('etat', 'enabled');
-        $categories = $this->categoryRepository->getBy('etat', 'enabled');
-        $sub_categories = $this->subCategoryRepository->getBy('etat', 'enabled');
+        $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
+        $categories = $this->categoryRepository->getBy('etat', '=', 'enabled');
+        $sub_categories = $this->subCategoryRepository->getBy('etat', '=', 'enabled');
         return view('dashboards.sub_sub_categories.create', compact('categories', 'rayons', 'sub_categories'));
     }
 
@@ -110,10 +110,10 @@ class SubSubCategoryController extends Controller
     {
         $sub_sub_category = $this->subSubCategoryRepository->getById($id);
 
-        $rayons = $this->rayonRepository->getBy('id', $sub_sub_category->rayon_id);
-        $categories = $this->categoryRepository->getBy('id', $sub_sub_category->category_id);
-        $sub_categories = $this->subCategoryRepository->getBy('id', $sub_sub_category->sub_category_id);
-        $sub_sub_categories = $this->subSubCategoryRepository->getBy('id', $sub_sub_category->sub_sub_category_id);
+        $rayons = $this->rayonRepository->getBy('id', '=', $sub_sub_category->rayon_id);
+        $categories = $this->categoryRepository->getBy('id', '=', $sub_sub_category->category_id);
+        $sub_categories = $this->subCategoryRepository->getBy('id', '=', $sub_sub_category->sub_category_id);
+        $sub_sub_categories = $this->subSubCategoryRepository->getBy('id', '=', $sub_sub_category->sub_sub_category_id);
 
         return view('dashboards.sub_sub_categories.edit', compact('sub_sub_category', 'categories', 'rayons', 'sub_categories'));
     }
