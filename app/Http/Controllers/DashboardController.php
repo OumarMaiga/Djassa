@@ -213,7 +213,8 @@ class DashboardController extends Controller
     {
         // On recupère les commandes d'un utilisateur, les infos sur les produits
         $recettes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
-                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, commandes.paid as commande_paid, users.name as user_name, 
+                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
+                                commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer, users.name as user_name, 
                                 products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
                                 FROM commandes LEFT JOIN users ON commandes.user_id = users.id
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id

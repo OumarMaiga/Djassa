@@ -97,6 +97,23 @@ class ServiceController extends Controller
         }
         return view('services.show', compact('service', 'file'));
     }
+    
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Service  $service
+     * @return \Illuminate\Http\Response
+     */
+    public function dashboard_show($id)
+    {
+        $service = $this->serviceRepository->getById($id);
+        $file = null;
+        if ($service->etat === "done") {
+            $file = File::where('service_id', $service->id)->limit(1)->get()[0];
+            $file->file_path = env('APP_URL').$file->file_path;
+        }
+        return view('services.show', compact('service', 'file'));
+    }
 
     /**
      * Show the form for editing the specified resource.

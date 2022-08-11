@@ -43,15 +43,19 @@
                             <td>
                             <?php
                                 if($service->service_etat == "request") {
-                                    echo "<b style=color:red>Demande</b>";
-                                } elseif($admin->etat == "inprogress") {
-                                    echo "<b style=color:orange>Traitement en cours ...</b>";
-                                } elseif($admin->etat == "done") {
+                                    echo "<b style=color:red>Demande initiée</b>";
+                                } elseif($service->service_etat == "inprogress") {
+                                    echo "<b style=color:orange>En cours de traitement ...</b>";
+                                } elseif($service->service_etat == "done") {
                                     echo "<b style=color:green>Terminer</b>";
                                 }
                             ?>
                             </td>
-                            <td><a href="{{ route('service.show', $service->service_id) }}">Voir</a></td>
+                            <td>
+                                <a href="{{ route('dashboard.service.show', $service->service_id) }}">
+                                    Détail
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     <tr>

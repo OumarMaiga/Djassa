@@ -84,13 +84,13 @@ Route::post('/commande/{id}/paiement', [CommandeController::class, 'store_paieme
 Route::get('/my-service/{user_id}', [ServiceController::class, 'index'])->name('service.index')->middleware('auth');
 Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create')->middleware('auth');
 Route::get('/service/{id}/detail', [ServiceController::class, 'show'])->name('service.show')->middleware('auth');
-Route::get('/service/{id}', [ServiceController::class, 'show'])->name('service.show')->middleware('auth');
+Route::get('/dashboard/service/{id}', [ServiceController::class, 'dashboard_show'])->name('dashboard.service.show')->middleware('auth');
 Route::post('/service', [ServiceController::class, 'store'])->name('service.store')->middleware('auth');
 Route::get('/service/{id}/edit', [ServiceController::class, 'edit'])->name('service.edit')->middleware('auth');
 Route::put('/service/{id}', [ServiceController::class, 'update'])->name('service.update')->middleware('auth');
 Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy')->middleware('auth');
-Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
-Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
+Route::get('/dashboard/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('dashboard.service.inprogress')->middleware('auth');
+Route::post('/dashboard/service/{id}/done', [ServiceController::class, 'done'])->name('dashboard.service.done')->middleware('auth');
 Route::post('/dashborad/services/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
 Route::get('/dashborad/services/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
 

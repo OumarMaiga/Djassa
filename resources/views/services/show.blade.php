@@ -76,7 +76,7 @@
                 @endif
             </div>
         </div>
-
+        
         @if ($service->etat === "inprogress")
         <div class="row">
             <h2>Valider le service</h2>
@@ -85,7 +85,7 @@
     
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
-            <form method="POST" action="{{ route('service.done', $service->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('dashboard.service.done', $service->id) }}" enctype="multipart/form-data">
                 @csrf
                 <div>
                     <label for="proof">Fiche justificatif</label>
