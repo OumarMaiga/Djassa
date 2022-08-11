@@ -116,7 +116,7 @@ class DashboardController extends Controller
         $services = DB::select("SELECT services.title as service_title, services.id as service_id, services.slug as service_slug,
         services.beneficiaire as service_beneficiaire, services.telephone as service_telephone, services.user_id as service_user_id, 
         services.montant as service_montant, services.paid as service_paid, services.expire as service_expire, services.etat as service_etat,
-        users.name as user_name
+        users.name as service_user_name
         FROM services 
         LEFT JOIN users ON services.user_id = users.id
         WHERE services.etat != 'done'");

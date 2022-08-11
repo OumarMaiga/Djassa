@@ -62,9 +62,7 @@
                     <tr>
                         <th scope="row" colspan="5">Total</th>
                         <td><b>{{ $cumul_montant_du }}</b></td>
-                        <td><b>{{ $cumul_montant_payer }}</b></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="3"><b>{{ $cumul_montant_payer }}</b></td>
                     </tr>
                 </tbody>
             </table>
