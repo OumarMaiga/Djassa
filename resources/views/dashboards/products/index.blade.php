@@ -5,7 +5,7 @@
             <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                 LES PRODUITS
             </h3>
-            <a href="{{ route('dashboard.product.create') }}" style="display: inline-block; float: right; padding-top:1rem;"><x-button class="btn-custom">AJOUTER</x-button></a>
+            <a href="{{ route('product.create') }}" style="display: inline-block; float: right; padding-top:1rem;"><x-button class="btn-custom">AJOUTER</x-button></a>
 
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
@@ -32,14 +32,14 @@
                             <td>{{ $product->product_price }}</td>
                             <td>{{ $product->product_quantity }}</td>
                             <td class="justify-content-between icon-content">
-                                <a href="{{ route('product.detail', $product->product_id) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
+                                <a href="{{ route('dashboard.product.show', $product->product_id) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
                                     <ion-icon name="eye-outline" style="font-size:24px;"></ion-icon>
                                 </a>
-                                <a href="{{ route('dashboard.product.edit', $product->product_id) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
+                                <a href="{{ route('product.edit', $product->product_id) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
                                     <ion-icon name="create-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                                 <span class="col icon-action" style="display:inline-block;">
-                                    <form method="POST" action="{{ route('dashboard.product.destroy', $product->product_id) }}">
+                                    <form method="POST" action="{{ route('product.destroy', $product->product_id) }}">
                                         @csrf
                                         @method('delete')
                                             <button class="" type="submit" onclick="return confirm('Vraiment supprimer ce product ?')" title="Supprimer">

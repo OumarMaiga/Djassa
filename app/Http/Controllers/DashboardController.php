@@ -10,11 +10,14 @@ use App\Repositories\SubCategoryRepository;
 use App\Repositories\SubSubCategoryRepository;
 use App\Repositories\UserRepository;
 use App\Repositories\ServiceRepository;
+use App\Repositories\FileRepository;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+use App\Models\File;
 
 class DashboardController extends Controller
 {
@@ -26,11 +29,13 @@ class DashboardController extends Controller
     protected $subSubCategoryRepository;
     protected $userRepository;
     protected $serviceRepository;
+    protected $fileRepository;
     
     public function __construct(ProductRepository $productRepository, CommandeRepository $commandeRepository, 
                         RayonRepository $rayonRepository, CategoryRepository $categoryRepository, 
                         SubCategoryRepository $subCategoryRepository, SubSubCategoryRepository $subSubCategoryRepository,
-                        UserRepository $userRepository, ServiceRepository $serviceRepository) {
+                        UserRepository $userRepository, ServiceRepository $serviceRepository, FileRepository $fileRepository) 
+    {
         //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->productRepository = $productRepository;
         $this->commandeRepository = $commandeRepository;
@@ -40,6 +45,7 @@ class DashboardController extends Controller
         $this->subSubCategoryRepository = $subSubCategoryRepository;
         $this->userRepository = $userRepository;
         $this->serviceRepository = $serviceRepository;
+        $this->fileRepository = $fileRepository;
     }
         
     /**
@@ -139,7 +145,7 @@ class DashboardController extends Controller
         users.name as service_user_name
         FROM services 
         LEFT JOIN users ON services.user_id = users.id
-        WHERE services.etat != 'done'");
+        /*WHERE services.etat != 'done'*/");
 
         return view('dashboards.services.index', compact('services'));
     }
@@ -154,8 +160,13 @@ class DashboardController extends Controller
         $service = $this->serviceRepository->getById($id);
         $file = null;
         if ($service->etat === "done") {
-            $file = File::where('service_id', $service->id)->limit(1)->get()[0];
-            $file->file_path = env('APP_URL').$file->file_path;
+            $file = $this->fileRepository->getBy('service_id', '=', $service->id);
+            if (count($file) > 0) {
+                $file = $file[0];
+                $file->file_path = env('APP_URL').$file->file_path;
+            } else {
+                $file = null;
+            }
         }
         return view('dashboards.services.show', compact('service', 'file'));
     }
@@ -168,8 +179,31 @@ class DashboardController extends Controller
      */
     public function products()
     {
-        $products = $this->productRepository->get();
+        $products = DB::select('SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.price as product_price,
+        products.overview as product_overview, products.quantity as product_quantity, products.published as product_publised, products.discount as product_discount,
+        categories.id as categorie_id, categories.title as category_title, categories.slug as categorie_slug
+        FROM products LEFT JOIN categories ON products.category_id = categories.id
+        /*WHERE products.quantity > 0 AND products.published = 1*/ ');
+
         return view('dashboards.products.index', compact('products'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function product($id)
+    {
+        $product = $this->productRepository->getById($id);
+        
+        if($product->product_discount != null &&  $product->product_discount > 0) 
+        {
+            $product->product_price = $product->product_price - ($product->product_price * ($product->product_discount / 100));
+        }
+
+        return view('dashboards.products.show', compact('product'));
     }
 
     /**
@@ -256,19 +290,13 @@ class DashboardController extends Controller
                                 FROM commandes LEFT JOIN users ON commandes.user_id = users.id
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
                                 LEFT JOIN products ON commande_product.product_id = products.id 
-                                WHERE commandes.paid = 1 GROUP BY commande_code");
+                                WHERE commandes.montant_payer > 0 GROUP BY commande_code
+                                /*UNION
+                                SELECT services.title as service_title, services.slug as service_slug, services.beneficiaire as service_beneficiaire, services.montant as service_montant, services.paid as service_paid
+                                FROM services
+                                WHERE services.paid = 1*/");
+
         return view('dashboards.recettes.index', compact('recettes'));
-    }
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function product(Product $product)
-    {
-        return view('dashboards.products.show', compact('product'));
     }
 
     public function search()

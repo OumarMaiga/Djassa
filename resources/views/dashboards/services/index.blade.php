@@ -17,7 +17,7 @@
                     <th scope="col">Utilisateur</th>
                     <th scope="col">Montant</th>
                     <th scope="col">Date de fin</th>
-                    <th scope="col">Payer</th>
+                    <!--<th scope="col">Payer</th>-->
                     <th scope="col">Etat</th>
                     <th scope="col">Action</th>
                     </tr>
@@ -39,7 +39,7 @@
                             <td>{{ $service->service_user_name }}</td>
                             <td>{{ ($service->service_montant != NULL) ? $service->service_montant : 0 }}</td>
                             <td>{{ custom_date($service->service_expire) }}</td>
-                            <td>{!! $service->service_paid ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}</td>
+                            <!--<td>{!! $service->service_paid ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}</td>-->
                             <td>
                             <?php
                                 if($service->service_etat == "request") {
@@ -52,8 +52,8 @@
                             ?>
                             </td>
                             <td>
-                                <a href="{{ route('dashboard.service.show', $service->service_id) }}">
-                                    Détail
+                                <a href="{{ route('dashboard.service.show', $service->service_id) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
+                                    <ion-icon name="eye-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                             </td>
                         </tr>

@@ -72,7 +72,7 @@ class ServiceController extends Controller
             'slug' => Str::slug($request->get('title')),
             'user_id' => $user_id,
             'etat' => 'request',
-            'paid' => 0,
+            'paid' => 1,
         ]);
             
         $service = $this->serviceRepository->store($request->all());

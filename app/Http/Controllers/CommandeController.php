@@ -109,7 +109,17 @@ class CommandeController extends Controller
      */
     public function delivered($id)
     {
-        $data = array('delivered' => 1, 'paid' => 1);
+        $commande = $this->commandeRepository->getById($id);
+        if ($commande->montant_du > 0) {
+            $commande->montant_payer = $commande->montant_du + $commande->montant_payer;
+            $commande->montant_du = 0;
+        }
+        $data = array (
+            'delivered' => 1, 
+            'paid' => 1, 
+            'montant_du' => $commande->montant_du, 
+            'montant_payer' => $commande->montant_payer
+        );
         $this->commandeRepository->update($id, $data);
         return redirect()->back()->withStatus("Commande livré");
     }
