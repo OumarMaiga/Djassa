@@ -56,7 +56,7 @@
                             <td>{{ ($sell->commande_montant_du != NULL) ? $sell->commande_montant_du : 0 }}</td>
                             <td>{{ ($sell->commande_montant_payer != NULL) ? $sell->commande_montant_payer : 0 }}</td>
                             <td>{!! $sell->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
-                            <td><a href="{{ route('commande.show', $sell->commande_id) }}">Voir</a></td>
+                            <td><a href="{{ route('dashboard.commande.show', $sell->commande_id) }}">Voir</a></td>
                         </tr>
                     @endforeach
                     <tr>

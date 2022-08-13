@@ -71,6 +71,9 @@
                             </button>
                     </form>
                 </span>
+                @if ($service->etat === "request")
+                    <a href="{{ route('dashboard.service.inprogress', $service->id) }}">In proccess</a>
+                @endif
             </div>
         </div>
         

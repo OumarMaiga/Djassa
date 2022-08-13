@@ -59,7 +59,7 @@ class DashboardController extends Controller
                             AND $year = YEAR(commandes.created_at)");
         $services = $this->serviceRepository->getBy('etat', '<>', 'done');
 
-        return view('dashboards.dashboard', compact('admins', 'users', 'commandes', 'ventes', 'services'));
+        return view('dashboards.index', compact('admins', 'users', 'commandes', 'ventes', 'services'));
     }
     
     /**
@@ -103,7 +103,27 @@ class DashboardController extends Controller
         LEFT JOIN products ON commande_product.product_id = products.id 
         WHERE commandes.delivered = 0");
 
-        return view('dashboards.commandes', compact('commandes'));
+        return view('dashboards.commandes.index', compact('commandes'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function commande($id)
+    {
+        // On recupère la commande et les infos sur les produits
+        $commande = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, users.name as user_name, 
+                                products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+                                FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+                                LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+                                LEFT JOIN products ON commande_product.product_id = products.id 
+                                WHERE commandes.id = $id")[0];
+                                
+        return view('dashboards.commandes.show', compact('commande'));
     }
     
     /**
@@ -121,8 +141,25 @@ class DashboardController extends Controller
         LEFT JOIN users ON services.user_id = users.id
         WHERE services.etat != 'done'");
 
-        return view('dashboards.services', compact('services'));
+        return view('dashboards.services.index', compact('services'));
     }
+        
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function service($id)
+    {
+        $service = $this->serviceRepository->getById($id);
+        $file = null;
+        if ($service->etat === "done") {
+            $file = File::where('service_id', $service->id)->limit(1)->get()[0];
+            $file->file_path = env('APP_URL').$file->file_path;
+        }
+        return view('dashboards.services.show', compact('service', 'file'));
+    }
+    
     
     /**
      * Display a listing of the product.
@@ -251,5 +288,42 @@ class DashboardController extends Controller
         //return response()->json(['products' => $products]);
         return view('dashboards.search', compact('products', 'query', 'rayons'));
             
+    }
+
+    public function service_inprogress ($id) 
+    {
+        $data = array('etat' => 'inprogress');
+        $this->serviceRepository->update($id, $data);
+        return redirect()->back()->withStatus("Service a bien été prise en compte");
+    }
+
+    public function service_done (Request $request, $id) 
+    {
+        $service = $this->serviceRepository->getById($id);
+        if($request->hasFile('proof')) {
+            $fileModel = new File;
+            
+            $fileName = time().'_'.$request->file('proof')->getClientOriginalName();
+            $filePath = $request->file('proof')->storeAs("uploads/proof/service/".$service->id, $fileName, 'public');
+            $fileModel->libelle = $fileName;
+            $fileModel->file_path = '/storage/' . $filePath;
+
+            if (Auth::check()) {
+                $fileModel->user_id = Auth::user()->id;
+            }
+
+            $fileModel->type = 'justificatif';
+            $fileModel->service_id = $service->id;
+            $fileModel->save();
+        } 
+        $data = array('etat' => 'done');
+        $this->serviceRepository->update($id, $data);
+        
+        return redirect()->back()->withStatus("Service marquer comme terminé");
+    }
+
+    public function dashboard_index() {
+        $services = $this->serviceRepository->get();
+        return view('dashboard.services.index', compact('services'));
     }
 }

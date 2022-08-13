@@ -31,10 +31,10 @@
                     @endif -->
                     @if (Auth::check())
                         @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
-                        <x-nav-link :href="route('dashboard.commandes')">
+                        <x-nav-link :href="route('dashboard.commande.index')">
                             Les commandes
                         </x-nav-link> 
-                        <x-nav-link :href="route('dashboard.services')">
+                        <x-nav-link :href="route('dashboard.service.index')">
                             Les services
                         </x-nav-link>
                         @endif

@@ -98,8 +98,7 @@ class CommandeController extends Controller
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
                                 LEFT JOIN products ON commande_product.product_id = products.id 
                                 WHERE commandes.id = $id")[0];
-            /*var_dump($commande);
-            die();*/
+                                
         return view('commandes.show', compact('commande'));
     }
     /**

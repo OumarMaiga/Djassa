@@ -77,7 +77,7 @@ class ServiceController extends Controller
             
         $service = $this->serviceRepository->store($request->all());
 
-        return redirect("/service/".Auth::user()->id)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
+        return redirect("/service/".$service->id)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
     
     }
 
@@ -88,23 +88,6 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        $service = $this->serviceRepository->getById($id);
-        $file = null;
-        if ($service->etat === "done") {
-            $file = File::where('service_id', $service->id)->limit(1)->get()[0];
-            $file->file_path = env('APP_URL').$file->file_path;
-        }
-        return view('services.show', compact('service', 'file'));
-    }
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Service  $service
-     * @return \Illuminate\Http\Response
-     */
-    public function dashboard_show($id)
     {
         $service = $this->serviceRepository->getById($id);
         $file = null;
@@ -150,41 +133,5 @@ class ServiceController extends Controller
     {
         $this->serviceRepository->destroy($id);
         return redirect()->back()->withError("Service a bien été supprimer");
-    }
-
-    public function inprogress ($id) {
-        $data = array('etat' => 'inprogress');
-        $this->serviceRepository->update($id, $data);
-        return redirect()->back()->withStatus("Service a bien été prise en compte");
-    }
-
-    public function done (Request $request, $id) {
-
-        $service = $this->serviceRepository->getById($id);
-        if($request->hasFile('proof')) {
-            $fileModel = new File;
-            
-            $fileName = time().'_'.$request->file('proof')->getClientOriginalName();
-            $filePath = $request->file('proof')->storeAs("uploads/proof/service/".$service->id, $fileName, 'public');
-            $fileModel->libelle = $fileName;
-            $fileModel->file_path = '/storage/' . $filePath;
-
-            if (Auth::check()) {
-                $fileModel->user_id = Auth::user()->id;
-            }
-
-            $fileModel->type = 'justificatif';
-            $fileModel->service_id = $service->id;
-            $fileModel->save();
-        } 
-        $data = array('etat' => 'done');
-        $this->serviceRepository->update($id, $data);
-        
-        return redirect()->back()->withStatus("Service marquer comme terminé");
-    }
-
-    public function dashboard_index() {
-        $services = $this->serviceRepository->get();
-        return view('dashboard.services', compact('services'));
     }
 }
