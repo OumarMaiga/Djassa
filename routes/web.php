@@ -30,13 +30,21 @@ require __DIR__.'/auth.php';
 
 Route::get('/', [PageController::class, 'welcome'])->name('welcome');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard.index');
-Route::get('/dashboard/sells', [DashboardController::class, 'sells'])->middleware(['auth'])->name('dashboard.sells');
-Route::get('/dashboard/commandes', [DashboardController::class, 'commandes'])->middleware(['auth'])->name('dashboard.commandes');
-Route::get('/dashboard/recettes', [DashboardController::class, 'recettes'])->name('dashboard.recettes');
-Route::get('/dashboard/services', [DashboardController::class, 'services'])->name('dashboard.services');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware(['auth']);
+Route::get('/dashboard/sells', [DashboardController::class, 'sells'])->name('dashboard.sells')->middleware(['auth']);
+Route::get('/dashboard/commandes', [DashboardController::class, 'commandes'])->name('dashboard.commande.index')->middleware(['auth']);
+Route::get('/dashboard/commande/{id}', [DashboardController::class, 'commande'])->name('dashboard.commande.show')->middleware(['auth']);
+Route::get('/dashboard/recettes', [DashboardController::class, 'recettes'])->name('dashboard.recette.index')->middleware(['auth']);
+Route::get('/dashboard/services', [DashboardController::class, 'services'])->name('dashboard.service.index')->middleware(['auth']);
+Route::get('/dashboard/recette', [DashboardController::class, 'recette'])->name('dashboard.recette')->middleware(['auth']);
+Route::get('/dashboard/service/{id}', [DashboardController::class, 'service'])->name('dashboard.service.show')->middleware(['auth']);
+Route::get('/dashboard/service/{id}/inprogress', [DashboardController::class, 'service_inprogress'])->name('dashboard.service.inprogress')->middleware('auth');
+Route::post('/dashboard/service/{id}/done', [DashboardController::class, 'service_done'])->name('dashboard.service.done')->middleware('auth');
+Route::get('/dashboard/product', [DashboardController::class, 'products'])->name('dashboard.product.index')->middleware('auth');
+Route::get('/dashboard/product/{id}', [DashboardController::class, 'product'])->name('dashboard.product.show')->middleware('auth');
 
-//Route::resource('dashboard/product', ProductController::class)->middleware('auth');
+Route::resource('product', ProductController::class)->middleware('auth');
+/*
 Route::get('/dashboard/product', [ProductController::class, 'index'])->name('dashboard.product.index')->middleware('auth');
 Route::get('/dashboard/product/create', [ProductController::class, 'create'])->name('dashboard.product.create')->middleware('auth');
 Route::get('/dashboard/product/{id}', [ProductController::class, 'show'])->name('dashboard.product.show')->middleware('auth');
@@ -44,6 +52,7 @@ Route::post('/dashboard/product', [ProductController::class, 'store'])->name('da
 Route::get('/dashboard/product/{id}/edit', [ProductController::class, 'edit'])->name('dashboard.product.edit')->middleware('auth');
 Route::put('/dashboard/product/{id}', [ProductController::class, 'update'])->name('dashboard.product.update')->middleware('auth');
 Route::delete('/dashboard/product/{id}', [ProductController::class, 'destroy'])->name('dashboard.product.destroy')->middleware('auth');
+*/
 
 Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('dashboard.admin.index')->middleware('auth');
 Route::get('/dashboard/admin/create', [AdminController::class, 'create'])->name('dashboard.admin.create')->middleware('auth');
@@ -63,10 +72,10 @@ Route::delete('/dashboard/user/{id}', [UserController::class, 'destroy'])->name(
 
 Route::resource('panier', PanierController::class);
 
-Route::get('/products', [PageController::class, 'products'])->name('products');
 Route::get('/category/{category}', [PageController::class, 'product_per_category'])->name('product_per_category');
 Route::get('/category/{category}/{sub_category}', [PageController::class, 'product_per_sub_category'])->name('product_per_sub_category');
 Route::get('/category/{category}/{sub_category}/{sub_sub_category}', [PageController::class, 'product_per_sub_sub_category'])->name('product_per_sub_sub_category');
+Route::get('/products', [PageController::class, 'products'])->name('products');
 Route::get('/product', [ProductController::class, 'list'])->name('product.index');
 Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
 Route::get('/product/files/{product_id}', [ProductController::class, 'product_files_ajax'])->name('product.product_files_ajax');
@@ -83,16 +92,11 @@ Route::post('/commande/{id}/paiement', [CommandeController::class, 'store_paieme
 //Route::resource('/dashboard/service', ServiceController::class);
 Route::get('/my-service/{user_id}', [ServiceController::class, 'index'])->name('service.index')->middleware('auth');
 Route::get('/service/create', [ServiceController::class, 'create'])->name('service.create')->middleware('auth');
-Route::get('/service/{id}/detail', [ServiceController::class, 'show'])->name('service.show')->middleware('auth');
 Route::get('/service/{id}', [ServiceController::class, 'show'])->name('service.show')->middleware('auth');
 Route::post('/service', [ServiceController::class, 'store'])->name('service.store')->middleware('auth');
 Route::get('/service/{id}/edit', [ServiceController::class, 'edit'])->name('service.edit')->middleware('auth');
 Route::put('/service/{id}', [ServiceController::class, 'update'])->name('service.update')->middleware('auth');
 Route::delete('/service/{id}', [ServiceController::class, 'destroy'])->name('service.destroy')->middleware('auth');
-Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
-Route::get('/service/{id}/inprogress', [ServiceController::class, 'inprogress'])->name('service.inprogress')->middleware('auth');
-Route::post('/dashborad/services/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
-Route::get('/dashborad/services/', [ServiceController::class, 'dashboard_index'])->name('service.dashboard_index')->middleware('auth');
 
 Route::get('/dashboard/rayon', [RayonController::class, 'index'])->name('dashboard.rayon.index')->middleware('auth');
 Route::get('/dashboard/rayon/create', [RayonController::class, 'create'])->name('dashboard.rayon.create')->middleware('auth');

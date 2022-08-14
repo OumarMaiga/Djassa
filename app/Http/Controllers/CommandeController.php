@@ -98,8 +98,7 @@ class CommandeController extends Controller
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
                                 LEFT JOIN products ON commande_product.product_id = products.id 
                                 WHERE commandes.id = $id")[0];
-            /*var_dump($commande);
-            die();*/
+                                
         return view('commandes.show', compact('commande'));
     }
     /**
@@ -110,7 +109,17 @@ class CommandeController extends Controller
      */
     public function delivered($id)
     {
-        $data = array('delivered' => 1, 'paid' => 1);
+        $commande = $this->commandeRepository->getById($id);
+        if ($commande->montant_du > 0) {
+            $commande->montant_payer = $commande->montant_du + $commande->montant_payer;
+            $commande->montant_du = 0;
+        }
+        $data = array (
+            'delivered' => 1, 
+            'paid' => 1, 
+            'montant_du' => $commande->montant_du, 
+            'montant_payer' => $commande->montant_payer
+        );
         $this->commandeRepository->update($id, $data);
         return redirect()->back()->withStatus("Commande livré");
     }

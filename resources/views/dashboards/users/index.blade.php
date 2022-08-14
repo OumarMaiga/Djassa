@@ -43,8 +43,7 @@
                                 </a>
                                 <a href="{{ route('dashboard.user.unblocked', $user->id) }}" title="Débloquer">
                                     <ion-icon name="arrow-up-circle-outline" style="font-size:24px; color:green;"></ion-icon>
-                                </a>
-                            
+                                </a>                            
                             </td>
                         </tr>
                     @endforeach

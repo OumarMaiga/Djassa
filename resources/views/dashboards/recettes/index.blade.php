@@ -22,14 +22,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $n = 0 ?>
+                    <?php
+                        $n = 0;
+                        $cumul_montant = 0;
+                    ?>
                     @foreach ($recettes as $recette)
                     <?php 
                         $n = $n + 1;
                         $commande_products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
                                                         products.id as product_id FROM products LEFT JOIN commande_product
                                                         ON products.id = commande_product.product_id WHERE commande_product.commande_id = $recette->commande_id");
-
+                        $cumul_montant = $cumul_montant + $recette->commande_montant_payer;
                     ?>
                         <tr>
                             <th scope="row">{{ $n }}</th>
@@ -46,11 +49,15 @@
                                 }
                                 ?>
                             </td>
-                            <td>{!! $recette->commande_paid ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}</td>
+                            <td>{{ $recette->commande_montant_payer != null ? $recette->commande_montant_payer : 0 }} F</td>
                             <td>{!! $recette->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
                             <td><a href="{{ route('commande.show', $recette->commande_id) }}">Voir</a></td>
                         </tr>
                     @endforeach
+                        <tr>
+                            <th scope="row" colspan="5">Total</th>
+                            <td colspan="3"><b>{{ $cumul_montant }} F CFA</b></td>
+                        </tr>
                 </tbody>
             </table>
             @else

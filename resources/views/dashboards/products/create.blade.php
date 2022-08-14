@@ -14,7 +14,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('dashboard.product.store') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('product.store') }}" enctype="multipart/form-data">
                 @csrf
     
                 <h3 class="content-title" style="margin-bottom:1rem; padding-top:2rem; font-weight:500; font-size:20px">Info du product</h1>

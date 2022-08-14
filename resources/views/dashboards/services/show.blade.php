@@ -71,6 +71,9 @@
                             </button>
                     </form>
                 </span>
+                @if ($service->etat === "request")
+                    <a href="{{ route('dashboard.service.inprogress', $service->id) }}">In proccess</a>
+                @endif
             </div>
         </div>
         
@@ -96,7 +99,7 @@
         @endif
 
         
-        @if ($service->etat === "done")
+        @if ($service->etat === "done" && $file != null)
         <div class="row">
             <h2>Voir le justificatif</h2>
             <a target="_blank" href="{{ $file->file_path }}">Voir</a>

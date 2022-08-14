@@ -92,7 +92,7 @@
                 </a>
             </div>
             <div class="col-4 mt-3">
-                <a href="{{  route('dashboard.commandes')}}">
+                <a href="{{  route('dashboard.commande.index')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <center>
@@ -107,7 +107,7 @@
                 </a>
             </div>
             <div class="col-4 mt-3">
-                <a href="{{  route('dashboard.services')}}">
+                <a href="{{  route('dashboard.service.index')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <center>

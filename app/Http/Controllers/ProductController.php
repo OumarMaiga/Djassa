@@ -120,13 +120,16 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->productRepository->getById($id);
-        
-        if($product->product_discount != null &&  $product->product_discount > 0) 
+        $images = $this->fileRepository->getBy("product_id", '=', $product->id);
+        $category = $this->categoryRepository->getById($product->category_id);
+        $rayon = $this->rayonRepository->getById($category->rayon_id);
+
+        if($product->discount != null &&  $product->discount > 0) 
         {
-            $product->product_price = $product->product_price - ($product->product_price * ($product->product_discount / 100));
+            $product->discount_price();
         }
 
-        return view('dashboards.products.show', compact('product'));
+        return view('products.show', compact('product', 'images', 'category', 'rayon'));
     }
 
     /**
@@ -201,33 +204,12 @@ class ProductController extends Controller
         $this->productRepository->destroy($id);
         return redirect()->back()->withError("Product a bien été supprimer");
     }
-    
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function detail($id)
-    {
-        $product = $this->productRepository->getById($id);
-        $images = $this->fileRepository->getBy("product_id", '=', $product->id);
-        $category = $this->categoryRepository->getById($product->category_id);
-        $rayon = $this->rayonRepository->getById($category->rayon_id);
 
-        if($product->discount != null &&  $product->discount > 0) 
-        {
-            $product->discount_price();
-        }
-
-        return view('pages.products.show', compact('product', 'images', 'category', 'rayon'));
-    }
-    
     public function list()
     {
         $products = $this->productRepository->get();
 
-        return view('pages.products.show', compact('products'));
+        return view('products.show', compact('products'));
     }
 
     /**

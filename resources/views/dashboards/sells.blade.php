@@ -56,15 +56,17 @@
                             <td>{{ ($sell->commande_montant_du != NULL) ? $sell->commande_montant_du : 0 }}</td>
                             <td>{{ ($sell->commande_montant_payer != NULL) ? $sell->commande_montant_payer : 0 }}</td>
                             <td>{!! $sell->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
-                            <td><a href="{{ route('commande.show', $sell->commande_id) }}">Voir</a></td>
+                            <td>
+                                <a href="{{ route('dashboard.commande.show', $sell->commande_id) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
+                                    <ion-icon name="eye-outline" style="font-size:24px;"></ion-icon>
+                                </a>
+                            </td>
                         </tr>
                     @endforeach
                     <tr>
                         <th scope="row" colspan="5">Total</th>
                         <td><b>{{ $cumul_montant_du }}</b></td>
-                        <td><b>{{ $cumul_montant_payer }}</b></td>
-                        <td></td>
-                        <td></td>
+                        <td colspan="3"><b>{{ $cumul_montant_payer }}</b></td>
                     </tr>
                 </tbody>
             </table>

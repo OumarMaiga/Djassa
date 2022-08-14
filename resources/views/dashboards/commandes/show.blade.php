@@ -32,9 +32,11 @@
                                 <b>Pour: </b>{{ "$commande->commande_firstname $commande->commande_lastname" }}
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <b>Livré: </b>{!! $commande->commande_delivered ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}
-                        </div>
+                        <div class="mb-3"><b>Livré: </b>{!! $commande->commande_delivered ? "<b style=color:green>Oui</b>" : "<b style=color:red>Non</b>" !!}</div>
+
+                        @if($commande->commande_delivered != 1)
+                            <div class="mb-3"><i><a href="{{ route('delivered', $commande->commande_id) }}">Marqué comme livré</a></i></div>
+                        @endif
                     </div>
                 </div>
             </div>

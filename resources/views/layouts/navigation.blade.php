@@ -30,18 +30,23 @@
                         </span>
                     @endif -->
                     @if (Auth::check())
-                        <x-nav-link :href="route('my_commande', Auth::user()->id)">
-                            Mes commandes
-                        </x-nav-link> 
-                        
                         @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
-                            <!--<x-nav-link :href="route('service.dashboard_index')">
-                                Services
-                            </x-nav-link>-->
-                        @endif
-                        <x-nav-link :href="route('service.index', Auth::user()->id)">
-                            Mes services
+                        <x-nav-link :href="route('dashboard.commande.index')">
+                            Les commandes
+                        </x-nav-link> 
+                        <x-nav-link :href="route('dashboard.service.index')">
+                            Les services
                         </x-nav-link>
+                        @endif
+                        
+                        @if(Auth::user()->type === "user")
+                            <x-nav-link :href="route('my_commande', Auth::user()->id)">
+                                Mes commandes
+                            </x-nav-link> 
+                            <x-nav-link :href="route('service.index', Auth::user()->id)">
+                                Mes services
+                            </x-nav-link>
+                        @endif
                     @endif
                 </div>
             </div>
