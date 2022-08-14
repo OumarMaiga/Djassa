@@ -36,7 +36,7 @@ class DashboardController extends Controller
                         SubCategoryRepository $subCategoryRepository, SubSubCategoryRepository $subSubCategoryRepository,
                         UserRepository $userRepository, ServiceRepository $serviceRepository, FileRepository $fileRepository) 
     {
-        //$this->middleware('adminOnly', ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
+        $this->middleware('admin', ['only' => ['index', 'sells', 'monthly_sells', 'commandes', 'commande', 'services', 'service', 'products', 'product', 'recettes', 'service_inprogress', 'service_done']]);
         $this->productRepository = $productRepository;
         $this->commandeRepository = $commandeRepository;
         $this->rayonRepository = $rayonRepository;
@@ -57,6 +57,7 @@ class DashboardController extends Controller
     {
         $admins = $this->userRepository->getBy('type', '=', 'admin');
         $users = $this->userRepository->getBy('type', '=', 'user');
+        $products = $this->productRepository->get();
         $commandes = $this->commandeRepository->getBy('delivered', '=', 0);
         $month = date('m');
         $year = date('Y');
@@ -67,7 +68,7 @@ class DashboardController extends Controller
                             WHERE commandes.delivered = 1");
         $services = $this->serviceRepository->getBy('etat', '<>', 'done');
 
-        return view('dashboards.index', compact('admins', 'users', 'commandes', 'monthly_sells', 'sells', 'services'));
+        return view('dashboards.index', compact('admins', 'users', 'commandes', 'products', 'monthly_sells', 'sells', 'services'));
     }
     
     /**
@@ -372,10 +373,5 @@ class DashboardController extends Controller
         $this->serviceRepository->update($id, $data);
         
         return redirect()->back()->withStatus("Service marquer comme terminé");
-    }
-
-    public function dashboard_index() {
-        $services = $this->serviceRepository->get();
-        return view('dashboard.services.index', compact('services'));
     }
 }
