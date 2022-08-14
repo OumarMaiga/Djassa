@@ -32,6 +32,7 @@ Route::get('/', [PageController::class, 'welcome'])->name('welcome');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index')->middleware(['auth']);
 Route::get('/dashboard/sells', [DashboardController::class, 'sells'])->name('dashboard.sells')->middleware(['auth']);
+Route::get('/dashboard/sells-of-month', [DashboardController::class, 'monthly_sells'])->name('dashboard.monthly_sells')->middleware(['auth']);
 Route::get('/dashboard/commandes', [DashboardController::class, 'commandes'])->name('dashboard.commande.index')->middleware(['auth']);
 Route::get('/dashboard/commande/{id}', [DashboardController::class, 'commande'])->name('dashboard.commande.show')->middleware(['auth']);
 Route::get('/dashboard/recettes', [DashboardController::class, 'recettes'])->name('dashboard.recette.index')->middleware(['auth']);

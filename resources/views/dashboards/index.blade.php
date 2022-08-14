@@ -82,7 +82,22 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="bag-check-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($ventes) }}</div>
+                                <div style="font-size:32px">{{ count($sells) }}</div>
+                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                    TOUTES LES VENTES
+                                </h2>
+                            </center>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-4 mt-3">
+                <a href="{{  route('dashboard.monthly_sells')}}">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <center>
+                                <div class="mt-2"><ion-icon name="bag-check-outline" style="font-size:36px"></ion-icon></div>
+                                <div style="font-size:32px">{{ count($monthly_sells) }}</div>
                                 <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
                                     VENTE DU MOIS
                                 </h2>

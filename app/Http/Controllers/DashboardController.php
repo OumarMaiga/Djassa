@@ -60,12 +60,14 @@ class DashboardController extends Controller
         $commandes = $this->commandeRepository->getBy('delivered', '=', 0);
         $month = date('m');
         $year = date('Y');
-        $ventes = DB::select("SELECT * FROM commandes 
+        $monthly_sells = DB::select("SELECT * FROM commandes 
                             WHERE commandes.delivered = 1 && $month = MONTH(commandes.created_at) 
                             AND $year = YEAR(commandes.created_at)");
+        $sells = DB::select("SELECT * FROM commandes 
+                            WHERE commandes.delivered = 1");
         $services = $this->serviceRepository->getBy('etat', '<>', 'done');
 
-        return view('dashboards.index', compact('admins', 'users', 'commandes', 'ventes', 'services'));
+        return view('dashboards.index', compact('admins', 'users', 'commandes', 'monthly_sells', 'sells', 'services'));
     }
     
     /**
@@ -74,6 +76,28 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function sells()
+    {
+        $sells = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+        commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
+        commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer,
+        users.name as user_name, 
+        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
+        FROM commandes LEFT JOIN users ON commandes.user_id = users.id
+        LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
+        LEFT JOIN products ON commande_product.product_id = products.id 
+        WHERE commandes.delivered = 1 
+        GROUP BY commande_code
+        ");
+
+        return view('dashboards.sells', compact('sells'));
+    }
+    
+    /**
+     * Display a listing of the product.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function monthly_sells()
     {
         $month = date('m');
         $year = date('Y');
@@ -89,7 +113,7 @@ class DashboardController extends Controller
         AND YEAR(commandes.created_at) = $year GROUP BY commande_code
         ");
 
-        return view('dashboards.sells', compact('sells'));
+        return view('dashboards.sells-of-month', compact('sells'));
     }
     
     /**

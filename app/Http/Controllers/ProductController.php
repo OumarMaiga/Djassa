@@ -78,8 +78,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        var_dump($request->all());
-        die();
         $request->validate([
             'title' => 'required|max:255',
             'overview' => 'required',
