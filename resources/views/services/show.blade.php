@@ -74,33 +74,5 @@
             </div>
         </div>
         
-        @if ($service->etat === "inprogress")
-        <div class="row">
-            <h2>Valider le service</h2>
-            <!-- Session Status -->
-            <x-auth-session-status class="mb-4" :status="session('status')" />
-    
-            <!-- Validation Errors -->
-            <x-auth-validation-errors class="mb-4" :errors="$errors" />
-            <form method="POST" action="{{ route('dashboard.service.done', $service->id) }}" enctype="multipart/form-data">
-                @csrf
-                <div>
-                    <label for="proof">Fiche justificatif</label>
-                    <input type="file" name="proof" id="proof" />
-                </div>
-                <button type="submit" class="">
-                    Terminer
-                </button>
-            </form>
-        </div>
-        @endif
-
-        
-        @if ($service->etat === "done")
-        <div class="row">
-            <h2>Voir le justificatif</h2>
-            <a target="_blank" href="{{ $file->file_path }}">Voir</a>
-        </div>
-        @endif
     </div>
 </x-app-layout>
