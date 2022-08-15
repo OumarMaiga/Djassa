@@ -65,11 +65,13 @@ Route::delete('/dashboard/admin/{id}', [AdminController::class, 'destroy'])->nam
 Route::get('/dashboard/admin/{id}/blocked', [AdminController::class, 'blocked'])->name('dashboard.admin.blocked')->middleware('auth');
 Route::get('/dashboard/admin/{id}/unblocked', [AdminController::class, 'unblocked'])->name('dashboard.admin.unblocked')->middleware('auth');
 
-Route::get('/dashboard/user/', [UserController::class, 'index'])->name('dashboard.user.index')->middleware('auth');
-Route::get('/dashboard/user/{id}', [UserController::class, 'show'])->name('dashboard.user.show')->middleware('auth');
+Route::get('/user', [UserController::class, 'index'])->name('user.index')->middleware('auth');
+Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update')->middleware('auth');
 Route::get('/dashboard/user/{id}/blocked', [UserController::class, 'blocked'])->name('dashboard.user.blocked')->middleware('auth');
 Route::get('/dashboard/user/{id}/unblocked', [UserController::class, 'unblocked'])->name('dashboard.user.unblocked')->middleware('auth');
 Route::delete('/dashboard/user/{id}', [UserController::class, 'destroy'])->name('dashboard.user.destroy')->middleware('auth');
+Route::get('/profile/{id}', [UserController::class, 'show'])->name('user.show')->middleware('auth');
+Route::get('/profile/{id}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('auth');
 
 Route::resource('panier', PanierController::class);
 

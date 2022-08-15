@@ -71,6 +71,9 @@
                                     Dashboard
                                 </x-dropdown-link>
                             @endif
+                            <x-dropdown-link :href="route('user.show', Auth::user()->id)">
+                                Profil
+                            </x-dropdown-link>
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -131,8 +134,12 @@
                 <?php
                     if(Auth::check()){    
                 ?>
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                    <div class="font-medium text-base text-gray-800">
+                        {{ Auth::user()->name }}
+                    </div>
+                    <div class="font-medium text-sm text-gray-500">
+                        {{ Auth::user()->email }}
+                    </div>
                 <?php } ?>
             </div>
 

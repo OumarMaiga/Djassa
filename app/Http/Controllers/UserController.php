@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->getBy('type', '=', 'user');
-        return view('dashboards.users.index', compact('users'));
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('dashboards.users.create');
+        return view('users.create');
     }
 
     /**
@@ -62,7 +62,7 @@ class UserController extends Controller
             
         $user = $this->userRepository->store($request->all());
 
-        return redirect('/dashboard/user/')->withStatus("Nouveau user (".$user->title.") vient d'être ajouté");
+        return redirect('/user/')->withStatus("Nouveau user (".$user->title.") vient d'être ajouté");
     
     }
 
@@ -75,7 +75,8 @@ class UserController extends Controller
     public function show($id)
     {
         $user = $this->userRepository->getById($id);
-        return view('dashboards.users.show', compact('user'));
+
+        return view('users.show', compact('user'));
     }
 
     /**
@@ -84,9 +85,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('dashboards.users.edit', compact('user'));
+        $user = $this->userRepository->getById($id);
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -99,7 +101,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->userRepository->update($user->id, $request->all());
-        return redirect('/dashboard/user')->withStatus("User a bien été modifier");
+        return redirect('/user/'.$id)->withStatus("User a bien été modifier");
     }
 
     /**

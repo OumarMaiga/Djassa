@@ -84,7 +84,7 @@ class SubSubCategoryController extends Controller
             
         $subCategory = $this->subSubCategoryRepository->store($request->all());
 
-        return redirect('/dashboard/sub_sub_categories/')->withStatus("Nouveau subCategory (".$subCategory->title.") vient d'être ajouté");
+        return redirect('/dashboard/sub_sub_category/')->withStatus("Nouveau subCategory (".$subCategory->title.") vient d'être ajouté");
     
     }
 
@@ -128,7 +128,7 @@ class SubSubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $this->subSubCategoryRepository->update($id, $request->all());
-        return redirect('/dashboard/sub_sub_categories')->withStatus("SubSubCategory a bien été modifier");
+        return redirect('/dashboard/sub_sub_category')->withStatus("SubSubCategory a bien été modifier");
     }
 
     /**
