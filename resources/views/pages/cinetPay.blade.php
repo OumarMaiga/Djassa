@@ -17,8 +17,8 @@
     <script>
         function checkout() {
             CinetPay.setConfig({
-                apikey: '',//   YOUR APIKEY
-                site_id: '',//YOUR_SITE_ID
+                apikey: '108518531662fa9435952016.02865577',//   YOUR APIKEY
+                site_id: '130627',//YOUR_SITE_ID
                 notify_url: 'http://mondomaine.com/notify/',
                 mode: 'PRODUCTION'
             });

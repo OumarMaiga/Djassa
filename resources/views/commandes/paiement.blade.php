@@ -53,7 +53,6 @@
         </div>
         </div>
         <div class="row">
-            
             <div class="col s12">
                 <form method="POST" action="{{ route('commande.store_paiement', $commande->id) }}" id="paiement-form">
                     @csrf
@@ -61,8 +60,8 @@
                     <div class="row">
                         <div class="form-item col-md-4">
                             <label for="montant">Montant</label>
-                            <input id="montant" class="form-control" type="text" name="montant" value="{{ $commande->montant_du }}" readonly />
-                            <!--<input id="montant" class="form-control" type="text" name="montant" value="100" readonly />-->
+                            <!--<input id="montant" class="form-control" type="text" name="montant" value="{{ $commande->montant_du }}" readonly />-->
+                            <input id="montant" class="form-control" type="text" name="montant" value="100" readonly />
                             <input id="commande_id" class="form-control" type="hidden" name="commande_id" value="{{ $commande->id }}" readonly />
                             <input id="customer_name" class="form-control" type="hidden" name="customer_name" value="Joe" readonly />
                             <input id="customer_surname" class="form-control" type="hidden" name="customer_surname" value="Down" readonly />

@@ -44,14 +44,13 @@ $(document).ready(function() {
     jQuery('#paiement-form').submit( (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
-        console.log(data);
 
         CinetPay.setConfig({
-            apikey: '112927115762d1e45cb26ef2.15035831', // YOUR APIKEY
-            site_id: 'http://oumarmaiga.com', // YOUR_SITE_ID
-            notify_url: 'http://oumarmaiga.com/notify/',
+            apikey: '108518531662fa9435952016.02865577', // YOUR APIKEY
+            site_id: '130627', // YOUR_SITE_ID
+            notify_url: 'http://localhost:8000/notify/',
             mode: 'PRODUCTION',
-            return_url: 'http://localhost:8000/commande/1/paiement'
+            return_url: 'http://localhost:8000/commande/'+data.commande_id+'/paiement'
         });
         CinetPay.getCheckout({
             transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
@@ -65,11 +64,11 @@ $(document).ready(function() {
             customer_surname: data.customer_surname,
             customer_email:  data.customer_email,
             customer_phone_number:  data.customer_phone_number,
-            customer_address :  data.customer_address,
+            customer_address:  data.customer_address,
             customer_city:  data.customer_city,
-            customer_country :  data.customer_country,
-            customer_state :  data.customer_state,
-            customer_zip_code :  data.customer_zip_code,
+            customer_country:  data.customer_country,
+            customer_state:  data.customer_state,
+            customer_zip_code:  data.customer_zip_code,
         });
         CinetPay.waitResponse(function(data) {
             console.log("REFUSED");
