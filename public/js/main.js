@@ -71,8 +71,8 @@ $(document).ready(function() {
             customer_zip_code:  data.customer_zip_code,
         });
         CinetPay.waitResponse(function(response) {
-            console.log("REFUSED");
             if (response.status == "REFUSED") {
+                console.log("REFUSED");
                 if (alert("Votre paiement a échoué")) {
                     window.location.reload();
                 }
