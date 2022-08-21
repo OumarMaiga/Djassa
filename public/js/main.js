@@ -44,13 +44,13 @@ $(document).ready(function() {
     jQuery('#paiement-form').submit( (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target).entries());
-
+        
         CinetPay.setConfig({
             apikey: '108518531662fa9435952016.02865577', // YOUR APIKEY
             site_id: '130627', // YOUR_SITE_ID
             notify_url: 'http://localhost:8000/notify/',
             mode: 'PRODUCTION',
-            return_url: 'http://localhost:8000/commande/'+data.commande_id+'/paiement'
+            return_url: 'http://localhost:8000/commande/'+data.commande_code+'/paiement'
         });
         CinetPay.getCheckout({
             transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
@@ -70,14 +70,30 @@ $(document).ready(function() {
             customer_state:  data.customer_state,
             customer_zip_code:  data.customer_zip_code,
         });
-        CinetPay.waitResponse(function(data) {
+        CinetPay.waitResponse(function(response) {
             console.log("REFUSED");
-            if (data.status == "REFUSED") {
+            if (response.status == "REFUSED") {
                 if (alert("Votre paiement a échoué")) {
                     window.location.reload();
                 }
-            } else if (data.status == "ACCEPTED") {
+            } else if (response.status == "ACCEPTED") {
                 console.log("ACCEPTED");
+                // Ajout de donnees pour l'enregistrement des transactions
+                data.from = 'CinetPay',
+                data.currency = currency,
+                data.channels = channels,
+                data.description = description,  
+                data.transaction_id = transaction_id,
+                
+                jQuery.ajax({
+                    url: "/paiement" ,
+                    method: 'POST',
+                    data: data,
+                    success: function(response) {
+                        console.log('Save paiement in database...');
+                        console.log(response);
+                    }
+                });
                 if (alert("Votre paiement a été effectué avec succès")) {
                     window.location.reload();
                 }
@@ -87,57 +103,6 @@ $(document).ready(function() {
             console.log(data);
         });
 
-        /*var axios = require('axios');
-        var data = JSON.stringify({
-            "apikey": '112927115762d1e45cb26ef2.15035831', // YOUR APIKEY
-            "site_id": 'http://oumarmaiga.com', // YOUR_SITE_ID
-            "notify_url": 'http://oumarmaiga.com/notify/',
-            "mode": 'PRODUCTION',
-            "return_url": 'http://localhost:8000/commande/1/paiement',
-            "transaction_id":  Math.floor(Math.random() * 100000000).toString(), //
-            "amount": form_data.montant,
-            "currency": 'XOF',
-            "channels": 'ALL',
-            "description": 'Paiement sur djassa',   
-                
-            //Fournir ces variables pour le paiements par carte bancaire
-            "customer_name": form_data.customer_name, 
-            "customer_surname": form_data.customer_surname,
-            "customer_email": form_data.customer_email, 
-            "customer_phone_number": form_data.customer_phone_number,
-            "customer_address" :form_data.customer_address, 
-            "customer_city": form_data.customer_city,
-            "customer_country" :form_data.customer_country, 
-            "customer_state" :form_data.customer_state,
-            "customer_zip_code" :form_data.customer_zip_code,
-            "alternative_currency": "",
-            "customer_id": "172",
-            "metadata": "user1",
-            "lang": "FR",
-            "invoice_data": {
-                "Donnee1": "",
-                "Donnee2": "",
-                "Donnee3": ""
-            }
-        });
-    
-        var config = {
-            method: 'post',
-            url: 'https://api-checkout.cinetpay.com/v2/payment',
-            headers: { 
-            'Content-Type': 'application/json'
-            },
-            data : data
-        };
-    
-        axios(config)
-        .then(function (response) {
-            console.log(JSON.stringify(response.data));
-        })
-        .catch(function (error) {
-            console.log(error);
-        });*/
-    
     });
 
     // Recherche

@@ -140,7 +140,7 @@ Route::put('/dashboard/sub_sub_category/{id}', [SubSubCategoryController::class,
 Route::delete('/dashboard/sub_sub_category/{id}', [SubSubCategoryController::class, 'destroy'])->name('dashboard.sub_sub_category.destroy')->middleware('auth');
 
 
-Route::resource('paiement', PaiementController::class);
+Route::resource('/paiement', PaiementController::class);
 
 Route::get('/cinetpay', function () {
     return view('pages.cinetPay');

@@ -36,7 +36,7 @@ class AuthenticatedSessionController extends Controller
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            return redirect('/login')->withErrors('Votre compte a été bloqué. <br/>Veuillez contacter l\'administrateur pour plus d\'information');
+            return redirect('/login')->withErrors("Votre compte a été bloqué. <br/>Veuillez contacter l'administrateur pour plus d'information");
         }
 
         if(Auth::user()->type === "admin") {

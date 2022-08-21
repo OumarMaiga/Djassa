@@ -48,12 +48,6 @@ class PaiementController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $request->validate([
-            'title' => 'required|max:255',
-            'overview' => 'required',
-            'montant' => 'required'
-        ]);
         $user_id = null;
         if(Auth::check())
         {
@@ -62,13 +56,10 @@ class PaiementController extends Controller
 
         $request->merge([
             'user_id' => $user_id,
-            'etat' => 'request',
-            'paid' => 0,
         ]);
             
         $paiement = $this->paiementRepository->store($request->all());
-
-        return redirect('/paiement')->withStatus("Nouveau paiement (".$paiement->title.") vient d'être ajouté");
+        return response()->json(['paiement' => $paiement]);
     
     }
 
