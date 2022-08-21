@@ -38,7 +38,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = DB::select('SELECT categories.id as category_id, categories.rayon_id as category_rayon_id, categories.title as category_title,
+        $categories = DB::select('SELECT categories.id as category_id, categories.slug as category_slug, categories.rayon_id as category_rayon_id, categories.title as category_title,
         rayons.id as rayon_id, rayons.title as rayon_title,
         files.file_path as category_image
         FROM categories 
@@ -75,8 +75,17 @@ class CategoryController extends Controller
             'rayon_id' => 'required',
         ]);
 
+        //Creation du slug
+        $i = 0;
+        do {
+            $i++;
+            $slug = Str::slug($request->get('title'))."-".$i;
+            if ($i == 1) $slug = Str::slug($request->get('title'));
+            $slug_count = $this->categoryRepository->getBy('slug', '=', $slug)->count();
+        } while ($slug_count >= 1);
+        
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
+            'slug' => $slug,
             'user_id' => Auth::user()->id,
             'etat' => 'enabled',
         ]);
@@ -108,9 +117,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $category = $this->categoryRepository->getById($id);
+        $category = $this->categoryRepository->getBy('slug', '=', $slug)->first();
         return view('dashboards.categories.show', compact('category'));
     }
 
@@ -120,9 +129,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $category = $this->categoryRepository->getById($id);
+        $category = $this->categoryRepository->getBy('slug', '=', $slug)->first();
         $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
 
         return view('dashboards.categories.edit', compact('category', 'rayons'));
@@ -135,10 +144,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $category = $this->categoryRepository->getById($id);
-        $this->categoryRepository->update($id, $request->all());
+        $category = $this->categoryRepository->getBy('slug', '=', $slug)->first();
+        $this->categoryRepository->update($category->id, $request->all());
         
         if($request->hasFile('category_image')) {
             // On supprime toutes les images de la categorie
@@ -167,9 +176,10 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $this->categoryRepository->destroy($id);
+        $category = $this->categoryRepository->getBy('slug', '=', $slug)->first();
+        $this->categoryRepository->destroy($category->id);
         return redirect()->back()->withError("Category a bien été supprimer");
     }
 

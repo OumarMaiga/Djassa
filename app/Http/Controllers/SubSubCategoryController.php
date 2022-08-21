@@ -76,8 +76,17 @@ class SubSubCategoryController extends Controller
             'category_id' => 'required',
         ]);
 
+        //Creation du slug
+        $i = 0;
+        do {
+            $i++;
+            $slug = Str::slug($request->get('title'))."-".$i;
+            if ($i == 1) $slug = Str::slug($request->get('title'));
+            $slug_count = $this->subSubCategoryRepository->getBy('slug', '=', $slug)->count();
+        } while ($slug_count >= 1);
+        
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
+            'slug' => $slug,
             'user_id' => Auth::user()->id,
             'etat' => 'enabled',
         ]);
@@ -94,9 +103,9 @@ class SubSubCategoryController extends Controller
      * @param  \App\Models\SubSubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $subCategory = $this->subSubCategoryRepository->getById($id);
+        $subCategory = $this->subSubCategoryRepository->getBy('slug', '=', $slug)->first();
         return view('dashboards.sub_sub_categories.show', compact('subCategory'));
     }
 
@@ -106,9 +115,9 @@ class SubSubCategoryController extends Controller
      * @param  \App\Models\SubSubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $sub_sub_category = $this->subSubCategoryRepository->getById($id);
+        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', '=', $slug)->first();
 
         $rayons = $this->rayonRepository->getBy('id', '=', $sub_sub_category->rayon_id);
         $categories = $this->categoryRepository->getBy('id', '=', $sub_sub_category->category_id);
@@ -125,9 +134,10 @@ class SubSubCategoryController extends Controller
      * @param  \App\Models\SubSubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $this->subSubCategoryRepository->update($id, $request->all());
+        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', '=', $slug)->first();
+        $this->subSubCategoryRepository->update($sub_sub_category->id, $request->all());
         return redirect('/dashboard/sub_sub_category')->withStatus("SubSubCategory a bien été modifier");
     }
 
@@ -137,9 +147,10 @@ class SubSubCategoryController extends Controller
      * @param  \App\Models\SubSubCategory  $subCategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $this->subSubCategoryRepository->destroy($id);
+        $sub_sub_category = $this->subSubCategoryRepository->getBy('slug', '=', $slug)->first();
+        $this->subSubCategoryRepository->destroy($sub_sub_category->id);
         return redirect()->back()->withError("SubSubCategory a bien été supprimer");
     }
     

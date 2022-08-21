@@ -84,8 +84,17 @@ class ProductController extends Controller
             'price' => 'required'
         ]);
 
+        //Creation du slug
+        $i = 0;
+        do {
+            $i++;
+            $slug = Str::slug($request->get('title'))."-".$i;
+            if ($i == 1) $slug = Str::slug($request->get('title'));
+            $slug_count = $this->productRepository->getBy('slug', '=', $slug)->count();
+        } while ($slug_count >= 1);
+        
         $request->merge([
-            'slug' => time()."-".Str::slug($request->get('title')),
+            'slug' => $slug,
             'user_id' => Auth::user()->id,
         ]);
             
@@ -115,9 +124,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $product = $this->productRepository->getById($id);
+        $product = $this->productRepository->getBy('slug', '=', $slug)->first();
         $images = $this->fileRepository->getBy("product_id", '=', $product->id);
         $category = $this->categoryRepository->getById($product->category_id);
         $rayon = $this->rayonRepository->getById($category->rayon_id);
@@ -136,9 +145,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $product = $this->productRepository->getById($id);
+        $product = $this->productRepository->getBy('slug', '=', $slug)->first();
 
         $rayons = $this->rayonRepository->getBy('etat', '=', 'enabled');
         $categories = $this->categoryRepository->getBy('etat', '=', 'enabled');
@@ -155,7 +164,7 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
         if(isset($request->valeur_nutritionnelle) && $request->valeur_nutritionnelle = 1) {
             $request->merge([
@@ -167,7 +176,7 @@ class ProductController extends Controller
             ]);
         }   
         
-        $product = $this->productRepository->getById($id);
+        $product = $this->productRepository->getBy('slug', '=', $slug)->first();
         $this->productRepository->update($product->id, $request->all());
 
         if($request->hasFile('product_image')) {
@@ -197,9 +206,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $this->productRepository->destroy($id);
+        $product = $this->productRepository->getBy('slug', '=', $slug)->first();
+        $this->productRepository->destroy($product->id);
         return redirect()->back()->withError("Product a bien été supprimer");
     }
 

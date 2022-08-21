@@ -20,7 +20,7 @@
                             <div class="card-body">
                                 <!-- <h5 class="card-title">Special title treatment</h5> -->
                                 <p class="card-text">{{ $service->service_overview }}</p><br>
-                                <a href="{{ route('service.show', $service->service_id) }}" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
+                                <a href="{{ route('service.show', $service->service_slug) }}" class="btn" style="background-color: #ec8333; color: #fff">Voir les détails</a>
                             </div>
                             <div class="card-footer text-muted">
                                 Prend fin le {{ custom_date($service->service_expire) }}

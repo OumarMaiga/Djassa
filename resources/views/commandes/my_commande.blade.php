@@ -24,7 +24,7 @@
                 <tbody>
                     <?php $n = 0 ?>
                     @foreach ($commandes as $commande)
-                    <?php 
+                    <?php
                         $n = $n + 1;
                         $commande_products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
                                                         products.id as product_id FROM products LEFT JOIN commande_product
@@ -52,7 +52,7 @@
                                 @if($commande->commande_paid)
                                     <b style=color:green>Solder</b>
                                 @else
-                                    <a href="{{ route('commande.create_paiement', $commande->commande_id) }}">Payer</a>
+                                    <a href="{{ route('commande.create_paiement', $commande->commande_code) }}">Payer</a>
                                 @endif
                             </td>
                         </tr>

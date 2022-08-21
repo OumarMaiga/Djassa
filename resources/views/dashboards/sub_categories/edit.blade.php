@@ -15,7 +15,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('dashboard.sub_category.update', $sub_category->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('dashboard.sub_category.update', $sub_category->slug) }}" enctype="multipart/form-data">
                 @csrf
                 @method('put')
 

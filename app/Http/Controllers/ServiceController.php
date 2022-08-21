@@ -68,8 +68,17 @@ class ServiceController extends Controller
             $user_id = Auth::user()->id;
         }
 
+        //Creation du slug
+        $i = 0;
+        do {
+            $i++;
+            $slug = Str::slug($request->get('title'))."-".$i;
+            if ($i == 1) $slug = Str::slug($request->get('title'));
+            $slug_count = $this->serviceRepository->getBy('slug', '=', $slug)->count();
+        } while ($slug_count >= 1);
+        
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
+            'slug' => $slug,
             'user_id' => $user_id,
             'etat' => 'request',
             'paid' => 1,
@@ -77,7 +86,7 @@ class ServiceController extends Controller
             
         $service = $this->serviceRepository->store($request->all());
 
-        return redirect("/service/".$service->id)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
+        return redirect("/service/".$service->slug)->withStatus("Nouveau service (".$service->title.") vient d'être ajouté");
     
     }
 
@@ -87,9 +96,9 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $service = $this->serviceRepository->getById($id);
+        $service = $this->serviceRepository->getBy('slug', '=', $slug)->first();
         $file = null;
         if ($service->etat === "done") {
             $file = File::where('service_id', $service->id)->limit(1)->get()[0];
@@ -104,9 +113,9 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $service = $this->serviceRepository->getById($id);
+        $service = $this->serviceRepository->getBy('slug', '=', $slug)->first();
         return view('services.edit', compact('service'));
     }
 
@@ -117,9 +126,10 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $this->serviceRepository->update($id, $request->all());
+        $service = $this->serviceRepository->getBy('slug', '=', $slug)->first();
+        $this->serviceRepository->update($service->id, $request->all());
         return redirect("/my-service/".Auth::user()->id)->withStatus("Service a bien été modifier");
     }
 
@@ -129,9 +139,10 @@ class ServiceController extends Controller
      * @param  \App\Models\Service  $service
      * @return \Illuminate\Http\Response
      */
-    public function destroy ($id)
+    public function destroy ($slug)
     {
-        $this->serviceRepository->destroy($id);
+        $service = $this->serviceRepository->getBy('slug', '=', $slug)->first();
+        $this->serviceRepository->destroy($service->id);
         return redirect()->back()->withError("Service a bien été supprimer");
     }
 }

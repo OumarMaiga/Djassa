@@ -147,8 +147,9 @@ class PageController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function product(Product $product)
+    public function product($slug)
     {
+        $product = $this->productRepository->getBy('slug', '=', $slug);
         return view('pages.products.show', compact('product'));
     }
 

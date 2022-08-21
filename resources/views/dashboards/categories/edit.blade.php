@@ -14,7 +14,7 @@
             <!-- Validation Errors -->
             <x-auth-validation-errors class="mb-4" :errors="$errors" />
     
-            <form method="POST" action="{{ route('dashboard.category.update', $category->id) }}">
+            <form method="POST" action="{{ route('dashboard.category.update', $category->slug) }}">
                 @csrf
                 @method('put')
                 <!-- Email Address -->

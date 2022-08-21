@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         $users = $this->userRepository->getBy('type', '=', 'user');
-        return view('users.index', compact('users'));
+        return view('dashboards.users.index', compact('users'));
     }
 
     /**
@@ -56,7 +56,6 @@ class UserController extends Controller
         ]);
 
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
             'user_id' => Auth::user()->id,
         ]);
             

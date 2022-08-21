@@ -46,12 +46,12 @@
                             <td>{{ $sub_category->category_title }}</td>
                             <td>{{ $sub_category->rayon_title }}</td>
                             <td class="justify-content-between icon-content">
-                                <!-- <a href="{{ route('dashboard.sub_category.show', $sub_category->sub_category_id) }}">Voir</a> -->
-                                <a href="{{ route('dashboard.sub_category.edit', $sub_category->sub_category_id) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
+                                <!-- <a href="{{ route('dashboard.sub_category.show', $sub_category->sub_category_slug) }}">Voir</a> -->
+                                <a href="{{ route('dashboard.sub_category.edit', $sub_category->sub_category_slug) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
                                     <ion-icon name="create-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                                 <span class="col icon-action" style="display:inline-block">
-                                    <form method="POST" action="{{ route('dashboard.sub_category.destroy', $sub_category->sub_category_id) }}">
+                                    <form method="POST" action="{{ route('dashboard.sub_category.destroy', $sub_category->sub_category_slug) }}">
                                         @csrf
                                         @method('delete')
                                             <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer cette catégorie ?')" title="Supprimer">

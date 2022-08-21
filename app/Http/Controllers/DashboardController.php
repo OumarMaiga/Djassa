@@ -143,7 +143,7 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function commande($id)
+    public function commande($code)
     {
         // On recupère la commande et les infos sur les produits
         $commande = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
@@ -152,7 +152,7 @@ class DashboardController extends Controller
                                 FROM commandes LEFT JOIN users ON commandes.user_id = users.id
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
                                 LEFT JOIN products ON commande_product.product_id = products.id 
-                                WHERE commandes.id = $id")[0];
+                                WHERE commandes.code = '$code'")[0];
                                 
         return view('dashboards.commandes.show', compact('commande'));
     }
@@ -180,9 +180,9 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function service($id)
+    public function service($slug)
     {
-        $service = $this->serviceRepository->getById($id);
+        $service = $this->serviceRepository->getBy('slug', '=', $slug)->first();
         $file = null;
         if ($service->etat === "done") {
             $file = $this->fileRepository->getBy('service_id', '=', $service->id);

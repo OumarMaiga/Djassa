@@ -52,7 +52,7 @@
                             ?>
                             </td>
                             <td>
-                                <a href="{{ route('dashboard.service.show', $service->service_id) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
+                                <a href="{{ route('dashboard.service.show', $service->service_slug) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
                                     <ion-icon name="eye-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                             </td>

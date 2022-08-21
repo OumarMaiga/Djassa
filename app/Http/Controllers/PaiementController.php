@@ -61,7 +61,6 @@ class PaiementController extends Controller
         }
 
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
             'user_id' => $user_id,
             'etat' => 'request',
             'paid' => 0,

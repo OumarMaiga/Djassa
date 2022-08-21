@@ -57,7 +57,7 @@
                             <td>{{ ($commande->commande_montant_payer != NULL) ? $commande->commande_montant_payer : 0 }}</td>
                             <!--<td>{!! $commande->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>-->
                             <td>
-                                <a href="{{ route('dashboard.commande.show', $commande->commande_id) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
+                                <a href="{{ route('dashboard.commande.show', $commande->commande_code) }}" style="display:inline-block; margin-right:0.75rem" title="Voir">
                                     <ion-icon name="eye-outline" style="font-size:24px;"></ion-icon>
                                 </a>
                             </td>

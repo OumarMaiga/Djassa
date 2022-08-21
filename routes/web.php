@@ -67,6 +67,7 @@ Route::get('/dashboard/admin/{id}/unblocked', [AdminController::class, 'unblocke
 
 Route::get('/user', [UserController::class, 'index'])->name('user.index')->middleware('auth');
 Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update')->middleware('auth');
+Route::get('/dashboard/user/index', [UserController::class, 'index'])->name('dashboard.user.index')->middleware('auth');
 Route::get('/dashboard/user/{id}/blocked', [UserController::class, 'blocked'])->name('dashboard.user.blocked')->middleware('auth');
 Route::get('/dashboard/user/{id}/unblocked', [UserController::class, 'unblocked'])->name('dashboard.user.unblocked')->middleware('auth');
 Route::delete('/dashboard/user/{id}', [UserController::class, 'destroy'])->name('dashboard.user.destroy')->middleware('auth');
@@ -84,7 +85,6 @@ Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product
 Route::get('/product/files/{product_id}', [ProductController::class, 'product_files_ajax'])->name('product.product_files_ajax');
 Route::get('/products/more-products/{page_number}', [ProductController::class, 'more_products_ajax'])->name('product.more_products_ajax');
 Route::get('/search', [PageController::class, 'search'])->name('search');
-
 
 Route::resource('commande', CommandeController::class)->middleware('auth');
 Route::get('/my-commande/{user_id}', [CommandeController::class, 'my_commande'])->name('my_commande')->middleware('auth');

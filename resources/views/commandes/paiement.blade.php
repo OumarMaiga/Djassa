@@ -37,7 +37,7 @@
                                     @if($commande->paid)
                                         <b style=color:green>Solder</b>
                                     @else
-                                        <a href="{{ route('commande.create_paiement', $commande->id) }}">Payer</a>
+                                        <a href="{{ route('commande.create_paiement', $commande->code) }}">Payer</a>
                                     @endif
                                 </td>
                             </tr>

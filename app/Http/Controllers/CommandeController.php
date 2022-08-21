@@ -78,7 +78,7 @@ class CommandeController extends Controller
 
         }
         
-        return redirect('/commande/'.$commande['id'].'/paiement')->withStatus("Nouveau commande (".$commande['code'].") vient d'être ajouté");
+        return redirect('/commande/'.$commande['code'].'/paiement')->withStatus("Nouveau commande (".$commande['code'].") vient d'être ajouté");
     
     }
 
@@ -88,7 +88,7 @@ class CommandeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($code)
     {
         // On recupère la commande et les infos sur les produits
         $commande = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
@@ -97,7 +97,7 @@ class CommandeController extends Controller
                                 FROM commandes LEFT JOIN users ON commandes.user_id = users.id
                                 LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
                                 LEFT JOIN products ON commande_product.product_id = products.id 
-                                WHERE commandes.id = $id")[0];
+                                WHERE commandes.code = $code")->first();
                                 
         return view('commandes.show', compact('commande'));
     }
@@ -197,7 +197,7 @@ class CommandeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_paiement($id)
+    public function create_paiement($code)
     {
         //die("Fonctionnality not available");
         if (!Auth::check()) {
@@ -205,10 +205,10 @@ class CommandeController extends Controller
             exit;
         }
 
-        $commande = $this->commandeRepository->getById($id);
+        $commande = $this->commandeRepository->getBy('code', '=', $code)->first();
         $products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
                                         products.id as product_id FROM products LEFT JOIN commande_product
-                                        ON products.id = commande_product.product_id WHERE commande_product.commande_id = $id");
+                                        ON products.id = commande_product.product_id WHERE commande_product.commande_id = $commande->id");
 
 
         return view('commandes.paiement', compact('commande', 'products'));

@@ -55,8 +55,17 @@ class RayonController extends Controller
             'title' => 'required|max:255',
         ]);
 
+        //Creation du slug
+        $i = 0;
+        do {
+            $i++;
+            $slug = Str::slug($request->get('title'))."-".$i;
+            if ($i == 1) $slug = Str::slug($request->get('title'));
+            $slug_count = $this->rayonRepository->getBy('slug', '=', $slug)->count();
+        } while ($slug_count >= 1);
+        
         $request->merge([
-            'slug' => Str::slug($request->get('title')),
+            'slug' => $slug,
             'user_id' => Auth::user()->id,
             'etat' => 'enabled',
         ]);
@@ -73,9 +82,9 @@ class RayonController extends Controller
      * @param  \App\Models\Rayon  $rayon
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $rayon = $this->rayonRepository->getById($id);
+        $rayon = $this->rayonRepository->getBy('slug', '=', $slug)->first();
         return view('dashboards.rayons.show', compact('rayon'));
     }
 
@@ -85,9 +94,9 @@ class RayonController extends Controller
      * @param  \App\Models\Rayon  $rayon
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        $rayon = $this->rayonRepository->getById($id);
+        $rayon = $this->rayonRepository->getBy('slug', '=', $slug)->first();
         return view('dashboards.rayons.edit', compact('rayon'));
     }
 
@@ -98,9 +107,10 @@ class RayonController extends Controller
      * @param  \App\Models\Rayon  $rayon
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        $this->rayonRepository->update($id, $request->all());
+        $rayon = $this->rayonRepository->getBy('slug', '=', $slug)->first();
+        $this->rayonRepository->update($rayon->id, $request->all());
         return redirect('/dashboard/rayon')->withStatus("Rayon a bien été modifier");
     }
 
@@ -110,9 +120,10 @@ class RayonController extends Controller
      * @param  \App\Models\Rayon  $rayon
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        $this->rayonRepository->destroy($id);
+        $rayon = $this->rayonRepository->getBy('slug', '=', $slug)->first();
+        $this->rayonRepository->destroy($rayon->id);
         return redirect()->back()->withError("Rayon a bien été supprimer");
     }
 
@@ -125,10 +136,7 @@ class RayonController extends Controller
     public function categories($id)
     {
         $categories = $this->categoryRepository->getBy('rayon_id', '=', $id);
-        /*var_dump($categories);
-        die();*/
         return response()->json(['categories' => $categories]);
-        //return view('dashboards.categories.rayon', compact('category'));
     }
     
 }

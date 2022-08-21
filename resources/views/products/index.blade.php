@@ -38,7 +38,7 @@
                                 <span>
                                     <form  method="POST" action="{{ route('panier.store') }}">
                                         @csrf
-                                            <input type="hidden" id="id" name="id" value="{{ $product->id }}">
+                                            <input type="hidden" id="id" name="id" value="{{ $product->slug }}">
                                             <input id="quantity" name="quantity" type="number" value="1" min="1">
                                             <label for="quantity">Quantité</label>        
                                             <p>
@@ -48,7 +48,7 @@
                                             </p>
                                       </form>
                                 </span>
-                                <a href="{{ route('product.destroy', $product->id) }}">Del_panier</a>
+                                <a href="{{ route('product.destroy', $product->slug) }}">Del_panier</a>
                                 
                             </td>
                         </tr>
