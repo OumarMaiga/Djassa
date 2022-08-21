@@ -32,6 +32,13 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if(Auth::user()->etat === "blocked") {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/login')->withErrors('Votre compte a été bloqué. <br/>Veuillez contacter l\'administrateur pour plus d\'information');
+        }
+
         if(Auth::user()->type === "admin") {
             return redirect('/dashboard')->withWelcome("Bienvenue <strong>".Auth::user()->prenom." ".Auth::user()->nom."</strong>");
         } else {
