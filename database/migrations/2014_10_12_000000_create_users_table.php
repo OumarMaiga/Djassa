@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('etat')->nullable();
             $table->string('type')->nullable();
+            $table->foreignId('user_id')->reference('id')->on('users')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

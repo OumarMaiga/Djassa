@@ -63,15 +63,16 @@
                             <!--<input id="montant" class="form-control" type="text" name="montant" value="{{ $commande->montant_du }}" readonly />-->
                             <input id="montant" class="form-control" type="text" name="montant" value="100" readonly />
                             <input id="commande_id" class="form-control" type="hidden" name="commande_id" value="{{ $commande->id }}" readonly />
-                            <input id="customer_name" class="form-control" type="hidden" name="customer_name" value="Joe" readonly />
-                            <input id="customer_surname" class="form-control" type="hidden" name="customer_surname" value="Down" readonly />
-                            <input id="customer_email" class="form-control" type="hidden" name="customer_email" value="down@test.com" readonly />
-                            <input id="customer_phone_number" class="form-control" type="hidden" name="customer_phone_number" value="088767611" readonly />
-                            <input id="customer_address" class="form-control" type="hidden" name="customer_address" value="BP 0024" readonly />
-                            <input id="customer_city" class="form-control" type="hidden" name="customer_city" value="Antananarivo" readonly />
-                            <input id="customer_country" class="form-control" type="hidden" name="customer_country" value="CM" readonly />
-                            <input id="customer_state" class="form-control" type="hidden" name="customer_state" value="CM" readonly />
-                            <input id="customer_zip_code" class="form-control" type="hidden" name="customer_zip_code" value="06510" readonly />
+                            <input id="commande_code" class="form-control" type="hidden" name="commande_code" value="{{ $commande->code }}" readonly />
+                            <input id="customer_name" class="form-control" type="hidden" name="customer_name" value="" readonly />
+                            <input id="customer_surname" class="form-control" type="hidden" name="customer_surname" value="" readonly />
+                            <input id="customer_email" class="form-control" type="hidden" name="customer_email" value="" readonly />
+                            <input id="customer_phone_number" class="form-control" type="hidden" name="customer_phone_number" value="" readonly />
+                            <input id="customer_address" class="form-control" type="hidden" name="customer_address" value="" readonly />
+                            <input id="customer_city" class="form-control" type="hidden" name="customer_city" value="" readonly />
+                            <input id="customer_country" class="form-control" type="hidden" name="customer_country" value="" readonly />
+                            <input id="customer_state" class="form-control" type="hidden" name="customer_state" value="" readonly />
+                            <input id="customer_zip_code" class="form-control" type="hidden" name="customer_zip_code" value="" readonly />
                             
                             <x-button type="submit" class="mt-4">
                                 {{ __('Payez') }}

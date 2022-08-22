@@ -71,19 +71,21 @@ $(document).ready(function() {
             customer_zip_code:  data.customer_zip_code,
         });
         CinetPay.waitResponse(function(response) {
+            console.log(response);
             if (response.status == "REFUSED") {
                 console.log("REFUSED");
-                if (alert("Votre paiement a échoué")) {
-                    window.location.reload();
-                }
+                alert("Votre paiement a échoué");
+                window.location.reload();
             } else if (response.status == "ACCEPTED") {
                 console.log("ACCEPTED");
                 // Ajout de donnees pour l'enregistrement des transactions
                 data.from = 'CinetPay',
-                data.currency = currency,
-                data.channels = channels,
-                data.description = description,  
+                data.currency = response.currency != undefined ? response.currency : currency,
+                data.channels = response.channels != undefined ? response.channels : channels,
+                data.description = response.description != undefined ? response.description : description,  
                 data.transaction_id = transaction_id,
+                data.operator_id = response.operator_id != undefined ? response.operator_id : null,
+                data.payment_method = response.payment_method != undefined ? response.payment_method : null,
                 
                 jQuery.ajax({
                     url: "/paiement" ,
@@ -94,13 +96,22 @@ $(document).ready(function() {
                         console.log(response);
                     }
                 });
-                if (alert("Votre paiement a été effectué avec succès")) {
-                    window.location.reload();
-                }
+                
+                alert("Votre paiement a été effectué avec succès");
             }
         });
         CinetPay.onError(function(data) {
             console.log(data);
+            if (data.message == 'ERROR_AMOUNT_TOO_LOW') {
+                alert("Le montant minimum requis pour le paiemet est 100 F CFA")
+                window.location.reload();
+            } else if (data.message == 'MINIMUM_REQUIRED_FIELDS') {
+                alert("Le montant doit contenir seulement des chiffres")
+                window.location.reload();                
+            } else if (data.message == 'MINIMUM_REQUIRED_FIELDS') {
+                alert("Le montant doit contenir seulement des chiffres")
+                window.location.reload();                
+            }
         });
 
     });

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         User::create([
-            'name' => 'Admin',
+            'name' => 'Superadmin',
             'email' => 'superadmin@djassa.com',
             'password' => Hash::make('password123'),
             'etat' => 'enabled',

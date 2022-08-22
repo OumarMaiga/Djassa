@@ -19,6 +19,22 @@ class CreatePaiementsTable extends Migration
             $table->foreignId('user_id')->reference('id')->on('users')->nullable();
             $table->foreignId('commande_id')->reference('id')->on('commandes')->nullable();
             $table->foreignId('service_id')->reference('id')->on('services')->nullable();
+            $table->string('from')->nullable();
+            $table->string('currency')->nullable();
+            $table->string('description')->nullable();
+            $table->string('transaction_id')->nullable();
+            $table->string('channels')->nullable();
+            $table->string('payment_method')->nullable();
+            $table->string('operator_id')->nullable();
+            $table->string('customer_name')->nullable();
+            $table->string('customer_surname')->nullable();
+            $table->string('customer_email')->nullable();
+            $table->string('customer_phone_number')->nullable();
+            $table->string('customer_address')->nullable();
+            $table->string('customer_city')->nullable();
+            $table->string('customer_country')->nullable();
+            $table->string('customer_state')->nullable();
+            $table->string('customer_zip_code')->nullable();
             $table->timestamps();
         });
     }

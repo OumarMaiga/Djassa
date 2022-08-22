@@ -25,6 +25,8 @@ class Paiement extends Model
         'description',
         'transaction_id',
         'channels',
+        'payment_method',
+        'operator_id',
         'customer_name',
         'customer_surname',
         'customer_email',
