@@ -307,19 +307,21 @@ class DashboardController extends Controller
      */
     public function recettes()
     {
-        // On recupère les commandes d'un utilisateur, les infos sur les produits
-        $recettes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
-                                commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
-                                commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer, users.name as user_name, 
-                                products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
-                                FROM commandes LEFT JOIN users ON commandes.user_id = users.id
-                                LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
-                                LEFT JOIN products ON commande_product.product_id = products.id 
-                                WHERE commandes.montant_payer > 0 GROUP BY commande_code
-                                /*UNION
-                                SELECT services.title as service_title, services.slug as service_slug, services.beneficiaire as service_beneficiaire, services.montant as service_montant, services.paid as service_paid
-                                FROM services
-                                WHERE services.paid = 1*/");
+        // On recupère les recettes
+        $recettes = DB::select("SELECT paiements.montant as montant, paiements.id as id, paiements.user_id as user_id,
+                                paiements.commande_id as commande_id, paiements.service_id as service_id, paiements.from as paiement_from, paiements.currency as currency, 
+                                paiements.description as description, paiements.channels as channels, paiements.payment_method as payment_method, paiements.operator_id as operator_id, paiements.customer_name as customer_name, 
+                                paiements.customer_surname as customer_surname, paiements.customer_email as customer_email, paiements.customer_phone_number as customer_phone_number, 
+                                paiements.customer_address as customer_address, paiements.customer_city as customer_city, paiements.customer_country as customer_country, 
+                                paiements.customer_zip_code as customer_zip_code, paiements.customer_state as customer_state, paiements.created_at as created_at, paiements.updated_at as updated_at,
+                                users.name as user_name, 
+                                services.title as service_title, services.slug as service_slug, 
+                                commandes.id, commandes.code as commande_code
+                                FROM paiements 
+                                LEFT JOIN users ON paiements.user_id = users.id
+                                LEFT JOIN commandes ON paiements.commande_id = commandes.id
+                                LEFT JOIN services ON paiements.service_id = services.id
+                                ");
 
         return view('dashboards.recettes.index', compact('recettes'));
     }

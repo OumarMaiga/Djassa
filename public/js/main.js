@@ -53,7 +53,6 @@ $(document).ready(function() {
             return_url: 'http://localhost:8000/commande/'+data.commande_code+'/paiement'
         });
         CinetPay.getCheckout({
-            transaction_id: Math.floor(Math.random() * 100000000).toString(), // YOUR TRANSACTION ID
             amount: data.montant,
             currency: 'XOF',
             channels: 'ALL',
@@ -83,7 +82,6 @@ $(document).ready(function() {
                 data.currency = response.currency != undefined ? response.currency : currency,
                 data.channels = response.channels != undefined ? response.channels : channels,
                 data.description = response.description != undefined ? response.description : description,  
-                data.transaction_id = transaction_id,
                 data.operator_id = response.operator_id != undefined ? response.operator_id : null,
                 data.payment_method = response.payment_method != undefined ? response.payment_method : null,
                 

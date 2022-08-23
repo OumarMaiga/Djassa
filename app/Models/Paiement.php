@@ -23,7 +23,6 @@ class Paiement extends Model
         'from',
         'currency',
         'description',
-        'transaction_id',
         'channels',
         'payment_method',
         'operator_id',

@@ -11,14 +11,15 @@
             <table class="table table-hover table-responsive" style="margin-top: 2rem">
                 <thead>
                     <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Fullname</th>
-                    <th scope="col">Telephone</th>
-                    <th scope="col">Code</th>
-                    <th scope="col">Produits</th>
-                    <th scope="col">Payer</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Action</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Utilisateur</th>
+                        <th scope="col">Commande</th>
+                        <th scope="col">Service</th>
+                        <th scope="col">Moyen de paiement</th>
+                        <th scope="col">Methode de paiement</th>
+                        <th scope="col">Operation ID</th>
+                        <th scope="col">Montant</th>
+                        <th scope="col">Devise</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,34 +30,34 @@
                     @foreach ($recettes as $recette)
                     <?php 
                         $n = $n + 1;
-                        $commande_products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
-                                                        products.id as product_id FROM products LEFT JOIN commande_product
-                                                        ON products.id = commande_product.product_id WHERE commande_product.commande_id = $recette->commande_id");
-                        $cumul_montant = $cumul_montant + $recette->commande_montant_payer;
+                        $cumul_montant = $cumul_montant + $recette->montant;
                     ?>
                         <tr>
                             <th scope="row">{{ $n }}</th>
-                            <td>{{ "$recette->commande_firstname $recette->commande_lastname" }}</td>
-                            <td>{{ $recette->commande_telephone }}</td>
-                            <td>{{ $recette->commande_code }}</td>
                             <td>
-                                <?php 
-                                $x = 0;
-                                foreach ($commande_products as $commande_product) {
-                                    echo $x > 0 ? ", " : "";
-                                    echo $commande_product->product_title;
-                                    $x++;
-                                }
-                                ?>
+                                @if($recette->commande_id != NULL)
+                                    <a href="{{ route('user.show', $recette->user_id) }}">{{ $recette->user_name }}</a>
+                                @endif
                             </td>
-                            <td>{{ $recette->commande_montant_payer != null ? $recette->commande_montant_payer : 0 }} F</td>
-                            <td>{!! $recette->commande_delivered ? "<b style=color:green>Livré</b>" : "<b style=color:red>Non livré</b>" !!}</td>
-                            <td><a href="{{ route('commande.show', $recette->commande_id) }}">Voir</a></td>
+                            <td>
+                                @if($recette->commande_id != NULL)
+                                    <a href="{{ route('dashboard.commande.show', $recette->commande_code) }}">{{ $recette->commande_code }}</a></td>
+                                @endif
+                                <td>
+                                @if($recette->service_id != NULL)
+                                    <a href="{{ route('dashboard.service.show', $recette->service_slug) }}">{{ $recette->service_title }}</a>
+                                @endif
+                            </td>
+                            <td>{{ $recette->paiement_from }}</td>
+                            <td>{{ $recette->payment_method }}</td>
+                            <td>{{ $recette->operator_id }}</td>
+                            <td>{{ $recette->montant }}</td>
+                            <td>{{ $recette->currency }}</td>
                         </tr>
                     @endforeach
                         <tr>
-                            <th scope="row" colspan="5">Total</th>
-                            <td colspan="3"><b>{{ $cumul_montant }} F CFA</b></td>
+                            <th scope="row" colspan="7">Total</th>
+                            <td colspan="2"><b>{{ $cumul_montant }} F CFA</b></td>
                         </tr>
                 </tbody>
             </table>
