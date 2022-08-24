@@ -219,16 +219,19 @@ class DashboardController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function product($id)
+    public function product($slug)
     {
-        $product = $this->productRepository->getById($id);
-        
-        if($product->product_discount != null &&  $product->product_discount > 0) 
+        $product = $this->productRepository->getBy('slug', '=', $slug)->first();
+        $images = $this->fileRepository->getBy("product_id", '=', $product->id);
+        $category = $this->categoryRepository->getById($product->category_id);
+        $rayon = $this->rayonRepository->getById($category->rayon_id);
+
+        if($product->discount != null &&  $product->discount > 0) 
         {
-            $product->product_price = $product->product_price - ($product->product_price * ($product->product_discount / 100));
+            $product->discount_price();
         }
 
-        return view('dashboards.products.show', compact('product'));
+        return view('dashboards.products.show', compact('product', 'images', 'category', 'rayon'));
     }
 
     /**
