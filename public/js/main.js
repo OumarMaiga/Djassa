@@ -24,7 +24,7 @@ $(document).ready(function() {
                     products_container.append (
                         '<div class="col-2 mt-4">'+
                             '<div class="card shadow-sm">'+
-                                '<a href="/product/'+products[i].product_id+'" class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%; cursor:pointer">Voir les offres</a>'+
+                                '<a href="/product/'+products[i].product_slug+'" class="py-2 mt-2 mx-3" style="background:#F6F6F6;text-align:center;border-radius:4px;font-weight:700; margin-bottom:25%; cursor:pointer">Voir les offres</a>'+
                                 '<img src="'+image+'" class="img-responsive mx-3" style="margin-bottom:10%;height:75px;object-fit:cover;" alt="...">'+
                                 '<div class="card-body">'+
                                     '<p class="px-2" style="background:#ec6333;color:#fff;font-weight:800; font-size:14px; width:40%">-'+products[i].product_discount+'%</p>'+
@@ -56,7 +56,8 @@ $(document).ready(function() {
             amount: data.montant,
             currency: 'XOF',
             channels: 'ALL',
-            description: 'Paiement sur djassa',   
+            description: 'Paiement sur djassa',
+            transaction_id:  Math.floor(Math.random() * 100000000).toString(),
                 
             //Fournir ces variables pour le paiements par carte bancaire
             customer_name: data.customer_name,
@@ -79,6 +80,7 @@ $(document).ready(function() {
                 console.log("ACCEPTED");
                 // Ajout de donnees pour l'enregistrement des transactions
                 data.from = 'CinetPay',
+                data.transaction_id = response.transaction_id != undefined ? response.transaction_id : transaction_id,
                 data.currency = response.currency != undefined ? response.currency : currency,
                 data.channels = response.channels != undefined ? response.channels : channels,
                 data.description = response.description != undefined ? response.description : description,  
@@ -106,10 +108,7 @@ $(document).ready(function() {
             } else if (data.message == 'MINIMUM_REQUIRED_FIELDS') {
                 alert("Le montant doit contenir seulement des chiffres")
                 window.location.reload();                
-            } else if (data.message == 'MINIMUM_REQUIRED_FIELDS') {
-                alert("Le montant doit contenir seulement des chiffres")
-                window.location.reload();                
-            }
+            } 
         });
 
     });

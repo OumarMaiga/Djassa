@@ -22,6 +22,7 @@ class Paiement extends Model
         'etat',
         'from',
         'currency',
+        'transaction_id',
         'description',
         'channels',
         'payment_method',

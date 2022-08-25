@@ -21,6 +21,7 @@ class CreatePaiementsTable extends Migration
             $table->foreignId('service_id')->reference('id')->on('services')->nullable();
             $table->string('from')->nullable();
             $table->string('currency')->nullable();
+            $table->string('transaction_id')->nullable();
             $table->string('description')->nullable();
             $table->string('channels')->nullable();
             $table->string('payment_method')->nullable();
