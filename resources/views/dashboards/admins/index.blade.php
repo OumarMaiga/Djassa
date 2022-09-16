@@ -67,6 +67,7 @@
             <div id="loader" class="hide">
                 <div class="loader"></div>
             </div>
+            {{ $admins->links() }}
         </div>
     </div>
 </x-app-layout>

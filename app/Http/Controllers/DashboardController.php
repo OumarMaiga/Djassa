@@ -78,17 +78,18 @@ class DashboardController extends Controller
      */
     public function sells()
     {
-        $sells = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+        $sells = DB::table('commandes')
+        ->selectRaw('commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
         commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
         commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer,
         users.name as user_name, 
-        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
-        FROM commandes LEFT JOIN users ON commandes.user_id = users.id
-        LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
-        LEFT JOIN products ON commande_product.product_id = products.id 
-        WHERE commandes.delivered = 1 
-        GROUP BY commande_code
-        ");
+        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id')
+        ->leftJoin('users', 'commandes.user_id', '=', 'users.id')
+        ->leftJoin('commande_product', 'commandes.id', '=', 'commande_product.commande_id')
+        ->leftJoin('products', 'commande_product.product_id', '=', 'products.id')
+        ->where('commandes.delivered', '=', 1)
+        ->groupBy('commande_code')
+        ->simplePaginate(25);
 
         return view('dashboards.sells', compact('sells'));
     }
@@ -102,17 +103,20 @@ class DashboardController extends Controller
     {
         $month = date('m');
         $year = date('Y');
-        $sells = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+        $sells = DB::table('commandes')
+        ->selectRaw('commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
         commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
         commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer,
         users.name as user_name, 
-        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
-        FROM commandes LEFT JOIN users ON commandes.user_id = users.id
-        LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
-        LEFT JOIN products ON commande_product.product_id = products.id 
-        WHERE commandes.delivered = 1 AND MONTH(commandes.created_at) = $month
-        AND YEAR(commandes.created_at) = $year GROUP BY commande_code
-        ");
+        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id')
+        ->leftJoin('users', 'commandes.user_id', '=', 'users.id')
+        ->leftJoin('commande_product', 'commandes.id', '=', 'commande_product.commande_id')
+        ->leftJoin('products', 'commande_product.product_id', '=', 'products.id')
+        ->where('commandes.delivered', '=', 1)
+        ->selectRaw(DB::raw('MONTH(commandes.created_at) = '.$month))
+        ->selectRaw(DB::raw('YEAR(commandes.created_at) = '.$year))
+        ->groupBy('commande_code')
+        ->simplePaginate(25);
 
         return view('dashboards.sells-of-month', compact('sells'));
     }
@@ -124,15 +128,17 @@ class DashboardController extends Controller
      */
     public function commandes()
     {        
-        $commandes = DB::select("SELECT commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
+        $commandes = DB::table('commandes')
+        ->selectRaw('commandes.code as commande_code, commandes.id as commande_id, commandes.firstname as commande_firstname,
         commandes.lastname as commande_lastname, commandes.telephone as commande_telephone, commandes.user_id, commandes.delivered as commande_delivered, 
         commandes.paid as commande_paid, commandes.montant_du as commande_montant_du, commandes.montant_payer as commande_montant_payer,
         users.name as user_name, 
-        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id
-        FROM commandes LEFT JOIN users ON commandes.user_id = users.id
-        LEFT JOIN commande_product ON commandes.id = commande_product.commande_id
-        LEFT JOIN products ON commande_product.product_id = products.id 
-        WHERE commandes.delivered = 0");
+        products.id, products.title as product_title, products.slug as product_slug, commande_product.product_id, commande_product.commande_id')
+        ->leftJoin('users', 'commandes.user_id', '=', 'users.id')
+        ->leftJoin('commande_product', 'commandes.id', '=', 'commande_product.commande_id')
+        ->leftJoin('products', 'commande_product.product_id', '=', 'products.id')
+        ->where('commandes.delivered', '=', 0)
+        ->simplePaginate(25);
 
         return view('dashboards.commandes.index', compact('commandes'));
     }
@@ -164,13 +170,13 @@ class DashboardController extends Controller
      */
     public function services()
     {
-        $services = DB::select("SELECT services.title as service_title, services.id as service_id, services.slug as service_slug,
+        $services = DB::table('services')
+        ->select('services.title as service_title, services.id as service_id, services.slug as service_slug,
         services.beneficiaire as service_beneficiaire, services.telephone as service_telephone, services.user_id as service_user_id, 
         services.montant as service_montant, services.paid as service_paid, services.expire as service_expire, services.etat as service_etat,
-        users.name as service_user_name
-        FROM services 
-        LEFT JOIN users ON services.user_id = users.id
-        /*WHERE services.etat != 'done'*/");
+        users.name as service_user_name')
+        ->leftJoin('users', 'services.user_id', '=', 'users.id')
+        ->simplePaginate(25);
 
         return view('dashboards.services.index', compact('services'));
     }
@@ -204,11 +210,11 @@ class DashboardController extends Controller
      */
     public function products()
     {
-        $products = DB::select('SELECT products.id as product_id, products.title as product_title, products.slug as product_slug, products.price as product_price,
+        $products = DB::table('products')
+        ->selectRaw('products.id as product_id, products.title as product_title, products.slug as product_slug, products.price as product_price,
         products.overview as product_overview, products.quantity as product_quantity, products.published as product_publised, products.discount as product_discount,
-        categories.id as categorie_id, categories.title as category_title, categories.slug as categorie_slug
-        FROM products LEFT JOIN categories ON products.category_id = categories.id
-        /*WHERE products.quantity > 0 AND products.published = 1*/ ');
+        categories.id as categorie_id, categories.title as category_title, categories.slug as categorie_slug')
+        ->leftJoin('categories', 'products.category_id', '=', 'categories.id')->simplePaginate(25);
 
         return view('dashboards.products.index', compact('products'));
     }
@@ -311,20 +317,20 @@ class DashboardController extends Controller
     public function recettes()
     {
         // On recupère les recettes
-        $recettes = DB::select("SELECT paiements.montant as montant, paiements.id as id, paiements.user_id as user_id,
-                                paiements.commande_id as commande_id, paiements.service_id as service_id, paiements.from as paiement_from, paiements.currency as currency, 
-                                paiements.description as description, paiements.channels as channels, paiements.payment_method as payment_method, paiements.operator_id as operator_id, paiements.customer_name as customer_name, 
-                                paiements.customer_surname as customer_surname, paiements.customer_email as customer_email, paiements.customer_phone_number as customer_phone_number, 
-                                paiements.customer_address as customer_address, paiements.customer_city as customer_city, paiements.customer_country as customer_country, 
-                                paiements.customer_zip_code as customer_zip_code, paiements.customer_state as customer_state, paiements.created_at as created_at, paiements.updated_at as updated_at,
-                                users.name as user_name, 
-                                services.title as service_title, services.slug as service_slug, 
-                                commandes.id, commandes.code as commande_code
-                                FROM paiements 
-                                LEFT JOIN users ON paiements.user_id = users.id
-                                LEFT JOIN commandes ON paiements.commande_id = commandes.id
-                                LEFT JOIN services ON paiements.service_id = services.id
-                                ");
+        $recettes = DB::table('paiements')
+        ->selectRaw('paiements.montant as montant, paiements.id as id, paiements.user_id as user_id,
+        paiements.commande_id as commande_id, paiements.service_id as service_id, paiements.from as paiement_from, paiements.currency as currency, 
+        paiements.description as description, paiements.channels as channels, paiements.payment_method as payment_method, paiements.operator_id as operator_id, paiements.customer_name as customer_name, 
+        paiements.customer_surname as customer_surname, paiements.customer_email as customer_email, paiements.customer_phone_number as customer_phone_number, 
+        paiements.customer_address as customer_address, paiements.customer_city as customer_city, paiements.customer_country as customer_country, 
+        paiements.customer_zip_code as customer_zip_code, paiements.customer_state as customer_state, paiements.created_at as created_at, paiements.updated_at as updated_at,
+        users.name as user_name, 
+        services.title as service_title, services.slug as service_slug, 
+        commandes.id, commandes.code as commande_code')
+        ->leftJoin('users', 'paiements.user_id', '=', 'users.id')
+        ->leftJoin('commandes', 'paiements.commande_id', '=', 'commandes.id')
+        ->leftJoin('services', 'paiements.service_id', '=', 'services.id')
+        ->simplePaginate(25);
 
         return view('dashboards.recettes.index', compact('recettes'));
     }

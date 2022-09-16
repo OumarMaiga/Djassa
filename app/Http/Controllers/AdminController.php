@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 
 use App\Repositories\UserRepository;
@@ -28,7 +29,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = $this->userRepository->getBy('type', '=', 'admin');
+        $admins = DB::table('users')
+        ->where('type', '=', 'admin')->simplePaginate(25);
         return view('dashboards.admins.index', compact('admins'));
     }
 

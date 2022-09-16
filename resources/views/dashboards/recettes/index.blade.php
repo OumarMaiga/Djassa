@@ -66,8 +66,9 @@
             @endif
             </div>        
             <div id="loader" class="hide">
-            <div class="loader"></div>
+                <div class="loader"></div>
             </div>
+            {{ $recettes->links() }}
         </div>
         </div>
     </div>

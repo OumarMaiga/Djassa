@@ -27,7 +27,7 @@
                 Afficher plus
             </button>
         </div>
-        <input type="hidden" id="page_number" value="1" />
+        <input type="hidden" id="page_number" value="2" />
         <div class="row gx-1" style="margin-top:5%">
             <div class="col">
                 <img src="images/body-lotion.jpg" alt="" style="border-radius:8px">

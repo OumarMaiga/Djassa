@@ -53,6 +53,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $products->links() }}
         </div>
     </div>
 </x-app-layout>

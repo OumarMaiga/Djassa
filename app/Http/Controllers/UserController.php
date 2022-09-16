@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class UserController extends Controller
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->userRepository->getBy('type', '=', 'user');
+        $users = DB::table('users')
+        ->where('type', '=', 'user')->simplePaginate(25);
         return view('dashboards.users.index', compact('users'));
     }
 

@@ -55,6 +55,7 @@
             <div id="loader" class="hide">
                 <div class="loader"></div>
             </div>
+            {{ $users->links() }}
         </div>
     </div>
 </x-app-layout>
