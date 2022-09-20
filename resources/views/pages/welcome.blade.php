@@ -1,20 +1,20 @@
 <x-app-layout>
-    @include('layouts.sidebar')
+    <!--@include('layouts.sidebar')-->
 
-    <div style="margin-left:19rem; margin-top:6.5rem" id="container">
+    <div class="ml-72 mt-24 md:ml-0.5 sm:ml-0.5" id="container">
         <!-- Banners -->
         <div class="row" style="margin-right:1rem">
             <div class="col">
                 <img src="{{ asset('images/home.jpeg') }}" alt="">
-                <h2 class="text-xl font-bold text-black" style="margin-top:2%; font-size:20px; font-weight:700">Faites vos courses sur Djassa</h2>
+                <h2 class="xl:text-xl lg:text-lg md:text-md mt-2 font-bold text-black">Faites vos courses sur Djassa</h2>
             </div>
             <div class="col">
                 <img src="{{ asset('images/concert.jpeg') }}" alt="">
-                <h2 class="text-xl font-bold text-black" style="margin-top:2%; font-size:20px; font-weight:700">Acheter des billets</h2>
+                <h2 class="xl:text-xl lg:text-lg md:text-md mt-2 font-bold text-black">Acheter des billets</h2>
             </div>
         </div>
 
-        <h2 style="margin-top:5%; margin-bottom:1.5rem; font-size:24px; font-weight:700">Les offres de la semaine dans les magasins</h2>
+        <h2 class="text-lg mt-3 font-bold text-black">Les offres de la semaine dans les magasins</h2>
 
         <div id="">
             <div id="products-container" class="row" style="margin-right:1rem">
@@ -23,7 +23,7 @@
         </div>
         
         <div style="display:flex; justify-content:center; align-items:center; margin-top:4%">
-            <button id="more-products" style="color:#ec6333; border:2px solid #ec6333; padding:0.75em 4.5em; border-radius:0.5em; font-size:18px; font-weight:800; text-align:center;">
+            <button id="more-products" class="text-[#ec6333] border-2 border-solid border-red-600 md:px-8 md:py-1 px-16 py-3 rounded-lg text-base font-extrabold text-center">
                 Afficher plus
             </button>
         </div>
@@ -31,15 +31,15 @@
         <div class="row gx-1" style="margin-top:5%">
             <div class="col">
                 <img src="images/body-lotion.jpg" alt="" style="border-radius:8px">
-                <h2 class="text-xl font-bold text-black" style="margin-top:2%; font-size:20px; font-weight:700">Les imbattables de la semaine</h2>
+                <h2 class="xl:text-xl lg:text-lg md:text-md mt-2 font-bold text-black">Les imbattables de la semaine</h2>
             </div>
             <div class="col">
                 <img src="images/body-lotion.jpg" alt="" style="border-radius:8px">
-                <h2 class="text-xl font-bold text-black" style="margin-top:2%; font-size:20px; font-weight:700">Un soin optimal et naturel</h2>
+                <h2 class="xl:text-xl lg:text-lg md:text-md mt-2 font-bold text-black">Un soin optimal et naturel</h2>
             </div>
             <div class="col">
                 <img src="images/care-products.jpeg" alt="" style="border-radius:8px">
-                <h2 class="text-xl font-bold text-black" style="margin-top:2%; font-size:20px; font-weight:700">Du nouveau en beauté</h2>
+                <h2 class="xl:text-xl lg:text-lg md:text-md mt-2 font-bold text-black">Du nouveau en beauté</h2>
             </div>
         </div>
 
