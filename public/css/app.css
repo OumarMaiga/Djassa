@@ -683,9 +683,9 @@ select {
 .inline-flex {
   display: inline-flex;
 }
-.grid {
+/*.grid {
   display: grid;
-}
+}*/
 .hidden {
   display: none;
 }
