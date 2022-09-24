@@ -9,8 +9,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="cube-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($products) }}</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <div class="text-2xl lg:text-3xl">{{ count($products) }}</div>
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     PRODUITS
                                 </h2>
                             </center>
@@ -25,7 +25,7 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="cash-outline" style="font-size:36px"></ion-icon></div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     RECETTES
                                 </h2>
                             </center>
@@ -41,7 +41,7 @@
                                 <div class="card-body">
                                     <center>
                                         <div class="mt-2"><ion-icon name="file-tray-stacked-outline" style="font-size:36px"></ion-icon></div>
-                                        <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                        <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                             RAYONS
                                         </h2>
                                     </center>
@@ -55,8 +55,8 @@
                                 <div class="card-body">
                                     <center>
                                         <div class="mt-2"><ion-icon name="people-outline" style="font-size:36px"></ion-icon></div>
-                                        <div style="font-size:32px">{{ count($admins) }}</div>
-                                        <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                        <div class="text-2xl lg:text-3xl">{{ count($admins) }}</div>
+                                        <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                             ADMINISTRATEURS
                                         </h2>
                                     </center>
@@ -72,8 +72,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="people-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($users) }}</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <div class="text-2xl lg:text-3xl">{{ count($users) }}</div>
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     UTILISATEURS
                                 </h2>
                             </center>
@@ -87,8 +87,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="bag-check-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($sells) }}</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <div class="text-2xl lg:text-3xl">{{ count($sells) }}</div>
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     TOUTES LES VENTES
                                 </h2>
                             </center>
@@ -102,8 +102,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="bag-check-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($monthly_sells) }}</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <div class="text-2xl lg:text-3xl">{{ count($monthly_sells) }}</div>
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     VENTE DU MOIS
                                 </h2>
                             </center>
@@ -117,8 +117,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="file-tray-full-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($commandes) }}</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <div class="text-2xl lg:text-3xl">{{ count($commandes) }}</div>
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     COMMANDES EN COURS
                                 </h2>
                             </center>
@@ -132,8 +132,8 @@
                         <div class="card-body">
                             <center>
                                 <div class="mt-2"><ion-icon name="file-tray-full-outline" style="font-size:36px"></ion-icon></div>
-                                <div style="font-size:32px">{{ count($services) }}</div>
-                                <h2 class="mb-2" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                                <div class="text-2xl lg:text-3xl">{{ count($services) }}</div>
+                                <h2 class="mb-2 text-md lg:text-xl font-medium pt-4">
                                     SERVICES
                                 </h2>
                             </center>

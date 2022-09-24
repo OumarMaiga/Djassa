@@ -5,7 +5,7 @@
             <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px"">
                 ETAT DE LA COMMANDE
             </h3>
-            <div class="col-6 mt-4">
+            <div class="col-md-6 mt-4">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         <div class="row">
