@@ -8,7 +8,8 @@
             </h3>
             <div id="wrapper">          
             @if($commandes)
-            <table class="table table-hover table-responsive" style="margin-top: 2rem">
+            <div class="table-responsive">
+            <table class="table table-hover" style="margin-top: 2rem">
                 <thead>
                     <tr>
                     <th scope="col">#</th>

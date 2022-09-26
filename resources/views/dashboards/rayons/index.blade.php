@@ -54,41 +54,43 @@
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
 
-            <table class="table table-hover table-responsive">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Intitulé</th>
-                    <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $n = 0 ?>
-                    @foreach ($rayons as $rayon)
-                    <?php $n = $n + 1 ?>
+            <div class="table-responsive w-full">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
-                            <th scope="row">{{ $n }}</th>
-                            <td>{{ $rayon->title }}</td>
-                            <td class="justify-content-between icon-content">
-                                <!-- <a href="{{ route('dashboard.rayon.show', $rayon->slug) }}">Voir</a> -->
-                                <a href="{{ route('dashboard.rayon.edit', $rayon->slug) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
-                                    <ion-icon name="create-outline" style="font-size:24px;"></ion-icon>
-                                </a>
-                                <span class="col icon-action" style="display:inline-block">
-                                    <form method="POST" action="{{ route('dashboard.rayon.destroy', $rayon->slug) }}">
-                                        @csrf
-                                        @method('delete')
-                                            <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce rayon?')" title="Supprimer">
-                                                <ion-icon name="trash-outline" style="font-size:24px; color:red;"></ion-icon>
-                                            </button>
-                                    </form>
-                                </span>
-                                
-                            </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Intitulé</th>
+                        <th scope="col" style="min-width:140px">Action</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php $n = 0 ?>
+                        @foreach ($rayons as $rayon)
+                        <?php $n = $n + 1 ?>
+                            <tr>
+                                <th scope="row">{{ $n }}</th>
+                                <td>{{ $rayon->title }}</td>
+                                <td class="justify-content-between icon-content">
+                                    <!-- <a href="{{ route('dashboard.rayon.show', $rayon->slug) }}">Voir</a> -->
+                                    <a href="{{ route('dashboard.rayon.edit', $rayon->slug) }}" class="col icon-action icon-edit" style="display:inline-block; margin-right:0.75rem" title="Modifier">
+                                        <ion-icon name="create-outline" style="font-size:24px;"></ion-icon>
+                                    </a>
+                                    <span class="col icon-action" style="display:inline-block">
+                                        <form method="POST" action="{{ route('dashboard.rayon.destroy', $rayon->slug) }}">
+                                            @csrf
+                                            @method('delete')
+                                                <button class="" type="submit" onclick="return confirm('Voulez-vous vraiment supprimer ce rayon?')" title="Supprimer">
+                                                    <ion-icon name="trash-outline" style="font-size:24px; color:red;"></ion-icon>
+                                                </button>
+                                        </form>
+                                    </span>
+                                    
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-app-layout>

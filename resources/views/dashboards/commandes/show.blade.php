@@ -13,7 +13,8 @@
                                 <b>Commande: </b>{{ $commande->commande_code }}
                             </div>
                             <div class="col-6 mb-3">
-                                <b>Produit </b><?php 
+                                <b>Produit </b>
+                                <?php 
                                 $commande_products = DB::select("SELECT products.title as product_title, products.slug as product_slug,
                                                                 products.id as product_id FROM products LEFT JOIN commande_product
                                                                 ON products.id = commande_product.product_id WHERE commande_product.commande_id = $commande->commande_id");

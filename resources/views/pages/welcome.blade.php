@@ -1,5 +1,5 @@
 <x-app-layout>
-    <!--@include('layouts.sidebar')-->
+    <!---->@include('layouts.sidebar')
 
     <div class="p-2 md:p-4 lg:p-4 md:ml-72 mt-24" id="container">
         <!-- Banners -->

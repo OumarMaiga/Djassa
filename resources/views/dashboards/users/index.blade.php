@@ -6,49 +6,51 @@
                 UTILISATEURS
             </h3>
             @if($users)
-            <table class="table table-hover table-responsive" style="margin-top: 2rem">
-                <thead>
-                    <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Fullname</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $n = 0 ?>
-                    @foreach ($users as $user)
-                    <?php 
-                        $n = $n + 1;
-                    ?>
+            <div class="table-responsive w-full">
+                <table class="table table-hover" style="margin-top: 2rem">
+                    <thead>
                         <tr>
-                            <th scope="row">{{ $n }}</th>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>
-                                <?php
-                                    if($user->etat == "disabled") {
-                                        echo "<b style=color:red>Inactif</b>";
-                                    } elseif($user->etat == "enabled") {
-                                        echo "<b style=color:green>Actif</b>";
-                                    } elseif($user->etat == "blocked") {
-                                        echo "<b style=color:red>Bloqué</b>";
-                                    }
-                                ?>        
-                            </td>
-                            <td>
-                                <a href="{{ route('dashboard.user.blocked', $user->id) }}" title="Bloquer">
-                                    <ion-icon name="remove-circle-outline" style="font-size:24px; color:red;"></ion-icon>
-                                </a>
-                                <a href="{{ route('dashboard.user.unblocked', $user->id) }}" title="Débloquer">
-                                    <ion-icon name="arrow-up-circle-outline" style="font-size:24px; color:green;"></ion-icon>
-                                </a>                            
-                            </td>
+                        <th scope="col">#</th>
+                        <th scope="col">Fullname</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Etat</th>
+                        <th scope="col" style="min-width:140px">Action</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php $n = 0 ?>
+                        @foreach ($users as $user)
+                        <?php 
+                            $n = $n + 1;
+                        ?>
+                            <tr>
+                                <th scope="row">{{ $n }}</th>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    <?php
+                                        if($user->etat == "disabled") {
+                                            echo "<b style=color:red>Inactif</b>";
+                                        } elseif($user->etat == "enabled") {
+                                            echo "<b style=color:green>Actif</b>";
+                                        } elseif($user->etat == "blocked") {
+                                            echo "<b style=color:red>Bloqué</b>";
+                                        }
+                                    ?>        
+                                </td>
+                                <td>
+                                    <a href="{{ route('dashboard.user.blocked', $user->id) }}" title="Bloquer">
+                                        <ion-icon name="remove-circle-outline" style="font-size:24px; color:red;"></ion-icon>
+                                    </a>
+                                    <a href="{{ route('dashboard.user.unblocked', $user->id) }}" title="Débloquer">
+                                        <ion-icon name="arrow-up-circle-outline" style="font-size:24px; color:green;"></ion-icon>
+                                    </a>                            
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             @else
             <span class="card-title center-align">Aucun utilisateur enrégistré</span>
             @endif      
