@@ -121,4 +121,8 @@ $(document).ready(function() {
             $('#main').html(markup);
         }); 
     });
+
+    $( "#sidebar-toggle" ).click(function() {
+        $( "#wrapper" ).toggle();
+    });
 });

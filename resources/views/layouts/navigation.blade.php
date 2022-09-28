@@ -5,13 +5,16 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
+                    <span class="md:hidden pt-2 mr-2" id="sidebar-toggle">
+                        <ion-icon name="grid-outline" style="font-size:1.5em; color:#1A1A1A"></ion-icon>
+                    </span>
                     <a href="{{ route('welcome') }}">
                         <h1 class="inline-flex items-center" style="font-size:24px; font-weight:800; color:#ec8333">DJASSA</h1>
                     </a>
                 </div>
 
                 <!-- Search -->
-                <form action="{{route('search')}}" id="search-form" method="GET">
+                <form class="hidden md:flex" action="{{route('search')}}" id="search-form" method="GET">
                     <input style="height:70%; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:0.75rem" name="query" placeholder="Rechercher un produit"/>
                 </form>
                 <!-- Navigation Links -->
@@ -122,9 +125,14 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <!-- Search -->
+        <form action="{{route('search')}}" id="search-form" method="GET">
+            <input style="height:2rem; width:21rem; background:#F6F6F6; padding-left:1rem; border-radius:5px; margin-left:1.5rem; margin-top:0.75rem" name="query" placeholder="Rechercher un produit"/>
+        </form>
+
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
-                {{ __('Dashboard') }}
+                <p class="pl-3">{{ __('Dashboard') }}</p>
             </x-responsive-nav-link>
         </div>
 
@@ -151,7 +159,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        <p class="pl-3">{{ __('Log Out') }}</p>
                     </x-responsive-nav-link>
                 </form>
             </div>

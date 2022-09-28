@@ -6,13 +6,13 @@
     /* Sets the ... once the text overflows */
     text-overflow: ellipsis;
 }
-#category_id_container{
+#category_id_container {
     display: none;
 }
-#sub_category_id_container{
+#sub_category_id_container {
     display: none;
 }
-#sub_sub_category_id_container{
+#sub_sub_category_id_container {
     display: none;
 }
 

@@ -1,5 +1,6 @@
 <x-app-layout>
-    <!---->@include('layouts.sidebar')
+    <!---->
+    @include('layouts.sidebar')
 
     <div class="p-2 md:p-4 lg:p-4 md:ml-72 mt-24" id="container">
         <!-- Banners -->
@@ -16,7 +17,7 @@
 
         <h2 class="text-md md:text-lg lg:text-xl mt-3 font-bold text-black">Les offres de la semaine dans les magasins</h2>
 
-        <div id="products-container" class="row">
+        <div id="products-container" style="position:none">
             @include('layouts.products-list')
         </div>
         
