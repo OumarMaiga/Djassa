@@ -1,5 +1,5 @@
 
-<div id="wrapper" class="hidden md:flex flex-col" style="background:#F6F6F6; width:16rem; height:100vh; position:fixed; top:0; bottom:0; left:0;">
+<div id="wrapper" class="hidden sm:flex flex-col" style="background:#F6F6F6; width:16rem; height:100vh; position:fixed; top:0; bottom:0; left:0;">
     <h2 class="text-xl font-bold text-black ml-4" style="margin-top:35%; margin-bottom:1rem">Tous les produits</h2>
     @foreach ($rayons as $rayon)
         <?php 
