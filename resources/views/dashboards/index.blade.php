@@ -3,7 +3,7 @@
     <div class="container" style="margin-top:6.5rem">
         <div class="row">
         
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="{{ route('dashboard.product.index') }}">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -19,7 +19,7 @@
                 </a>
             </div>
         
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="http://127.0.0.1:8000/dashboard/recettes">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -35,7 +35,7 @@
             </div>
             @if (Auth::check())
                 @if(Auth::user()->type === "super-admin")
-                    <div class="col-4 mt-3">
+                    <div class="col-6 col-sm-4 mt-3">
                         <a href="{{ route('dashboard.rayon.index') }}">
                             <div class="card shadow-sm">
                                 <div class="card-body">
@@ -49,7 +49,7 @@
                             </div>
                         </a>
                     </div>
-                    <div class="col-4 mt-3">
+                    <div class="col-6 col-sm-4 mt-3">
                         <a href="{{ route('dashboard.admin.index') }}">
                             <div class="card shadow-sm">
                                 <div class="card-body">
@@ -66,7 +66,7 @@
                     </div>
                 @endif
             @endif
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="{{ route('dashboard.user.index') }}">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -81,7 +81,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="{{  route('dashboard.sells')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -96,7 +96,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="{{  route('dashboard.monthly_sells')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -111,7 +111,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="{{  route('dashboard.commande.index')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -126,7 +126,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-4 mt-3">
+            <div class="col-6 col-sm-4 mt-3">
                 <a href="{{  route('dashboard.service.index')}}">
                     <div class="card shadow-sm">
                         <div class="card-body">
