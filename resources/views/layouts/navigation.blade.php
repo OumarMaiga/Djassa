@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <span class="md:hidden pt-2 mr-2" id="sidebar-toggle">
+                    <span class="sm:hidden pt-1 mr-2" id="sidebar-toggle">
                         <ion-icon name="grid-outline" style="font-size:1.5em; color:#1A1A1A"></ion-icon>
                     </span>
                     <a href="{{ route('welcome') }}">
@@ -14,8 +14,8 @@
                 </div>
 
                 <!-- Search -->
-                <form class="hidden md:flex" action="{{route('search')}}" id="search-form" method="GET">
-                    <input style="height:70%; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:0.75rem" name="query" placeholder="Rechercher un produit"/>
+                <form class="hidden sm:flex flex-col" action="{{route('search')}}" id="search-form" method="GET">
+                    <input style="height:3rem; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:1rem" name="query" placeholder="Rechercher un produit"/>
                 </form>
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

@@ -6,12 +6,15 @@
     /* Sets the ... once the text overflows */
     text-overflow: ellipsis;
 }
+
 #category_id_container {
     display: none;
 }
+
 #sub_category_id_container {
     display: none;
 }
+
 #sub_sub_category_id_container {
     display: none;
 }

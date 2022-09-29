@@ -1,5 +1,6 @@
+<div class="row">
     @foreach ($products as $product) 
-        <div class="col-md-6 col-lg-2 mt-4">
+        <div class="col-sm-3 mt-3">
             <div class="card shadow-sm">
                 <a href="{{ route('product.detail', $product->product_slug) }}" class="py-2 mt-2 mx-3 bg-[#F6F6F6] text-center rounded font-bold mb-[8%] md:mb-[20%] lg:mb-[20%] cursor-pointer">Voir l'offre</a>
                 <img src="{{ asset($product->files_file_path) }}" class="img-responsive mx-3 mb-[4%] md:mb-[10%] lg:mb-[10%] h-44 md:h-20 lg:h-20 object-cover" alt="...">
@@ -12,3 +13,4 @@
             </div>
         </div>
     @endforeach
+</div>
