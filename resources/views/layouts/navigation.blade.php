@@ -15,10 +15,10 @@
 
                 <!-- Search -->
                 <form class="hidden sm:flex flex-col" action="{{route('search')}}" id="search-form" method="GET">
-                    <input style="height:3rem; width:20rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1.5rem; margin-top:1rem" name="query" placeholder="Rechercher un produit"/>
+                    <input style="height:3rem; width:14rem; background:#F6F6F6; padding-left:1rem; border-radius:6px; margin-left:1rem; margin-top:1rem" name="query" placeholder="Rechercher un produit"/>
                 </form>
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-2 sm:-my-px sm:ml-6 sm:flex">
                     @if(Auth::check() && (Auth::user()->type === "super-admin" || Auth::user()->type === "admin"))
                         <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -35,19 +35,19 @@
                     @if (Auth::check())
                         @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
                         <x-nav-link :href="route('dashboard.commande.index')">
-                            Les commandes
+                            Commandes
                         </x-nav-link> 
                         <x-nav-link :href="route('dashboard.service.index')">
-                            Les services
+                            Services
                         </x-nav-link>
                         @endif
                         
                         @if(Auth::user()->type === "user")
                             <x-nav-link :href="route('my_commande', Auth::user()->id)">
-                                Mes commandes
+                                Commandes
                             </x-nav-link> 
                             <x-nav-link :href="route('service.index', Auth::user()->id)">
-                                Mes services
+                                Services
                             </x-nav-link>
                         @endif
                     @endif
@@ -55,7 +55,7 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ml-6">
+            <div class="hidden sm:flex sm:items-center sm:ml-3">
                 @if($cartCount ?? '' )
                     <span style="margin-top:0.6rem; margin-right:2rem" class="position-relative">
                         <a href="{{ route('panier.index') }}">
@@ -91,7 +91,7 @@
                     </x-slot>
                     <x-slot name="trigger">
                         <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                            <div style="font-size:16px; color:#1A1A1A; margin-right:-5rem" class="text-base">{{ Auth::check() ? Auth::user()->name : "" }} <span style="position: absolute; margin-top:0.2rem; margin-left:0.1rem;"><ion-icon name="chevron-down-outline"></ion-icon></span></div>
+                            <div style="font-size:16px; color:#1A1A1A; margin-right:-0.2rem" class="text-base">{{ Auth::check() ? Auth::user()->name : "" }} <span style="position: absolute; margin-top:0.2rem; margin-left:0.1rem;"><ion-icon name="chevron-down-outline"></ion-icon></span></div>
                         </button>
                     </x-slot>
                 </x-dropdown>
@@ -145,12 +145,12 @@
                 @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
                 <div>
                     <x-nav-link :href="route('dashboard.commande.index')">
-                        <span class="text-base">Les commandes</span> 
+                        <span class="text-base">Commandes</span> 
                     </x-nav-link> 
                 </div>
                 <div>
                     <x-nav-link :href="route('dashboard.service.index')">
-                        <span class="text-base">Les services</span> 
+                        <span class="text-base">Services</span> 
                     </x-nav-link>
                 </div>
                 @endif
@@ -158,12 +158,12 @@
                 @if(Auth::user()->type === "user")
                     <div>
                         <x-nav-link :href="route('my_commande', Auth::user()->id)">
-                            <span class="text-base">Mes commandes</span> 
+                            <span class="text-base">Commandes</span> 
                         </x-nav-link> 
                     </div>
                     <div>
                         <x-nav-link :href="route('service.index', Auth::user()->id)">
-                            <span class="text-base">Mes services</span> 
+                            <span class="text-base">Services</span> 
                         </x-nav-link>
                     </div>
                 @endif
