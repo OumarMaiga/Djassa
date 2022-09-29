@@ -3,6 +3,10 @@
         <div class="row">
 
             <div class="col-md-12">
+                <span class="mr-2" style="float: left; display: inline-block; padding-top:0.5rem; cursor: pointer;" id="go-back"><ion-icon name="return-up-back-outline" style="font-size:36px;"></ion-icon></span>
+                <h3 class="mb-3" style="display: inline-block; padding-top:1rem; font-weight:500; font-size:20px">
+                    Détails du service
+                </h3>
                 <div class="card">
                     <div class="card-header" style="font-size:19px; font-weight:600;">
                         <p style="float:left;">{{ $service->title }}</p>

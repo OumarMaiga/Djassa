@@ -130,39 +130,118 @@
             <input style="height:2rem; width:21rem; background:#F6F6F6; padding-left:1rem; border-radius:5px; margin-left:1.5rem; margin-top:0.75rem" name="query" placeholder="Rechercher un produit"/>
         </form>
 
-        <div class="pt-2 pb-3 space-y-1">
+        <!-- Navigation Links -->
+        <div class="ml-5 mt-2">
+            @if(Auth::check() && (Auth::user()->type === "super-admin" || Auth::user()->type === "admin"))
+                <div>
+                    <x-nav-link :href="route('dashboard.index')" :active="request()->routeIs('dashboard')">
+                        <span class="text-base">{{ __('Dashboard') }}</span>     
+                    </x-nav-link>
+                </div>
+            @endif
+            <!-- @if($cartCount ?? '' )
+                <span style="margin-top:1.5rem" class="position-relative">
+                    <a href="{{ route('panier.index') }}">
+                        <ion-icon name="cart-outline" style="font-size:2em; color:#1A1A1A"></ion-icon>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#ec6333">{{ $cartCount }}</span>
+                    </a>
+                </span>
+            @endif -->
+            @if (Auth::check())
+                @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
+                <div>
+                    <x-nav-link :href="route('dashboard.commande.index')">
+                        <span class="text-base">Les commandes</span> 
+                    </x-nav-link> 
+                </div>
+                <div>
+                    <x-nav-link :href="route('dashboard.service.index')">
+                        <span class="text-base">Les services</span> 
+                    </x-nav-link>
+                </div>
+                @endif
+                
+                @if(Auth::user()->type === "user")
+                    <div>
+                        <x-nav-link :href="route('my_commande', Auth::user()->id)">
+                            <span class="text-base">Mes commandes</span> 
+                        </x-nav-link> 
+                    </div>
+                    <div>
+                        <x-nav-link :href="route('service.index', Auth::user()->id)">
+                            <span class="text-base">Mes services</span> 
+                        </x-nav-link>
+                    </div>
+                @endif
+            @endif
+        </div>
+
+        <!-- Settings Dropdown -->
+        <div class="ml-5 mt-2">
+            @if($cartCount ?? '' )
+                <span style="margin-top:0.6rem; margin-right:2rem" class="position-relative">
+                    <a href="{{ route('panier.index') }}">
+                        <ion-icon name="cart-outline" style="font-size:2em; color:#1A1A1A"></ion-icon>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background-color:#ec6333">{{ $cartCount }}</span>
+                    </a>
+                </span>
+            @endif
+            @if (Auth::check())
+            <x-dropdown align="left" width="48">
+
+                <x-slot name="content">
+                    @if (Auth::check())
+                        @if(Auth::user()->type === "super-admin" || Auth::user()->type === "admin")
+                            <x-dropdown-link :href="route('dashboard.index')">
+                                Dashboard
+                            </x-dropdown-link>
+                        @endif
+                        <x-dropdown-link :href="route('user.show', Auth::user()->id)">
+                            Profil
+                        </x-dropdown-link>
+                        <!-- Authentication -->
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                                {{ __('Log Out') }}
+                            </x-dropdown-link>
+                        </form>
+                    @endif
+                </x-slot>
+                <x-slot name="trigger">
+                    <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                        <div style="font-size:16px; color:#1A1A1A; margin-right:-5rem">{{ Auth::check() ? Auth::user()->name : "" }}</div>
+
+                        <div class="ml-1">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
+            </x-dropdown>
+            @else
+            <div>
+                <x-nav-link :href="route('login')">
+                   <span class="text-base">Connexion</span> 
+                </x-nav-link>
+            </div>
+            <div>
+                <x-nav-link :href="route('register')">
+                <span class="text-base">Inscription</span> 
+                </x-nav-link>
+            </div>
+            @endif
+        </div>
+
+        <!-- <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
                 <p class="pl-3">{{ __('Dashboard') }}</p>
             </x-responsive-nav-link>
-        </div>
+        </div> -->
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <?php
-                    if(Auth::check()){    
-                ?>
-                    <div class="font-medium text-base text-gray-800">
-                        {{ Auth::user()->name }}
-                    </div>
-                    <div class="font-medium text-sm text-gray-500">
-                        {{ Auth::user()->email }}
-                    </div>
-                <?php } ?>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        <p class="pl-3">{{ __('Log Out') }}</p>
-                    </x-responsive-nav-link>
-                </form>
-            </div>
-        </div>
     </div>
 </nav>

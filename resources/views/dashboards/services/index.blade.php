@@ -9,7 +9,7 @@
             <div id="wrapper">          
             @if($services)
             <div class="table-responsive">
-                <table class="table table-hover" style="margin-top: 2rem">
+                <table class="table table-hover" style="margin-top: 0.5rem">
                     <thead>
                         <tr>
                         <th scope="col">#</th>
