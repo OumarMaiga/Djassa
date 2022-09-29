@@ -1,8 +1,10 @@
-@include('layouts.sidebar')
-<div style="margin-left:19rem; margin-top:6.5rem" id="container">
-    <h2 style="margin-top:5%; margin-bottom:1.5rem; font-size:24px; font-weight:700">{{ count($products) }} resultat(s) pour {{ $query }}</h2>
+<x-app-layout>
+    @include('layouts.sidebar')
+    <div class="p-2 md:p-4 lg:p-4 md:ml-72 mt-24" id="container">
+        <h2 class="text-lg md:text-lg lg:text-xl font-bold">{{ count($products) }} resultat(s) pour {{ $query }}</h2>
 
-    <div id="products-container" class="row" style="margin-right:1rem">
-        @include('layouts.products-list')
+        <div id="products-container" class="mt-2">
+            @include('layouts.products-list')
+        </div>
     </div>
-</div>
+</x-app-layout>

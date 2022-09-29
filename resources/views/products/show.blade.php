@@ -41,7 +41,7 @@
             </div>
         </div>
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" id="myTab" role="tablist" style="flex-wrap:nowrap;">
             <li class="nav-item" role="presentation">
                 <button class="nav-link active font-semibold text-sm md:text-lg lg:text-xl text-[#1A1A1A]" id="principales_caracteristiques-tab" data-bs-toggle="tab" data-bs-target="#principales_caracteristiques" type="button" role="tab" aria-controls="principales_caracteristiques" aria-selected="true">Principales caractéristiques</button>
             </li>
