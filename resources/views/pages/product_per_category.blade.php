@@ -1,14 +1,14 @@
 <x-app-layout>
     @include('layouts.sidebar')
 
-    <div style="margin-left:19rem; margin-top:6.5rem">
+    <div class="p-2 ml-4 md:p-4 lg:p-4 md:ml-72 mt-24" id="container">
         
-        <h2 style="margin-top:5%; margin-bottom:1rem; font-size:30px; font-weight:600">{{ $category->title }}</h2>
+        <h2 style="margin-top:2%; margin-bottom:1rem; font-size:30px; font-weight:600">{{ $category->title }}</h2>
         
         <!-- Cards -->
         <div class="row gx-1" style="margin-bottom:3%">
             @foreach ($sub_categories as $sub_category)
-            <div class="col-3 mb-3">
+            <div class="col col-md-3 mb-3">
                 <div class="card shadow-sm" style="width:17rem">
                 <div class="row">
                     <div class="col-4"></div>
@@ -38,7 +38,7 @@
             @endforeach
         </div>
 
-        <div class="">
+        <div class="ml-4 md:ml-72">
         <h2 style="margin-top:1%; margin-bottom:1rem; font-size:24px; font-weight:600; color:#ec6333;">Tous les produits</h2>
             <div class="row" style="margin-right:1rem">
                 @include('layouts.products-list')
